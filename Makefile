@@ -5,7 +5,8 @@ DIR_INCLUDES	= ./includes/
 DIR_LIB		= ./libft/
 
 LIBFT		= $(DIR_LIB)libft.a
-SRCS		= $(DIR_SRCS)main.c $(DIR_SRCS)builtin.c
+SRCS		= $(DIR_SRCS)main.c $(DIR_SRCS)builtin.c $(DIR_SRCS)list_utils.c $(DIR_SRCS)env_utils.c $(DIR_SRCS)exec.c
+
 
 HEADER		= $(DIR_INCLUDES)
 
@@ -20,7 +21,7 @@ RM			= rm -f
 CFLAGS			= -Wall -Werror -Wextra
 
 $(NAME):		$(OBJS) $(DIR_INCLUDES)*.h
-			@make -C $(DIR_LIB)
+			@make bonus -C $(DIR_LIB)
 			@cp $(LIBFT) ./$(NAME)
 			$(CC) $(CFLAGS) $(DIR_SRCS)*.o -o $(NAME) $(LIBFT)
 

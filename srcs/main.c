@@ -49,69 +49,22 @@ char	*ft_read_input()
 		return(input);
 }
 
-char	*get_path(char **envp)
+int	init_var(t_var *shell, char **envp)
 {
-	char* path = NULL;
 	int i;
 
 	i = 0;
-	while (envp[i] != NULL && path == NULL)
+	ft_bzero(shell, sizeof(t_var));	
+	shell->pwd = getcwd(NULL, 0);
+	shell->env = envp;
+	while (envp[i] != NULL && shell->path == NULL)
 	{
+	//	lstadd_value(&(shell->env_list), envp[i]); que si liste chainee
 		if (strncmp(envp[i], "PATH=", 5) == 0)
-			path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
+			shell->path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
 		i++;
 	}
-	return(path);
-}
-
-char *get_cmd_path(char *path, char *cmd)
-{
-	char **path_split = NULL;
-	struct stat	file;
-
-	path_split = ft_split(path, ':');
-
-	int i = 0;
-
-	while(path_split[i] != NULL)
-	{
-		path = ft_strjoin(path_split[i], "/");
-		path = ft_strjoin(path, cmd);
-		if (stat(path,	 &file) == 0)
-			return(path);
-		//a completer;
-		i++;
-	}
-
-	return (NULL);
-}
-
-int	ft_exec_cmd(char **envp, char *path, char *cmd)
-{
-
-	char* arg[] = {cmd, "toto", NULL};
-	pid_t child_pid;
-	int wstatus;
-
-	//si cmd n'est pas deja un chemin
-	path = get_cmd_path(path, cmd);
-	child_pid = fork();
-	if (child_pid < 0)
-		return(-1);
-	else if (child_pid == 0)
-	{
-		signal(SIGINT, SIG_DFL); //necessaire ?
-		if (execve(path, arg, envp) == -1)
-			return(-1); 
-		//-> besoin de parser le chemin absolu, il present dans la variable d'en PATH mais besoin de tester tous les chemins. stat(path, &file) ?	
-	}
-	else
-	{
-		waitpid(child_pid, &wstatus, 0);
-		kill(child_pid, SIGTERM); 
-		//a quoi ca sert de tuer le process ?
-	}
-    return(1);
+	return(1);
 }
 
 void sigint_handler(int signo)
@@ -126,29 +79,25 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	
 	char *input;
+	t_var shell;
 
-	char *path = get_path(envp);
+	init_var(&shell, envp);
+//	ft_putendl_fd(ft_lstlast(shell.env_list)->content, 1);
+	// ft_putendl_fd(shell.pwd, 1);
+	// ft_putendl_fd(shell.path, 1);
+	// ft_putendl_fd(shell.env[0], 1);
 	signal(SIGINT, sigint_handler);
+	
+	shell.cmd = malloc(3 * sizeof(char *));
+	shell.cmd[0] = ft_strdup("mkdir");	
+	shell.cmd[1] = ft_strdup("toto");	
+	shell.cmd[2] = NULL;	
 	while (1)
 	{
 		input = ft_read_input();
-		if (ft_strncmp("cd", input, 2) == 0)
-		{
-			if (ft_cd("/tmp/") == 1)
-				return(1);
-		}
-		if (ft_strncmp("pwd", input, 3) == 0)
-		{
-			if (ft_pwd() == 1)
-				return(1);
-		}
-		if (ft_strncmp("mkdir", input, 4) == 0)
-		{
-			char *cmd = "mkdir";  //en attendant le parsing;
-			ft_exec_cmd(envp, path, cmd);
-		}
+		ft_exec_cmd(&shell);
 		free(input);
-	}	
+	}
+	
 }

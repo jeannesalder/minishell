@@ -1,24 +1,44 @@
 #include "./../includes/minishell.h"
 
-int	ft_cd(char *path)
+void change_pwd(t_var *shell)
 {
-	if (chdir(path) == -1)
-		return (1); //implementer error
+	(void)shell;
+	//attention : initialiser la variable PWD si jamais elle n'existe pas.
+	//besoin d'avoir creer les builtin d'environnemet
+}
+
+int	ft_cd(t_var *shell, char **cmd)
+{
+	char *path;
+
+	// traiter cas too many arguments ?? 
+	if (cmd[1] == NULL)
+	{
+		if (!(path = get_varenv(shell->env, "HOME=")))
+		{
+			ft_putendl_fd("HOME NOT SET", 1); //chercher phrase d'erreur
+			return (1); //gerer erreur;
+		}
+		if (chdir(path) == -1) //est-ce qu'on peut mettre la meme phrase d'erreur ?
+		{
+			ft_putendl_fd("No such file or directory", 1); //chercher phrase d'erreur
+			return (1); //gerer erreur;
+		}
+	}
+	else 
+	{
+		if (chdir(cmd[1]) == -1)
+		{	
+			ft_putendl_fd("No such file or directory", 1); //chercher phrase d'erreur
+			return (1); //gerer erreur;
+		}
+	}
+	change_pwd(shell);
 	return (0);
 }
 
-int ft_pwd(void)
+int ft_pwd(t_var *shell)
 {
-	char *current_dir;
-
-	current_dir = NULL;
-
-	if ((current_dir = getcwd(current_dir, 0)) == NULL)
-		return (1); //implementer error
-//	printf("%s\n", current_dir);
-//	changer la variable d'environnement.	
-	ft_putstr_fd(current_dir, 1);
-	ft_putchar_fd('\n', 1);
-	free(current_dir);
+	ft_putendl_fd(shell->pwd, 1);
 	return (0);
 }
