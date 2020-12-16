@@ -84,18 +84,19 @@ int	main(int ac, char **av, char **envp)
 
 	init_var(&shell, envp);
 //	ft_putendl_fd(ft_lstlast(shell.env_list)->content, 1);
+	// ft_putendl_fd(shell.env[0], 1);
 	// ft_putendl_fd(shell.pwd, 1);
 	// ft_putendl_fd(shell.path, 1);
-	// ft_putendl_fd(shell.env[0], 1);
 	signal(SIGINT, sigint_handler);
 	
-	shell.cmd = malloc(3 * sizeof(char *));
-	shell.cmd[0] = ft_strdup("mkdir");	
-	shell.cmd[1] = ft_strdup("toto");	
-	shell.cmd[2] = NULL;	
+//	shell.cmd = malloc(3 * sizeof(char *));
+//	shell.cmd[0] = ft_strdup("mkdir");	
+//	shell.cmd[1] = ft_strdup("toto");	
+//	shell.cmd[2] = NULL;	
 	while (1)
 	{
 		input = ft_read_input();
+		shell.cmd = ft_split(input, ' ');
 		ft_exec_cmd(&shell);
 		free(input);
 	}

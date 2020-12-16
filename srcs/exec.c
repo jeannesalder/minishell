@@ -24,10 +24,9 @@ char *get_cmd_path(char *path, char *cmd)
 	return (NULL);
 }
 
-int	ft_exec_cmd(t_var *shell)
+int ft_execve(t_var *shell)
 {
-
-	char* arg[] = {shell->cmd[0], "toto", NULL};
+//	char* arg[] = {shell->cmd[0], "toto", NULL};
 	char *path;
 	pid_t child_pid;
 	int wstatus;
@@ -40,7 +39,7 @@ int	ft_exec_cmd(t_var *shell)
 	else if (child_pid == 0)
 	{
 		signal(SIGINT, SIG_DFL); //necessaire ?
-		if (execve(path, arg, shell->env) == -1)
+		if (execve(path, shell->cmd, shell->env) == -1)
 			return(-1); 
 		//-> besoin de parser le chemin absolu, il present dans la variable d'en PATH mais besoin de tester tous les chemins. stat(path, &file) ?	
 	}
@@ -51,4 +50,33 @@ int	ft_exec_cmd(t_var *shell)
 		//a quoi ca sert de tuer le process ?
 	}
     return(1);
+}
+
+int is_a_built(t_var *shell, char *cmd)
+{
+	if (ft_memcmp(cmd, "echo", 5) == 0)
+		// ft_echo(shell);
+		cmd = "banane";
+	else if (ft_memcmp(cmd, "cd", 3) == 0)
+		ft_cd(shell, shell->cmd);
+	else if (ft_memcmp(cmd, "pwd", 4) == 0)
+		ft_pwd(shell);
+	// else if (ft_memcmp(cmd, "export", 7) == 0)
+		// ft_export(shell);
+	// else if (ft_memcmp(cmd, "unset", 5) == 0)
+		// ft_unset(shell);
+	// else if (ft_memcmp(cmd, "env", 4) == 0)
+		// ft_env(shell);
+	// else if (ft_memcmp(cmd, "exit", 5) == 0)
+		// ft_exit(shell);
+	else
+		return (0);
+	return (1);
+}
+
+int	ft_exec_cmd(t_var *shell)
+{
+	if (!(is_a_built(shell, shell->cmd[0])))
+		ft_execve(shell);
+	return (1); // ret a changer;
 }

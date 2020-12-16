@@ -9,7 +9,7 @@ char	*get_varenv(char **env, char *name)
 	i = 0;
 	while (env[i] != NULL)
 	{
-		if (strncmp(env[i], name, size) == 0)
+		if (ft_strncmp(env[i], name, size) == 0)
 			return (ft_substr(env[i], size, ft_strlen(env[i]) - size));
 		i++;
 	}

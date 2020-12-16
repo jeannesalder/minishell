@@ -2,7 +2,7 @@
 
 void change_pwd(t_var *shell)
 {
-	(void)shell;
+	shell->pwd = getcwd(NULL, 0);
 	//attention : initialiser la variable PWD si jamais elle n'existe pas.
 	//besoin d'avoir creer les builtin d'environnemet
 }
@@ -11,7 +11,7 @@ int	ft_cd(t_var *shell, char **cmd)
 {
 	char *path;
 
-	// traiter cas too many arguments ?? 
+	// traiter cas too many arguments ?? ou Juju verifie avant ? 
 	if (cmd[1] == NULL)
 	{
 		if (!(path = get_varenv(shell->env, "HOME=")))
@@ -34,11 +34,5 @@ int	ft_cd(t_var *shell, char **cmd)
 		}
 	}
 	change_pwd(shell);
-	return (0);
-}
-
-int ft_pwd(t_var *shell)
-{
-	ft_putendl_fd(shell->pwd, 1);
 	return (0);
 }
