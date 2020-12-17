@@ -26,7 +26,9 @@ char	*ft_read_input()
 {
 	int ret;
 	char c;
-	char *input = NULL;
+	char *input;
+
+	input = NULL;
 	
 	write (1, "> ", 2);
 
@@ -89,16 +91,14 @@ int	main(int ac, char **av, char **envp)
 	// ft_putendl_fd(shell.path, 1);
 	signal(SIGINT, sigint_handler);
 	
-//	shell.cmd = malloc(3 * sizeof(char *));
-//	shell.cmd[0] = ft_strdup("mkdir");	
-//	shell.cmd[1] = ft_strdup("toto");	
-//	shell.cmd[2] = NULL;	
 	while (1)
 	{
 		input = ft_read_input();
 		shell.cmd = ft_split(input, ' ');
-		ft_exec_cmd(&shell);
 		free(input);
+		ft_exec_cmd(&shell);
+		free_strarray(shell.cmd);	
 	}
-	
+	free(shell.pwd);
+	free(shell.path);
 }

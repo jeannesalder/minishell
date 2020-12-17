@@ -2,8 +2,12 @@
 
 char *get_cmd_path(char *path, char *cmd)
 {
-	char **path_split = NULL;
+	char *tmp;
+	char *cmd_path;
+	char **path_split;
 	struct stat	file;
+
+	path_split = NULL;
 
 //verifier la s'íl sagit deja d´un chemin (commence par / ou ./).
 //Cas ou path est nul
@@ -13,14 +17,19 @@ char *get_cmd_path(char *path, char *cmd)
 
 	while(path_split[i] != NULL)
 	{
-		path = ft_strjoin(path_split[i], "/");
-		path = ft_strjoin(path, cmd);
-		if (stat(path,	 &file) == 0)
-			return(path);
+		tmp = ft_strjoin(path_split[i], "/");
+		cmd_path = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (stat(cmd_path, &file) == 0)
+		{
+			free_strarray(path_split);
+			return(cmd_path);
+		}
 		//a completer;
 		i++;
+		free(cmd_path);
 	}
-
+	free_strarray(path_split);
 	return (NULL);
 }
 
@@ -31,32 +40,36 @@ int ft_execve(t_var *shell)
 	pid_t child_pid;
 	int wstatus;
 
-	//si cmd n'est pas deja un chemin
-	path = get_cmd_path(shell->path, shell->cmd[0]);
-	child_pid = fork();
-	if (child_pid < 0)
-		return(-1);
-	else if (child_pid == 0)
+	if ((path = get_cmd_path(shell->path, shell->cmd[0])))
 	{
-		signal(SIGINT, SIG_DFL); //necessaire ?
-		if (execve(path, shell->cmd, shell->env) == -1)
-			return(-1); 
-		//-> besoin de parser le chemin absolu, il present dans la variable d'en PATH mais besoin de tester tous les chemins. stat(path, &file) ?	
-	}
-	else
-	{
-		waitpid(child_pid, &wstatus, 0);
-		kill(child_pid, SIGTERM); 
-		//a quoi ca sert de tuer le process ?
-	}
-    return(1);
+		child_pid = fork();
+		if (child_pid < 0)
+			return(-1);
+		else if (child_pid == 0)
+		{
+			signal(SIGINT, SIG_DFL); //necessaire ?
+			if (execve(path, shell->cmd, shell->env) == -1)
+				return(-1); 
+			//-> besoin de parser le chemin absolu, il present dans la variable d'en PATH mais besoin de tester tous les chemins. stat(path, &file) ?	
+		}
+		else
+		{
+			waitpid(child_pid, &wstatus, 0);
+			kill(child_pid, SIGTERM); 
+			//a quoi ca sert de tuer le process ?
+		}
+		free(path);
+    	return (1);
+    }
+    // ft_printf("bash: %s: command not found\n", shell->cmd[0]);
+    ft_putstr_fd("bash: %s: command not found\n", 1); //remplacer par printf quand j'aurais reussi a changer le Makefile
+    return (0);
 }
 
 int is_a_built(t_var *shell, char *cmd)
 {
 	if (ft_memcmp(cmd, "echo", 5) == 0)
-		// ft_echo(shell);
-		cmd = "banane";
+		ft_echo(shell, shell->cmd);
 	else if (ft_memcmp(cmd, "cd", 3) == 0)
 		ft_cd(shell, shell->cmd);
 	else if (ft_memcmp(cmd, "pwd", 4) == 0)

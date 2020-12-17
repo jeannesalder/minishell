@@ -2,6 +2,7 @@
 
 void change_pwd(t_var *shell)
 {
+	free(shell->pwd);
 	shell->pwd = getcwd(NULL, 0);
 	//attention : initialiser la variable PWD si jamais elle n'existe pas.
 	//besoin d'avoir creer les builtin d'environnemet

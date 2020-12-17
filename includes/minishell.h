@@ -2,6 +2,7 @@
 # define MINISHELL_H
 
 # include "libft.h"
+# include "ft_printf.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -35,6 +36,7 @@ void sigint_handler(int signo);
 
 int	ft_cd(t_var *shell, char **cmd);
 int ft_pwd(t_var *shell);
+int ft_echo(t_var *shell, char **cmd);
 
 /*
  **fonctions env_utils.c
@@ -48,7 +50,15 @@ char	*get_varenv(char **env, char *name);
 
 void	lstadd_value(t_list **list, void *value);
 
+/*
+ **fonctions list_utils.c
+*/
+
+void	free_strarray(char **tab);
+
+
 
 int	ft_exec_cmd(t_var *shell);
+
 
 #endif
