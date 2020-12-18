@@ -20,6 +20,13 @@ typedef struct		s_var
 	char	**env;
 }					t_var;
 
+typedef struct	s_env
+{
+	char *name;
+	int	content;
+	char	*value;
+}	t_env;
+
 /*
  **fonctions main.c
 */
@@ -43,6 +50,14 @@ int ft_echo(t_var *shell, char **cmd);
 */
 
 char	*get_varenv(char **env, char *name);
+char	**cpy_env(char **env);
+t_env	split_env(char *var);
+/*
+ **fonctions ft_export.c
+*/
+
+char	**sort_env(char **env);
+int	ft_export(char **env, char **cmd);
 
 /*
  **fonctions list_utils.c

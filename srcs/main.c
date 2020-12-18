@@ -32,7 +32,7 @@ char	*ft_read_input()
 	
 	write (1, "> ", 2);
 
-		if (!(input = malloc(sizeof(char) * 1)))
+		if (!(input = ft_calloc(sizeof(char), 1)))
 			return(NULL);
 		input[0] = 0; 
 		ret = read(0, &c, 1);
@@ -85,15 +85,11 @@ int	main(int ac, char **av, char **envp)
 	t_var shell;
 
 	init_var(&shell, envp);
-//	ft_putendl_fd(ft_lstlast(shell.env_list)->content, 1);
-	// ft_putendl_fd(shell.env[0], 1);
-	// ft_putendl_fd(shell.pwd, 1);
-	// ft_putendl_fd(shell.path, 1);
 	signal(SIGINT, sigint_handler);
 	
 	while (1)
 	{
-		input = ft_read_input();
+		input = ft_read_input(); //segfault dans le cas d'un retour a la ligne seul
 		shell.cmd = ft_split(input, ' ');
 		free(input);
 		ft_exec_cmd(&shell);
