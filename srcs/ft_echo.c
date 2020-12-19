@@ -1,11 +1,23 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/19 09:18:33 by jgonfroy          #+#    #+#             */
+/*   Updated: 2020/12/19 09:19:18 by jgonfroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
 int	ft_echo(t_var *shell, char **cmd)
 {
 	int i;
 	int arg;
+
 	(void)shell;
-	
 	i = 1;
 	arg = 0;
 	while (cmd[i] != NULL && !ft_memcmp(cmd[i], "-n", 3))

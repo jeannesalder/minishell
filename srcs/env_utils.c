@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env_utils.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/18 13:18:06 by jgonfroy          #+#    #+#             */
+/*   Updated: 2020/12/18 13:19:17 by jgonfroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
 char	*get_varenv(char **env, char *name)
 {
-	int i;
-	int size;
+	int	i;
+	int	size;
 
 	size = ft_strlen(name);
 	i = 0;
@@ -16,10 +28,10 @@ char	*get_varenv(char **env, char *name)
 	return (NULL);
 }
 
-char **cpy_env(char **env)
+char	**cpy_env(char **env)
 {
-	int i;
-	char **tab;
+	int		i;
+	char	**tab;
 
 	i = 0;
 	while (env[i])
@@ -27,7 +39,7 @@ char **cpy_env(char **env)
 	if (!(tab = ft_calloc(sizeof(char*), i + 1)))
 		return (NULL);
 	i = 0;
-	while(env[i])
+	while (env[i])
 	{
 		tab[i] = ft_strdup(env[i]);
 		i++;
@@ -37,8 +49,8 @@ char **cpy_env(char **env)
 
 t_env	split_env(char *var)
 {
-	int index;
-	t_env dest;
+	int		index;
+	t_env	dest;
 
 	if (!(index = ft_charset('=', var)))
 		dest.content = 0;

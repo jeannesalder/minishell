@@ -1,20 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2020/12/19 09:38:45 by jgonfroy          #+#    #+#             */
+/*   Updated: 2020/12/19 11:35:30 by jgonfroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
-int	is_in_order(const char *s1, const char *s2)
+int		is_in_order(const char *s1, const char *s2)
 {
 	if (ft_memcmp(s1, s2, ft_strlen(s1) + 1) <= 0)
 		return (1);
 	return (0);
 }
 
-char **sort_env(char **cpy)
+char	**sort_env(char **cpy)
 {
-	int i;
-	int j;
-	char *tmp;
-//	char **cpy;
+	int		i;
+	int		j;
+	char	*tmp;
 
-//	cpy = cpy_env(env);
 	i = 0;
 	while (cpy[i + 1])
 	{
@@ -64,7 +74,7 @@ void	print_env(char **env)
 	free_strarray(env);
 }
 
-int	ft_export(char **env, char **cmd)
+int		ft_export(char **env, char **cmd)
 {
 	if (!(cmd[1]))
 		print_env(sort_env(cpy_env(env)));
