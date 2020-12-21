@@ -53,7 +53,11 @@ t_env	split_env(char *var)
 	t_env	dest;
 
 	if (!(index = ft_charset('=', var)))
+	{
+		dest.name = ft_strdup(var);
 		dest.content = 0;
+		dest.value = ft_strdup("");
+	}
 	else
 	{
 		dest.content = 1;

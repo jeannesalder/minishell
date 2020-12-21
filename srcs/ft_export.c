@@ -74,9 +74,31 @@ void	print_env(char **env)
 	free_strarray(env);
 }
 
-int		ft_export(char **env, char **cmd)
+int		ft_export(t_var *shell, char **env, char **cmd)
 {
+	int		i;
+	int		index;
+	t_env	tmp;
+
 	if (!(cmd[1]))
+	{
 		print_env(sort_env(cpy_env(env)));
-	return (1);
+		return (0); //gerer retour
+	}
+	i = 1;
+	while (cmd[i])
+	{
+		tmp = split_env(cmd[i]);
+		if ((is_valid_id(tmp.name, cmd[i])))
+		{
+			if ((index = is_in_env(env, tmp.name)) && tmp.content == 1)
+				modify_env(env, cmd[i], index);
+			if (index == 0)
+				shell->env = add_env(shell->env, cmd[i]);
+		}
+		free(tmp.name);
+		free(tmp.value);
+		i++;
+	}
+	return (0);
 }

@@ -68,7 +68,7 @@ int		init_var(t_var *shell, char **envp)
 	i = 0;
 	ft_bzero(shell, sizeof(t_var));
 	shell->pwd = getcwd(NULL, 0);
-	shell->env = envp;
+	shell->env = cpy_env(envp);
 	while (envp[i] != NULL && shell->path == NULL)
 	{
 		//	lstadd_value(&(shell->env_list), envp[i]); que si liste chainee
@@ -105,4 +105,5 @@ int		main(int ac, char **av, char **envp)
 	}
 	free(shell.pwd);
 	free(shell.path);
+	free_strarray(shell.env);
 }
