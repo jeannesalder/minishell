@@ -52,9 +52,7 @@ char	**add_env(char **env, char *cmd)
 	char	**tab;
 
 	i = 0;
-	size = 0;
-	while (env[size])
-		size++;
+	size = size_env(env);
 	tab = ft_calloc(sizeof(char*), size + 2);
 	while (i < size)
 	{

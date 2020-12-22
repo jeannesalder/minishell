@@ -12,6 +12,16 @@
 
 #include "./../includes/minishell.h"
 
+int		size_env(char **env)
+{
+	int	size;
+
+	size = 0;
+	while (env[size])
+		size++;
+	return (size);
+}
+
 int		is_in_env(char **env, char *name)
 {
 	int	i;
@@ -31,6 +41,7 @@ int		is_in_env(char **env, char *name)
 
 int		error_id(char *arg)
 {
+	//modifier erreur retour ici ?
 	ft_putstr_fd("bash : export : ", 1);
 	ft_putstr_fd(arg, 1);
 	ft_putendl_fd(" : not a valid identifier", 1);

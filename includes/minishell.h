@@ -64,8 +64,14 @@ int				ft_echo(t_var *shell, char **cmd);
 char			*get_varenv(char **env, char *name);
 char			**cpy_env(char **env);
 t_env			split_env(char *var);
-int				is_valid_id(char *name, char *arg);
+
+/*
+ **fonctions export_unset_utils.c
+*/
+int				size_env(char **env);
 int				is_in_env(char **env, char *name);
+int				error_id(char *arg);
+int				is_valid_id(char *name, char *arg);
 
 /*
  **fonctions ft_export.c
@@ -73,6 +79,12 @@ int				is_in_env(char **env, char *name);
 
 char			**sort_env(char **env);
 int				ft_export(t_var *shell, char **env, char **cmd);
+
+/*
+ **fonctions ft_unset.c
+*/
+
+int				ft_unset(t_var *shell, char **cmd);
 
 /*
  **fonctions list_utils.c
