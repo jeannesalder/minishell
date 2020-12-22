@@ -87,10 +87,10 @@ int		is_a_built(t_var *shell, char *cmd)
 		ft_export(shell, shell->env, shell->cmd);
 	else if (ft_memcmp(cmd, "unset", 5) == 0)
 		ft_unset(shell, shell->cmd);
-	// else if (ft_memcmp(cmd, "env", 4) == 0)
-	// ft_env(shell);
-	// else if (ft_memcmp(cmd, "exit", 5) == 0)
-	// ft_exit(shell);
+	else if (ft_memcmp(cmd, "env", 4) == 0)
+		ft_env(shell, shell->env);
+	else if (ft_memcmp(cmd, "exit", 5) == 0)
+		ft_exit(shell, shell->cmd);
 	else
 		return (0);
 	return (1);

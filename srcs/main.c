@@ -103,7 +103,8 @@ int		main(int ac, char **av, char **envp)
 		ft_exec_cmd(&shell);
 		free_strarray(shell.cmd);
 	}
-	free(shell.pwd);
-	free(shell.path);
-	free_strarray(shell.env);
+	// Inutile ici non ?
+	// free(shell.pwd);
+	// free(shell.path);
+	// free_strarray(shell.env);
 }

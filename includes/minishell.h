@@ -87,6 +87,16 @@ int				ft_export(t_var *shell, char **env, char **cmd);
 int				ft_unset(t_var *shell, char **cmd);
 
 /*
+ **fonctions ft_env.c
+*/
+int				ft_env(t_var *shell, char **env);
+
+/*
+ **fonctions ft_exit.c
+*/
+int				ft_exit(t_var *shell, char **cmd);
+
+/*
  **fonctions list_utils.c
 */
 
