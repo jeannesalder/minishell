@@ -91,10 +91,17 @@ int		ft_export(t_var *shell, char **env, char **cmd)
 		tmp = split_env(cmd[i]);
 		if ((is_valid_id(tmp.name, cmd[i])))
 		{
-			if ((index = is_in_env(env, tmp.name)) && tmp.content == 1)
+			if ((index = is_in_env(shell->env, tmp.name)) && tmp.content == 1)
 				modify_env(env, cmd[i], index);
 			if (index == 0)
 				shell->env = add_env(shell->env, cmd[i]);
+			if (strncmp(tmp.name, "PATH", 4) == 0 && tmp.content)
+			{
+				free(shell->path);
+				shell->path = tmp.value;
+				if (!tmp.value[0])
+					shell->path = ft_strdup("\0");
+			}
 		}
 		free(tmp.name);
 		free(tmp.value);

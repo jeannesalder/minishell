@@ -21,9 +21,9 @@ char	*get_cmd_path(char *path, char *cmd)
 	struct stat	file;
 
 	i = 0;
+	if (ft_charset('/', cmd))
+		return (ft_strdup(cmd));
 	path_split = NULL;
-	//verifier la s'íl sagit deja d´un chemin (commence par / ou ./).
-	//Cas ou path est nul
 	path_split = ft_split(path, ':');
 	while (path_split[i] != NULL)
 	{
@@ -35,12 +35,25 @@ char	*get_cmd_path(char *path, char *cmd)
 			free_strarray(path_split);
 			return (cmd_path);
 		}
-		//a completer;
 		i++;
 		free(cmd_path);
 	}
 	free_strarray(path_split);
 	return (NULL);
+}
+
+int		error_exec(char *cmd, int error)
+{
+		ft_putstr_fd("bash: ", 1);
+		ft_putstr_fd(cmd, 1);
+		if (error == 14)
+		{
+			ft_putendl_fd(": command not found", 1);
+			return (127);
+		}
+		ft_putstr_fd(": ", 1);
+		ft_putendl_fd(strerror(errno), 1);
+		return (127);
 }
 
 int		ft_execve(t_var *shell)
@@ -49,30 +62,30 @@ int		ft_execve(t_var *shell)
 	pid_t	child_pid;
 	int		wstatus;
 
-	if ((path = get_cmd_path(shell->path, shell->cmd[0])))
+	path = ft_strdup("");
+	if (shell->path[0])
 	{
-		child_pid = fork();
-		if (child_pid < 0)
-			return (-1);
-		else if (child_pid == 0)
-		{
-			signal(SIGINT, SIG_DFL); //necessaire ?
-			if (execve(path, shell->cmd, shell->env) == -1)
-				return (-1);
-			//-> besoin de parser le chemin absolu, il present dans la variable d'en PATH mais besoin de tester tous les chemins. stat(path, &file) ?
-		}
-		else
-		{
-			waitpid(child_pid, &wstatus, 0);
-			kill(child_pid, SIGTERM);
-			//a quoi ca sert de tuer le process ?
-		}
 		free(path);
-		return (1);
+		path = get_cmd_path(shell->path, shell->cmd[0]);
 	}
-	// ft_printf("bash: %s: command not found\n", shell->cmd[0]);
-	ft_putstr_fd("bash: %s: command not found\n", 1); //remplacer par printf quand j'aurais reussi a changer le Makefile
-	return (0);
+	child_pid = fork();
+	if (child_pid < 0)
+		return (-1);
+	else if (child_pid == 0)
+	{
+		shell->ret = 0;
+		if (execve(path, shell->cmd, shell->env) == -1)
+			shell->ret = error_exec(shell->cmd[0], errno);
+		exit(shell->ret);
+	}
+	else
+	{
+		waitpid(child_pid, &wstatus, 0);
+		shell->ret = WEXITSTATUS(wstatus);
+	}
+	if (path)
+		free(path);
+	return (1);
 }
 
 int		is_a_built(t_var *shell, char *cmd)

@@ -23,6 +23,7 @@
 # include <sys/wait.h>
 # include <signal.h>
 # include <sys/stat.h>
+# include <errno.h>
 
 typedef struct	s_var
 {
@@ -30,6 +31,7 @@ typedef struct	s_var
 	char	*path;
 	char	**cmd;
 	char	**env;
+	int		ret;
 }				t_var;
 
 typedef struct	s_env
@@ -53,9 +55,9 @@ void			sigint_handler(int signo);
  **fonctions builtin.c
 */
 
-int				ft_cd(t_var *shell, char **cmd);
-int				ft_pwd(t_var *shell);
-int				ft_echo(t_var *shell, char **cmd);
+void			ft_cd(t_var *shell, char **cmd);
+void			ft_pwd(t_var *shell);
+void			ft_echo(t_var *shell, char **cmd);
 
 /*
  **fonctions env_utils.c
@@ -89,7 +91,7 @@ int				ft_unset(t_var *shell, char **cmd);
 /*
  **fonctions ft_env.c
 */
-int				ft_env(t_var *shell, char **env);
+void			ft_env(t_var *shell, char **env);
 
 /*
  **fonctions ft_exit.c
@@ -100,6 +102,7 @@ int				ft_exit(t_var *shell, char **cmd);
  **fonctions list_utils.c
 */
 
+int				nb_arg(char **cmd);
 void			lstadd_value(t_list **list, void *value);
 
 /*
@@ -107,6 +110,7 @@ void			lstadd_value(t_list **list, void *value);
 */
 
 void			free_strarray(char **tab);
+void			free_envp(char **tab);
 
 int				ft_exec_cmd(t_var *shell);
 

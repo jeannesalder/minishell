@@ -51,7 +51,13 @@ int		ft_unset(t_var *shell, char **cmd)
 		{
 			if ((index = is_in_env(shell->env, tmp.name)))
 				shell->env = remove_env(shell->env, index);
+			if (strncmp(tmp.name, "PATH", 4) == 0)
+			{
+				free(shell->path);
+				shell->path = ft_strdup("\0");
+			}
 		}
+
 		free(tmp.name);
 		free(tmp.value);
 		i++;

@@ -12,6 +12,17 @@
 
 #include "./../includes/minishell.h"
 
+int		nb_arg(char **cmd)
+{
+	int i;
+
+	i = 0;
+	while (cmd[i])
+		i++;
+
+	return (i - 1);
+}
+
 void	lstadd_value(t_list **list, void *value)
 {
 	t_list *new;

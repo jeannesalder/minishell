@@ -12,8 +12,8 @@
 
 #include "./../includes/minishell.h"
 
-int	ft_pwd(t_var *shell)
+void	ft_pwd(t_var *shell)
 {
 	ft_putendl_fd(shell->pwd, 1);
-	return (0);
+	shell->ret = 1;
 }

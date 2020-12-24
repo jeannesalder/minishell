@@ -71,7 +71,6 @@ int		init_var(t_var *shell, char **envp)
 	shell->env = cpy_env(envp);
 	while (envp[i] != NULL && shell->path == NULL)
 	{
-		//	lstadd_value(&(shell->env_list), envp[i]); que si liste chainee
 		if (strncmp(envp[i], "PATH=", 5) == 0)
 			shell->path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
 		i++;

@@ -12,12 +12,12 @@
 
 #include "./../includes/minishell.h"
 
-int	ft_echo(t_var *shell, char **cmd)
+void	ft_echo(t_var *shell, char **cmd)
 {
 	int i;
 	int arg;
 
-	(void)shell;
+	shell->ret = 0;
 	i = 1;
 	arg = 0;
 	while (cmd[i] != NULL && !ft_memcmp(cmd[i], "-n", 3))
@@ -34,5 +34,4 @@ int	ft_echo(t_var *shell, char **cmd)
 	}
 	if (!arg)
 		ft_putchar_fd('\n', 1);
-	return (1);
 }
