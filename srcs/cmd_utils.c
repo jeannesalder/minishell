@@ -19,8 +19,14 @@ int		nb_arg(char **cmd)
 	i = 0;
 	while (cmd[i])
 		i++;
-
 	return (i - 1);
+}
+
+void	print_str_fd(char *s1, char *s2, char *s3, int fd)
+{
+	ft_putstr_fd(s1, fd);
+	ft_putstr_fd(s2, fd);
+	ft_putstr_fd(s3, fd);
 }
 
 void	lstadd_value(t_list **list, void *value)

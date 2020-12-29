@@ -12,21 +12,17 @@
 
 #include "./../includes/minishell.h"
 
-void	change_pwd(t_var *shell)
+void	change_oldpwd(t_var *shell)
 {
-	int index;
-	char *pwd;
-	char *oldpwd;
-	char *env;
+	int		index;
+	char	*oldpwd;
+	char	*env;
 
-	pwd = getcwd(NULL, 0);
-	free(shell->pwd);
-	shell->pwd = pwd;
 	if ((index = is_in_env(shell->env, "OLDPWD")))
 	{
 		if (is_in_env(shell->env, "PWD"))
 		{
-			oldpwd = get_varenv(shell->env, "PWD");
+			oldpwd = get_varenv(shell->env, "PWD=");
 			env = ft_strjoin("OLDPWD=", oldpwd);
 			free(oldpwd);
 		}
@@ -35,6 +31,18 @@ void	change_pwd(t_var *shell)
 		modify_env(shell->env, env, index);
 		free(env);
 	}
+}
+
+void	change_pwd(t_var *shell)
+{
+	int		index;
+	char	*pwd;
+	char	*env;
+
+	pwd = getcwd(NULL, 0);
+	free(shell->pwd);
+	shell->pwd = pwd;
+	change_oldpwd(shell);
 	if ((index = is_in_env(shell->env, "PWD")))
 	{
 		env = ft_strjoin("PWD=", pwd);
@@ -43,33 +51,39 @@ void	change_pwd(t_var *shell)
 	}
 }
 
-void		ft_cd(t_var *shell, char **cmd)
+char	*check_arg(char **env, char **cmd)
 {
 	int		nb_args;
-	char 	*path;
+	char	*path;
 
-	shell->ret = 1;
 	nb_args = nb_arg(cmd);
 	if (nb_args > 1)
 	{
 		ft_putendl_fd("bash: cd: too many arguments", 2);
-		return ;
+		return (NULL);
 	}
 	if (!nb_args)
 	{
-		if (!(path = get_varenv(shell->env, "HOME=")))
-		{
+		path = get_varenv(env, "HOME=");
+		if (!path)
 			ft_putendl_fd("bash: cd: HOME not set", 2);
-			return ;
-		}
 	}
 	else
 		path = cmd[1];
+	return (path);
+}
+
+void	ft_cd(t_var *shell, char **cmd)
+{
+	char	*path;
+
+	shell->ret = 1;
+	path = check_arg(shell->env, cmd);
+	if (!path)
+		return ;
 	if (chdir(path) == -1)
 	{
-		ft_putstr_fd("bash: cd: ", 2);
-		ft_putstr_fd(path, 2);
-		ft_putstr_fd(": ", 2);
+		print_str_fd("bash: cd: ", path, ": ", 2);
 		ft_putendl_fd(strerror(errno), 2);
 		if (cmd[1] == NULL)
 			free(path);

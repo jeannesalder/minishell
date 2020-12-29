@@ -7,7 +7,7 @@ DIR_LIB		= ./libft/
 LIBFT		= $(DIR_LIB)libft.a
 FT_PRT 		= ./libft/ft_printf/libftprintf.a
 
-SRCS		= $(DIR_SRCS)main.c $(DIR_SRCS)ft_cd.c $(DIR_SRCS)list_utils.c $(DIR_SRCS)env_utils.c $(DIR_SRCS)exec.c \
+SRCS		= $(DIR_SRCS)main.c $(DIR_SRCS)ft_cd.c $(DIR_SRCS)cmd_utils.c $(DIR_SRCS)env_utils.c $(DIR_SRCS)exec.c \
 			$(DIR_SRCS)ft_pwd.c $(DIR_SRCS)ft_echo.c $(DIR_SRCS)free_utils.c $(DIR_SRCS)ft_export.c $(DIR_SRCS)export_unset_utils.c \
 			$(DIR_SRCS)export_utils.c $(DIR_SRCS)ft_unset.c $(DIR_SRCS)ft_env.c $(DIR_SRCS)ft_exit.c
 

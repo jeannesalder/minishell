@@ -89,7 +89,7 @@ int		ft_export(t_var *shell, char **env, char **cmd)
 	while (cmd[i])
 	{
 		tmp = split_env(cmd[i]);
-		if ((is_valid_id(tmp.name, cmd[i])))
+		if ((is_valid_id(shell, tmp.name, cmd[i])))
 		{
 			if ((index = is_in_env(shell->env, tmp.name)) && tmp.content == 1)
 				modify_env(env, cmd[i], index);

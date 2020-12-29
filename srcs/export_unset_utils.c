@@ -39,16 +39,16 @@ int		is_in_env(char **env, char *name)
 	return (0);
 }
 
-int		error_id(char *arg)
+int		error_id(t_var *shell, char *arg)
 {
-	//modifier erreur retour ici ?
+	shell->ret = 1;
 	ft_putstr_fd("bash : export : ", 1);
 	ft_putstr_fd(arg, 1);
 	ft_putendl_fd(" : not a valid identifier", 1);
 	return (0);
 }
 
-int		is_valid_id(char *name, char *arg)
+int		is_valid_id(t_var *shell, char *name, char *arg)
 {
 	int	i;
 	int error;
@@ -56,11 +56,11 @@ int		is_valid_id(char *name, char *arg)
 	i = 0;
 	error = 0;
 	if (name[0] == 0 || (name[0] != '_' && !ft_isalpha(name[0])))
-		return (error_id(arg));
+		return (error_id(shell, arg));
 	while (name[i])
 	{
 		if (name[i] != '_' && !ft_isalnum(name[i]))
-			return (error_id(arg));
+			return (error_id(shell, arg));
 		i++;
 	}
 	return (1);

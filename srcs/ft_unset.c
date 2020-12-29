@@ -35,19 +35,20 @@ char	**remove_env(char **env, int index)
 	return (tab);
 }
 
-int		ft_unset(t_var *shell, char **cmd)
+void	ft_unset(t_var *shell, char **cmd)
 {
 	int		i;
 	int		index;
 	t_env	tmp;
 
 	i = 1;
+	shell->ret = 0;
 	while (cmd[i])
 	{
 		tmp = split_env(cmd[i]);
 		if (tmp.content)
-			error_id(cmd[i]);
-		else if ((is_valid_id(tmp.name, cmd[i])))
+			error_id(shell, cmd[i]);
+		else if ((is_valid_id(shell, tmp.name, cmd[i])))
 		{
 			if ((index = is_in_env(shell->env, tmp.name)))
 				shell->env = remove_env(shell->env, index);
@@ -57,10 +58,8 @@ int		ft_unset(t_var *shell, char **cmd)
 				shell->path = ft_strdup("\0");
 			}
 		}
-
 		free(tmp.name);
 		free(tmp.value);
 		i++;
 	}
-	return (0);
 }

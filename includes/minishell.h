@@ -72,8 +72,8 @@ t_env			split_env(char *var);
 */
 int				size_env(char **env);
 int				is_in_env(char **env, char *name);
-int				error_id(char *arg);
-int				is_valid_id(char *name, char *arg);
+int				error_id(t_var *shell, char *arg);
+int				is_valid_id(t_var *shell, char *name, char *arg);
 
 /*
  **fonctions ft_export.c
@@ -86,7 +86,7 @@ int				ft_export(t_var *shell, char **env, char **cmd);
  **fonctions ft_unset.c
 */
 
-int				ft_unset(t_var *shell, char **cmd);
+void			ft_unset(t_var *shell, char **cmd);
 
 /*
  **fonctions ft_env.c
@@ -99,10 +99,11 @@ void			ft_env(t_var *shell, char **env);
 int				ft_exit(t_var *shell, char **cmd);
 
 /*
- **fonctions list_utils.c
+ **fonctions cmd_utils.c
 */
 
 int				nb_arg(char **cmd);
+void			print_str_fd(char *s1, char *s2, char *s3, int fd);
 void			lstadd_value(t_list **list, void *value);
 
 /*
