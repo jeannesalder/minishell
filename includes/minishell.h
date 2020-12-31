@@ -14,7 +14,6 @@
 # define MINISHELL_H
 
 # include "libft.h"
-# include "ft_printf.h"
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
@@ -32,6 +31,7 @@ typedef struct s_var
 	char	**cmd;
 	char	**env;
 	int		ret;
+	int		fork;
 }				t_var;
 
 typedef struct s_env
@@ -40,6 +40,8 @@ typedef struct s_env
 	int		content;
 	char	*value;
 }				t_env;
+
+t_var	*g_shell;
 
 /*
  **fonctions main.c

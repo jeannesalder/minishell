@@ -69,9 +69,11 @@ int	init_var(t_var *shell, char **envp)
 
 	i = 0;
 	ft_bzero(shell, sizeof(t_var));
+	g_shell = shell;
 	shell->pwd = getcwd(NULL, 0);
 	shell->env = cpy_env(envp);
 	shell->ret = 0;
+	shell->fork = 0;
 	while (envp[i] != NULL && shell->path == NULL)
 	{
 		if (strncmp(envp[i], "PATH=", 5) == 0)
@@ -84,7 +86,15 @@ int	init_var(t_var *shell, char **envp)
 void	sigint_handler(int signo)
 {
 	(void)signo;
-	write(2, "\n", 1);
+	ft_putchar_fd('\n', 1);
+	if (g_shell->fork)
+		g_shell->ret = 130;
+		
+	else
+	{
+		g_shell->ret = 1;
+		ft_putchar_fd('>', 1);
+	}
 }
 
 int	main(int ac, char **av, char **envp)
@@ -95,9 +105,9 @@ int	main(int ac, char **av, char **envp)
 	(void)ac;
 	(void)av;
 	init_var(&shell, envp);
-	signal(SIGINT, sigint_handler);
 	while (1)
 	{
+		signal(SIGINT, sigint_handler);
 		input = ft_read_input();
 		shell.cmd = ft_split(input, ' ');
 		free(input);

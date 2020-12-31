@@ -38,6 +38,7 @@ void	exec(t_var *shell, pid_t child_pid, char *path)
 	{
 		waitpid(child_pid, &status, 0);
 		shell->ret = WEXITSTATUS(status);
+		shell->fork = 0;
 	}	
 }
 
@@ -53,6 +54,7 @@ void	ft_execve(t_var *shell)
 		path = get_cmd_path(shell->path, shell->cmd[0]);
 	}
 	child_pid = fork();
+	shell->fork = 1;
 	if (child_pid < 0)
 	{
 		shell->ret = 128;
@@ -80,6 +82,8 @@ int	is_a_built(t_var *shell, char *cmd)
 		ft_env(shell, shell->env);
 	else if (ft_memcmp(cmd, "exit", 5) == 0)
 		ft_exit(shell, shell->cmd);
+	else if (ft_memcmp(cmd, "ret", 4) == 0)
+		ft_putendl_fd(ft_itoa(shell->ret), 1);
 	else
 		return (0);
 	return (1);
