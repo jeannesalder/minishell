@@ -14,7 +14,7 @@
 
 static size_t	get_size(long int n)
 {
-	unsigned int count;
+	unsigned int	count;
 
 	count = 1;
 	if (n < 0)
@@ -30,7 +30,7 @@ static size_t	get_size(long int n)
 	return (count);
 }
 
-static void		recursion(long int n, char *s, unsigned int i)
+static void	recursion(long int n, char *s, unsigned int i)
 {
 	if (n < 0)
 	{
@@ -46,7 +46,7 @@ static void		recursion(long int n, char *s, unsigned int i)
 	}
 }
 
-char			*ft_itoa(int n)
+char	*ft_itoa(int n)
 {
 	char		*s;
 	size_t		size;
@@ -54,7 +54,8 @@ char			*ft_itoa(int n)
 
 	nbr = (long int)n;
 	size = get_size(nbr);
-	if (!(s = ft_calloc(size + 1, sizeof(char))))
+	s = ft_calloc(size + 1, sizeof(char));
+	if (!s)
 		return (NULL);
 	recursion(nbr, s, size - 1);
 	return (s);

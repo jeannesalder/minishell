@@ -14,7 +14,7 @@
 
 static void	free_tab(char **tab)
 {
-	size_t i;
+	size_t	i;
 
 	i = 0;
 	while (tab[i])
@@ -27,8 +27,8 @@ static void	free_tab(char **tab)
 
 static int	count_words(char const *s, char c)
 {
-	size_t i;
-	size_t count;
+	size_t	i;
+	size_t	count;
 
 	i = 0;
 	count = 0;
@@ -62,7 +62,8 @@ static char	**cut_words(char **tab, char const *s, char c)
 			i++;
 		if (i > start)
 		{
-			if (!(tab[a] = ft_substr(s, start, i - start)))
+			tab[a] = ft_substr(s, start, i - start);
+			if (!tab[a])
 			{
 				free_tab(&tab[a]);
 				return (0);
@@ -73,7 +74,7 @@ static char	**cut_words(char **tab, char const *s, char c)
 	return (tab);
 }
 
-char		**ft_split(char const *s, char c)
+char	**ft_split(char const *s, char c)
 {
 	unsigned int	count;
 	char			**tab;
@@ -81,7 +82,8 @@ char		**ft_split(char const *s, char c)
 	if (s == 0)
 		return (0);
 	count = count_words(s, c);
-	if (!(tab = ft_calloc(count + 1, sizeof(char *))))
+	tab = ft_calloc(count + 1, sizeof(char *));
+	if (!tab)
 		return (NULL);
 	tab = cut_words(tab, s, c);
 	return (tab);

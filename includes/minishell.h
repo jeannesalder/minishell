@@ -25,7 +25,7 @@
 # include <sys/stat.h>
 # include <errno.h>
 
-typedef struct	s_var
+typedef struct s_var
 {
 	char	*pwd;
 	char	*path;
@@ -34,7 +34,7 @@ typedef struct	s_var
 	int		ret;
 }				t_var;
 
-typedef struct	s_env
+typedef struct s_env
 {
 	char	*name;
 	int		content;
@@ -46,7 +46,7 @@ typedef struct	s_env
 */
 
 char			*ft_cat(char *input, char c);
-char			*ft_read_input();
+char			*ft_read_input(void);
 char			*get_path(char **envp);
 char			*get_cmd_path(char *path, char *cmd);
 void			sigint_handler(int signo);
@@ -113,7 +113,6 @@ void			lstadd_value(t_list **list, void *value);
 void			free_multiple(void *s1, void *s2, void *s3, void *s4);
 void			free_strarray(char **tab);
 
-
 int				ft_exec_cmd(t_var *shell);
 
 /*
@@ -122,5 +121,5 @@ int				ft_exec_cmd(t_var *shell);
 
 void			modify_env(char **env, char *cmd, int index);
 char			**add_env(char **env, char *cmd);
-
+int				is_in_order(const char *s1, const char *s2);
 #endif

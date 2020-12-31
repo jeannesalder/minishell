@@ -12,7 +12,7 @@
 
 #include "./../includes/minishell.h"
 
-int		size_env(char **env)
+int	size_env(char **env)
 {
 	int	size;
 
@@ -22,7 +22,7 @@ int		size_env(char **env)
 	return (size);
 }
 
-int		is_in_env(char **env, char *name)
+int	is_in_env(char **env, char *name)
 {
 	int	i;
 	int	size;
@@ -31,15 +31,15 @@ int		is_in_env(char **env, char *name)
 	size = ft_strlen(name);
 	while (env[i])
 	{
-		if (!ft_strncmp(env[i], name, size) && \
-			(!env[i][size] || env[i][size] == '='))
+		if (!ft_strncmp(env[i], name, size)
+			&& (!env[i][size] || env[i][size] == '='))
 			return (i);
 		i++;
 	}
 	return (0);
 }
 
-int		error_id(t_var *shell, char *arg)
+int	error_id(t_var *shell, char *arg)
 {
 	shell->ret = 1;
 	ft_putstr_fd("bash : export : ", 1);
@@ -48,10 +48,10 @@ int		error_id(t_var *shell, char *arg)
 	return (0);
 }
 
-int		is_valid_id(t_var *shell, char *name, char *arg)
+int	is_valid_id(t_var *shell, char *name, char *arg)
 {
 	int	i;
-	int error;
+	int	error;
 
 	i = 0;
 	error = 0;

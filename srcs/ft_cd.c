@@ -18,7 +18,8 @@ void	change_oldpwd(t_var *shell)
 	char	*oldpwd;
 	char	*env;
 
-	if ((index = is_in_env(shell->env, "OLDPWD")))
+	index = is_in_env(shell->env, "OLDPWD");
+	if (index)
 	{
 		if (is_in_env(shell->env, "PWD"))
 		{
@@ -43,7 +44,8 @@ void	change_pwd(t_var *shell)
 	free(shell->pwd);
 	shell->pwd = pwd;
 	change_oldpwd(shell);
-	if ((index = is_in_env(shell->env, "PWD")))
+	index = is_in_env(shell->env, "PWD");
+	if (index)
 	{
 		env = ft_strjoin("PWD=", pwd);
 		modify_env(shell->env, env, index);

@@ -12,13 +12,6 @@
 
 #include "./../includes/minishell.h"
 
-int		is_in_order(const char *s1, const char *s2)
-{
-	if (ft_memcmp(s1, s2, ft_strlen(s1) + 1) <= 0)
-		return (1);
-	return (0);
-}
-
 char	**sort_env(char **cpy)
 {
 	int		i;
@@ -78,6 +71,16 @@ void	change_path(t_var *shell, t_env tmp)
 	}
 }
 
+int	no_arg(char **env, char *cmd)
+{
+	if (!cmd)
+	{
+		print_env(sort_env(cpy_env(env)));
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_export(t_var *shell, char **env, char **cmd)
 {
 	int		i;
@@ -85,18 +88,16 @@ void	ft_export(t_var *shell, char **env, char **cmd)
 	t_env	tmp;
 
 	shell->ret = 0;
-	if (!(cmd[1]))
-	{
-		print_env(sort_env(cpy_env(env)));
+	if (no_arg(env, cmd[1]))
 		return ;
-	}
 	i = 1;
 	while (cmd[i])
 	{
 		tmp = split_env(cmd[i]);
 		if ((is_valid_id(shell, tmp.name, cmd[i])))
 		{
-			if ((index = is_in_env(shell->env, tmp.name)) && tmp.content == 1)
+			index = is_in_env(shell->env, tmp.name);
+			if (index && tmp.content == 1)
 				modify_env(env, cmd[i], index);
 			if (index == 0)
 				shell->env = add_env(shell->env, cmd[i]);

@@ -12,7 +12,7 @@
 
 #include "./../includes/minishell.h"
 
-int		is_arg(char *cmd)
+int	is_arg(char *cmd)
 {
 	int	i;
 
@@ -30,8 +30,8 @@ int		is_arg(char *cmd)
 
 void	ft_echo(t_var *shell, char **cmd)
 {
-	int i;
-	int arg;
+	int	i;
+	int	arg;
 
 	shell->ret = 0;
 	i = 1;

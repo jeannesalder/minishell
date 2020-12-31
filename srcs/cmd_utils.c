@@ -41,9 +41,9 @@ char	*get_cmd_path(char *path, char *cmd)
 	return (NULL);
 }
 
-int		nb_arg(char **cmd)
+int	nb_arg(char **cmd)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (cmd[i])

@@ -36,7 +36,8 @@ char	**cpy_env(char **env)
 	i = 0;
 	while (env[i])
 		i++;
-	if (!(tab = ft_calloc(sizeof(char*), i + 1)))
+	tab = ft_calloc(sizeof(char*), i + 1);
+	if (!tab)
 		return (NULL);
 	i = 0;
 	while (env[i])
@@ -52,7 +53,8 @@ t_env	split_env(char *var)
 	int		index;
 	t_env	dest;
 
-	if (!(index = ft_charset('=', var)))
+	index = ft_charset('=', var);
+	if (!index)
 	{
 		dest.name = ft_strdup(var);
 		dest.content = 0;

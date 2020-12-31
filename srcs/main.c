@@ -20,7 +20,8 @@ char	*ft_cat(char *input, char c)
 	i = 0;
 	while (input[i])
 		i++;
-	if (!(str = malloc((i + 2) * sizeof(char))))
+	str = malloc((i + 2) *sizeof(char));
+	if (!str)
 		return (NULL);
 	i = 0;
 	while (input[i])
@@ -42,7 +43,8 @@ char	*ft_read_input(void)
 
 	input = NULL;
 	write(1, "> ", 2);
-	if (!(input = ft_calloc(sizeof(char), 1)))
+	input = ft_calloc(sizeof(char), 1);
+	if (!input)
 		return (NULL);
 	input[0] = 0;
 	ret = read(0, &c, 1);
@@ -61,9 +63,9 @@ char	*ft_read_input(void)
 	return (input);
 }
 
-int		init_var(t_var *shell, char **envp)
+int	init_var(t_var *shell, char **envp)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	ft_bzero(shell, sizeof(t_var));
@@ -85,7 +87,7 @@ void	sigint_handler(int signo)
 	write(2, "\n", 1);
 }
 
-int		main(int ac, char **av, char **envp)
+int	main(int ac, char **av, char **envp)
 {
 	char	*input;
 	t_var	shell;

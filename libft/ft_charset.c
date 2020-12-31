@@ -12,7 +12,7 @@
 
 int	ft_charset(char c, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (str[i] != 0)

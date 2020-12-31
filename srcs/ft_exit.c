@@ -12,9 +12,9 @@
 
 #include "./../includes/minishell.h"
 
-int		only_digit(char *str)
+int	only_digit(char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (str[i] == '_' || str[i] == '+')

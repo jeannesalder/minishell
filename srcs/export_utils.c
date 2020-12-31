@@ -63,3 +63,10 @@ char	**add_env(char **env, char *cmd)
 	free_strarray(env);
 	return (tab);
 }
+
+int	is_in_order(const char *s1, const char *s2)
+{
+	if (ft_memcmp(s1, s2, ft_strlen(s1) + 1) <= 0)
+		return (1);
+	return (0);
+}

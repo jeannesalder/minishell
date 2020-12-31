@@ -50,7 +50,8 @@ void	ft_unset(t_var *shell, char **cmd)
 			error_id(shell, cmd[i]);
 		else if ((is_valid_id(shell, tmp.name, cmd[i])))
 		{
-			if ((index = is_in_env(shell->env, tmp.name)))
+			index = is_in_env(shell->env, tmp.name);
+			if (index)
 				shell->env = remove_env(shell->env, index);
 			if (strncmp(tmp.name, "PATH", 4) == 0)
 			{
@@ -58,8 +59,7 @@ void	ft_unset(t_var *shell, char **cmd)
 				shell->path = ft_strdup("\0");
 			}
 		}
-		free(tmp.name);
-		free(tmp.value);
+		free_multiple(tmp.name, tmp.value, NULL, NULL);
 		i++;
 	}
 }

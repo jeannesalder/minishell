@@ -12,7 +12,7 @@
 
 #include "./../includes/minishell.h"
 
-int		error_exec(char *cmd, int error)
+int	error_exec(char *cmd, int error)
 {
 	print_str_fd("bash: ", cmd, NULL, 2);
 	if (error == 14)
@@ -64,7 +64,7 @@ void	ft_execve(t_var *shell)
 		free(path);
 }
 
-int		is_a_built(t_var *shell, char *cmd)
+int	is_a_built(t_var *shell, char *cmd)
 {
 	if (ft_memcmp(cmd, "echo", 5) == 0)
 		ft_echo(shell, shell->cmd);
@@ -85,7 +85,7 @@ int		is_a_built(t_var *shell, char *cmd)
 	return (1);
 }
 
-int		ft_exec_cmd(t_var *shell)
+int	ft_exec_cmd(t_var *shell)
 {
 	if (!(is_a_built(shell, shell->cmd[0])))
 		ft_execve(shell);

@@ -23,7 +23,7 @@ static size_t	isset(char const *set, char c)
 	return (0);
 }
 
-char			*ft_strtrim(char *s1, char const *set)
+char	*ft_strtrim(char *s1, char const *set)
 {
 	size_t			start;
 	size_t			size;

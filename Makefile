@@ -5,7 +5,6 @@ DIR_INCLUDES	= ./includes/
 DIR_LIB		= ./libft/
 
 LIBFT		= $(DIR_LIB)libft.a
-FT_PRT 		= ./libft/ft_printf/libftprintf.a
 
 SRCS		= $(DIR_SRCS)main.c $(DIR_SRCS)ft_cd.c $(DIR_SRCS)cmd_utils.c $(DIR_SRCS)env_utils.c $(DIR_SRCS)exec.c \
 			$(DIR_SRCS)ft_pwd.c $(DIR_SRCS)ft_echo.c $(DIR_SRCS)free_utils.c $(DIR_SRCS)ft_export.c $(DIR_SRCS)export_unset_utils.c \
@@ -27,8 +26,7 @@ CFLAGS			= -Wall -Werror -Wextra
 $(NAME):	$(OBJS) $(DIR_INCLUDES)*.h
 			@make bonus -C $(DIR_LIB)
 			@cp $(LIBFT) ./$(NAME)
-			@cp $(FT_PRT) ./$(NAME)
-			$(CC) $(CFLAGS) $(DIR_SRCS)*.o -o $(NAME) $(LIBFT) $(FT_PRT)
+			$(CC) $(CFLAGS) $(DIR_SRCS)*.o -o $(NAME) $(LIBFT)
 
 
 all:		$(NAME)

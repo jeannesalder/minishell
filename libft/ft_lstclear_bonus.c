@@ -22,9 +22,9 @@ static void	recurrence(t_list *lst, void (*del)(void *))
 	}
 }
 
-void		ft_lstclear(t_list **lst, void (*del)(void *))
+void	ft_lstclear(t_list **lst, void (*del)(void *))
 {
-	t_list *tmp;
+	t_list	*tmp;
 
 	tmp = *lst;
 	if (tmp)
