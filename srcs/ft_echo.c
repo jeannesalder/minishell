@@ -12,6 +12,22 @@
 
 #include "./../includes/minishell.h"
 
+int		is_arg(char *cmd)
+{
+	int	i;
+
+	if (cmd[0] != '-')
+		return (0);
+	i = 1;
+	while (cmd[i])
+	{
+		if (cmd[i] != 'n')
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 void	ft_echo(t_var *shell, char **cmd)
 {
 	int i;
@@ -20,7 +36,7 @@ void	ft_echo(t_var *shell, char **cmd)
 	shell->ret = 0;
 	i = 1;
 	arg = 0;
-	while (cmd[i] != NULL && !ft_memcmp(cmd[i], "-n", 3))
+	while (cmd[i] != NULL && is_arg(cmd[i]))
 	{
 		arg = 1;
 		i++;

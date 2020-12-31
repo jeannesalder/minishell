@@ -12,6 +12,35 @@
 
 #include "./../includes/minishell.h"
 
+char	*get_cmd_path(char *path, char *cmd)
+{
+	int			i;
+	char		*tmp;
+	char		*cmd_path;
+	char		**path_split;
+	struct stat	file;
+
+	i = 0;
+	if (ft_charset('/', cmd))
+		return (ft_strdup(cmd));
+	path_split = ft_split(path, ':');
+	while (path_split[i] != NULL)
+	{
+		tmp = ft_strjoin(path_split[i], "/");
+		cmd_path = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (stat(cmd_path, &file) == 0)
+		{
+			free_strarray(path_split);
+			return (cmd_path);
+		}
+		i++;
+		free(cmd_path);
+	}
+	free_strarray(path_split);
+	return (NULL);
+}
+
 int		nb_arg(char **cmd)
 {
 	int i;
@@ -27,21 +56,4 @@ void	print_str_fd(char *s1, char *s2, char *s3, int fd)
 	ft_putstr_fd(s1, fd);
 	ft_putstr_fd(s2, fd);
 	ft_putstr_fd(s3, fd);
-}
-
-void	lstadd_value(t_list **list, void *value)
-{
-	t_list *new;
-	t_list *last;
-
-	new = malloc(sizeof(new)); //utiliser bzero ? Proteger malloc.
-	new->content = value;
-	new->next = NULL;
-	if (!(*list))
-		*list = new;
-	else
-	{
-		last = ft_lstlast(*list);
-		last->next = new;
-	}
 }

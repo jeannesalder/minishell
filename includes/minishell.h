@@ -80,7 +80,7 @@ int				is_valid_id(t_var *shell, char *name, char *arg);
 */
 
 char			**sort_env(char **env);
-int				ft_export(t_var *shell, char **env, char **cmd);
+void			ft_export(t_var *shell, char **env, char **cmd);
 
 /*
  **fonctions ft_unset.c
@@ -96,7 +96,7 @@ void			ft_env(t_var *shell, char **env);
 /*
  **fonctions ft_exit.c
 */
-int				ft_exit(t_var *shell, char **cmd);
+void			ft_exit(t_var *shell, char **cmd);
 
 /*
  **fonctions cmd_utils.c
@@ -110,8 +110,9 @@ void			lstadd_value(t_list **list, void *value);
  **fonctions free_utils.c
 */
 
+void			free_multiple(void *s1, void *s2, void *s3, void *s4);
 void			free_strarray(char **tab);
-void			free_envp(char **tab);
+
 
 int				ft_exec_cmd(t_var *shell);
 

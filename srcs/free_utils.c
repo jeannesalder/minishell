@@ -12,6 +12,18 @@
 
 #include "./../includes/minishell.h"
 
+void	free_multiple(void *s1, void *s2, void *s3, void *s4)
+{
+	if (s1)
+		free(s1);
+	if (s2)
+		free(s2);
+	if (s3)
+		free(s3);
+	if (s4)
+		free(s4);
+}
+
 void	free_strarray(char **tab)
 {
 	int i;

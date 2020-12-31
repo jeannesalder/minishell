@@ -39,7 +39,7 @@ void	free_and_exit(t_var *shell, int nb_exit)
 	exit(nb_exit);
 }
 
-int		ft_exit(t_var *shell, char **cmd)
+void	ft_exit(t_var *shell, char **cmd)
 {
 	int		nb_args;
 
@@ -49,17 +49,15 @@ int		ft_exit(t_var *shell, char **cmd)
 	if (nb_args > 1)
 	{
 		ft_putendl_fd("bash: exit: too many arguments", 2);
-		return (1);
+		return ;
 	}
 	if (!cmd[1])
 		free_and_exit(shell, 0);
 	if (!only_digit(cmd[1]))
 	{
-		ft_putstr_fd("bash: exit: ", 2);
-		ft_putstr_fd(cmd[1], 2);
-		ft_putendl_fd(": numeric argument required", 2);
+		print_str_fd("bash: exit: ", cmd[1], ": numeric argument required", 2);
+		ft_putchar_fd('\n', 2);
 		free_and_exit(shell, 2);
 	}
 	free_and_exit(shell, ft_atoi(cmd[1]));
-	return (1);
 }

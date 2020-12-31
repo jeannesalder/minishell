@@ -69,6 +69,7 @@ int		init_var(t_var *shell, char **envp)
 	ft_bzero(shell, sizeof(t_var));
 	shell->pwd = getcwd(NULL, 0);
 	shell->env = cpy_env(envp);
+	shell->ret = 0;
 	while (envp[i] != NULL && shell->path == NULL)
 	{
 		if (strncmp(envp[i], "PATH=", 5) == 0)
@@ -81,8 +82,7 @@ int		init_var(t_var *shell, char **envp)
 void	sigint_handler(int signo)
 {
 	(void)signo;
-	write(1, "En construction...", 18);
-	//reset shell : free input et ft_read ?
+	write(2, "\n", 1);
 }
 
 int		main(int ac, char **av, char **envp)
@@ -96,14 +96,10 @@ int		main(int ac, char **av, char **envp)
 	signal(SIGINT, sigint_handler);
 	while (1)
 	{
-		input = ft_read_input(); //segfault dans le cas d'un retour a la ligne seul
+		input = ft_read_input();
 		shell.cmd = ft_split(input, ' ');
 		free(input);
 		ft_exec_cmd(&shell);
 		free_strarray(shell.cmd);
 	}
-	// Inutile ici non ?
-	// free(shell.pwd);
-	// free(shell.path);
-	// free_strarray(shell.env);
 }

@@ -55,16 +55,9 @@ void	print_env(char **env)
 		tmp = split_env(env[i]);
 		if (ft_strncmp(tmp.name, "_", 2) != 0)
 		{
-			// ft_print("declare -x %s", tmp.name);
-			ft_putstr_fd("declare -x ", 1); //a remplacer par le printf
-			ft_putstr_fd(tmp.name, 1);
+			print_str_fd("declare -x ", tmp.name, NULL, 1);
 			if (tmp.content == 1)
-				// ft_print("=\"%s\"", tmp.value);
-			{
-				ft_putstr_fd("=\"", 1); //a remplacer par le printf
-				ft_putstr_fd(tmp.value, 1);
-				ft_putstr_fd("\"", 1);
-			}
+				print_str_fd("=\"", tmp.value, "\"", 1);
 			ft_putchar_fd('\n', 1);
 		}
 		free(tmp.name);
@@ -74,16 +67,28 @@ void	print_env(char **env)
 	free_strarray(env);
 }
 
-int		ft_export(t_var *shell, char **env, char **cmd)
+void	change_path(t_var *shell, t_env tmp)
+{
+	if (strncmp(tmp.name, "PATH", 4) == 0 && tmp.content)
+	{
+		free(shell->path);
+		shell->path = tmp.value;
+		if (!tmp.value[0])
+			shell->path = ft_strdup("\0");
+	}
+}
+
+void	ft_export(t_var *shell, char **env, char **cmd)
 {
 	int		i;
 	int		index;
 	t_env	tmp;
 
+	shell->ret = 0;
 	if (!(cmd[1]))
 	{
 		print_env(sort_env(cpy_env(env)));
-		return (0); //gerer retour
+		return ;
 	}
 	i = 1;
 	while (cmd[i])
@@ -95,17 +100,9 @@ int		ft_export(t_var *shell, char **env, char **cmd)
 				modify_env(env, cmd[i], index);
 			if (index == 0)
 				shell->env = add_env(shell->env, cmd[i]);
-			if (strncmp(tmp.name, "PATH", 4) == 0 && tmp.content)
-			{
-				free(shell->path);
-				shell->path = tmp.value;
-				if (!tmp.value[0])
-					shell->path = ft_strdup("\0");
-			}
+			change_path(shell, tmp);
 		}
-		free(tmp.name);
-		free(tmp.value);
+		free_multiple(tmp.name, tmp.value, NULL, NULL);
 		i++;
 	}
-	return (0);
 }
