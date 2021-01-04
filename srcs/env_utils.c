@@ -54,17 +54,22 @@ t_env	split_env(char *var)
 	t_env	dest;
 
 	index = ft_charset('=', var);
+	dest.content = 1;
+	dest.append = 0;
 	if (!index)
 	{
-		dest.name = ft_strdup(var);
 		dest.content = 0;
+		dest.name = ft_strdup(var);
 		dest.value = ft_strdup("");
+		return (dest);
 	}
-	else
+	dest.value = ft_substr(var, index, ft_strlen(var) - index);
+	if (index > 1 && var[index - 2] == '+')
 	{
-		dest.content = 1;
-		dest.name = ft_substr(var, 0, index - 1);
-		dest.value = ft_substr(var, index, ft_strlen(var) - index);
+		dest.append = 1;
+		dest.name = ft_substr(var, 0, index - 2);
+		return (dest);
 	}
+	dest.name = ft_substr(var, 0, index - 1);
 	return (dest);
 }

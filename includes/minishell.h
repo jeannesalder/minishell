@@ -38,6 +38,7 @@ typedef struct s_env
 {
 	char	*name;
 	int		content;
+	int		append;
 	char	*value;
 }				t_env;
 
@@ -121,7 +122,7 @@ int				ft_exec_cmd(t_var *shell);
  **fonctions export_utils.c
 */
 
-void			modify_env(char **env, char *cmd, int index);
-char			**add_env(char **env, char *cmd);
+void			modify_env(char **env, char *cmd, int index, t_env var);
+char			**add_env(char **env, char *cmd, t_env var);
 int				is_in_order(const char *s1, const char *s2);
 #endif

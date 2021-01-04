@@ -39,16 +39,24 @@ char	*remove_quotes(char *str)
 	return (new);
 }
 
-void	modify_env(char **env, char *cmd, int index)
+void	modify_env(char **env, char *cmd, int index, t_env var)
 {
+	char *dest;
+	if (var.append)
+		dest = ft_strjoin(env[index], var.value);
+	else
+		dest = ft_strdup(cmd);
 	free(env[index]);
-	env[index] = remove_quotes(cmd);
+	env[index] = remove_quotes(dest);
+	free(dest);
 }
 
-char	**add_env(char **env, char *cmd)
+char	**add_env(char **env, char *cmd, t_env var)
 {
 	int		i;
 	int		size;
+	char	*tmp1;
+	char	*tmp2;
 	char	**tab;
 
 	i = 0;
@@ -59,7 +67,16 @@ char	**add_env(char **env, char *cmd)
 		tab[i] = ft_strdup(env[i]);
 		i++;
 	}
-	tab[i] = remove_quotes(cmd);
+	if (var.append)
+	{
+		tmp1 = ft_strjoin(var.name,"=");
+		tmp2 = ft_strjoin(tmp1, var.value);
+		tab[i] = remove_quotes(tmp2);
+		free(tmp1);
+		free(tmp2);
+	}
+	else
+		tab[i] = remove_quotes(cmd);
 	free_strarray(env);
 	return (tab);
 }

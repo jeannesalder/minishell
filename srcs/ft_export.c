@@ -98,9 +98,9 @@ void	ft_export(t_var *shell, char **env, char **cmd)
 		{
 			index = is_in_env(shell->env, tmp.name);
 			if (index && tmp.content == 1)
-				modify_env(env, cmd[i], index);
+				modify_env(env, cmd[i], index, tmp);
 			if (index == 0)
-				shell->env = add_env(shell->env, cmd[i]);
+				shell->env = add_env(shell->env, cmd[i], tmp);
 			change_path(shell, tmp);
 		}
 		free_multiple(tmp.name, tmp.value, NULL, NULL);
