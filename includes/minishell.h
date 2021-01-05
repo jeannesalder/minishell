@@ -31,7 +31,7 @@ typedef struct s_var
 	char	**cmd;
 	char	**env;
 	int		ret;
-	int		fork;
+	int		fork;	
 }				t_var;
 
 typedef struct s_env
@@ -42,14 +42,23 @@ typedef struct s_env
 	char	*value;
 }				t_env;
 
+typedef struct          s_mini
+{
+        char    *str;
+        char    **cmds;
+        int             nbtok;
+        char    **toks;
+}                                       t_mini;
+
+
 t_var	*g_shell;
+char 	*g_read;
 
 /*
  **fonctions main.c
 */
 
-char			*ft_cat(char *input, char c);
-char			*ft_read_input(void);
+void			display(char **env);
 char			*get_path(char **envp);
 char			*get_cmd_path(char *path, char *cmd);
 void			sigint_handler(int signo);
@@ -125,4 +134,39 @@ int				ft_exec_cmd(t_var *shell);
 void			modify_env(char **env, char *cmd, int index, t_env var);
 char			**add_env(char **env, char *cmd, t_env var);
 int				is_in_order(const char *s1, const char *s2);
+
+/*
+ **fonctions parsing.c
+*/
+void                            parsing(t_mini *mini, t_var *shell);
+int                                     s_error(t_mini *mini);
+int                                     q_error(t_mini *mini, char c1, char c2);
+
+/*
+ **fonctions utils.c
+*/
+void                            free_table(char **table);
+char                            *ft_strduplen(char *str, int len);
+void                            ft_addchr(char **str, char c);
+char                            quote_and_semi(char quote, char c);
+
+/*
+ **fonctions tokens.c
+*/
+int                                     nb_tokens(char *str);
+void                            set_tokens(char **toks, char *str, int nbtok);
+int                                     len_token(char *str, int i);
+int                                     len_quote(char *str, char c);
+
+/*
+ **fonctions rm.c
+*/
+void                            rm_char(char **str, int j);
+void                            rm_token(char **str);
+
+/*
+ **fonctions split_semi.c
+*/
+char            **split_semi(char const *s, char c);
+
 #endif

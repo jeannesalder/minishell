@@ -35,18 +35,17 @@ char	*ft_cat(char *input, char c)
 	return (str);
 }
 
-char	*ft_read_input(void)
+char	*ft_read_input(char **env)
 {
 	int		ret;
 	char	c;
-	char	*input;
 
-	input = NULL;
-	write(1, "> ", 2);
-	input = ft_calloc(sizeof(char), 1);
-	if (!input)
+	g_read = NULL;
+	display(env);
+	g_read = ft_calloc(sizeof(char), 1);
+	if (!g_read)
 		return (NULL);
-	input[0] = 0;
+	g_read[0] = 0;
 	ret = read(0, &c, 1);
 	if (ret == 0)
 	{
@@ -55,15 +54,35 @@ char	*ft_read_input(void)
 	}
 	while (c != '\n')
 	{
-		input = ft_cat(input, c);
+		g_read = ft_cat(g_read, c);
 		ret = read(0, &c, 1);
 	}
-	if (ret == -1 || input == NULL)
+	if (ret == -1 || g_read == NULL)
 		return (NULL);
-	return (input);
+	return (g_read);
 }
 
-int	init_var(t_var *shell, char **envp)
+void    display(char **envp)
+{
+        char *home;
+        char *path;
+        char cwd[4097];
+
+        home = get_varenv(envp, "HOME");
+        getcwd(cwd, 4096);
+        if (ft_memcmp(cwd, home, ft_strlen(home)))
+                path = ft_strdup(cwd);
+        else
+                path = ft_strjoin("~", cwd + ft_strlen(home));
+        write(2, "\033[1;32mminishell@JGONFROY-JSAGUEZ\033[0;0m", 39);
+        write(2, ":", 1);
+        ft_putstr_fd(path, 2);
+        write(2, ": ", 2);
+        free(path);
+	free(home);
+}
+
+void	init_struct(t_var *shell, t_mini **mini, char **envp)
 {
 	int	i;
 
@@ -80,38 +99,39 @@ int	init_var(t_var *shell, char **envp)
 			shell->path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
 		i++;
 	}
-	return (1);
+        (*mini) = (t_mini *)malloc(sizeof(t_mini));
+        (*mini)->nbtok = 0;
+        (*mini)->toks = 0;
+        (*mini)->str = 0;
 }
 
 void	sigint_handler(int signo)
 {
 	(void)signo;
+	free(g_read);
+ 	g_read = ft_strdup("\0");
 	ft_putchar_fd('\n', 1);
 	if (g_shell->fork)
 		g_shell->ret = 130;
-		
 	else
 	{
 		g_shell->ret = 1;
-		ft_putchar_fd('>', 1);
+		display(g_shell->env);
 	}
 }
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*input;
 	t_var	shell;
+	t_mini	*mini;
 
 	(void)ac;
 	(void)av;
-	init_var(&shell, envp);
+	init_struct(&shell, &mini,  envp);
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
-		input = ft_read_input();
-		shell.cmd = ft_split(input, ' ');
-		free(input);
-		ft_exec_cmd(&shell);
-		free_strarray(shell.cmd);
+		mini->str = ft_read_input(shell.env);
+		parsing(mini, &shell);
 	}
 }

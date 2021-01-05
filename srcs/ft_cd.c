@@ -12,6 +12,12 @@
 
 #include "./../includes/minishell.h"
 
+void	change_env(char **env, char *path, int index)
+{
+	free(env[index]);
+	env[index] = ft_strdup(path);
+}
+
 void	change_oldpwd(t_var *shell)
 {
 	int		index;
@@ -29,7 +35,7 @@ void	change_oldpwd(t_var *shell)
 		}
 		else
 			env = ft_strdup("OLDPWD");
-		modify_env(shell->env, env, index);
+		change_env(shell->env, env, index);
 		free(env);
 	}
 }
@@ -48,7 +54,7 @@ void	change_pwd(t_var *shell)
 	if (index)
 	{
 		env = ft_strjoin("PWD=", pwd);
-		modify_env(shell->env, env, index);
+		change_env(shell->env, env, index);
 		free(env);
 	}
 }
