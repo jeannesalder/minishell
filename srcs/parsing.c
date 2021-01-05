@@ -70,7 +70,7 @@ void		parsing(t_mini *mini, t_var *shell)
 	i = 0;
 	while (mini->cmds[i])
 	{
-		//check_env(&(mini->cmds[i]), mini);Modification par rapport a backslash et variable d'environnement
+		//value_env(&(shell, mini->cmds[i]));
 		mini->nbtok = nb_tokens(mini->cmds[i]);
 		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
 		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
