@@ -109,7 +109,7 @@ void			ft_env(t_var *shell, char **env);
 /*
  **fonctions ft_exit.c
 */
-void			free_and_exit(t_var *shell, int nb_exit);
+void			free_and_exit(t_var *shell, int nb_exit, int eof);
 void			ft_exit(t_var *shell, char **cmd);
 
 /*

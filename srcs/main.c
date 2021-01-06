@@ -48,15 +48,7 @@ char	*ft_read_input(char **env)
 	g_read[0] = 0;
 	ret = read(0, &c, 1);
 	if (ret == 0)
-	{
-		write(1, "exit\n", 5);
-		free(g_read);
-		free(g_shell->pwd);
-		free(g_shell->path);
-		free_strarray(g_shell->env);
-		free(g_shell->mini);
-		exit(0);
-	}
+		free_and_exit(g_shell, 0, 1);
 	while (c != '\n')
 	{
 		g_read = ft_cat(g_read, c);
