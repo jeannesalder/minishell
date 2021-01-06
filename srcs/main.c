@@ -48,10 +48,7 @@ char	*ft_read_input(char **env)
 	g_read[0] = 0;
 	ret = read(0, &c, 1);
 	if (ret == 0)
-	{
-		write(1, "\n", 1);
-		exit(0);
-	}
+		free_and_exit(g_shell, 0, 1);
 	while (c != '\n')
 	{
 		g_read = ft_cat(g_read, c);
@@ -103,6 +100,7 @@ void	init_struct(t_var *shell, t_mini **mini, char **envp)
         (*mini)->nbtok = 0;
         (*mini)->toks = 0;
         (*mini)->str = 0;
+	shell->mini = (*mini);
 }
 
 void	sigint_handler(int signo)
@@ -110,7 +108,7 @@ void	sigint_handler(int signo)
 	(void)signo;
 	free(g_read);
  	g_read = ft_strdup("\0");
-	ft_putchar_fd('\n', 1);
+	write(1, "\n", 1);
 	if (g_shell->fork)
 		g_shell->ret = 130;
 	else
