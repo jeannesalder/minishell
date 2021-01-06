@@ -12,29 +12,6 @@
 
 #include "./../includes/minishell.h"
 
-char	*ft_cat(char *input, char c)
-{
-	int		i;
-	char	*str;
-
-	i = 0;
-	while (input[i])
-		i++;
-	str = malloc((i + 2) *sizeof(char));
-	if (!str)
-		return (NULL);
-	i = 0;
-	while (input[i])
-	{
-		str[i] = input[i];
-		i++;
-	}
-	str[i] = c;
-	str[i + 1] = 0;
-	free(input);
-	return (str);
-}
-
 char	*ft_read_input(char **env)
 {
 	int		ret;
@@ -59,23 +36,23 @@ char	*ft_read_input(char **env)
 	return (g_read);
 }
 
-void    display(char **envp)
+void	display(char **envp)
 {
-        char *home;
-        char *path;
-        char cwd[4097];
+	char	*home;
+	char	*path;
+	char	cwd[4097];
 
-        home = get_varenv(envp, "HOME");
-        getcwd(cwd, 4096);
-        if (ft_memcmp(cwd, home, ft_strlen(home)))
-                path = ft_strdup(cwd);
-        else
-                path = ft_strjoin("~", cwd + ft_strlen(home));
-        write(2, "\033[1;32mminishell@JGONFROY-JSAGUEZ\033[0;0m", 39);
-        write(2, ":", 1);
-        ft_putstr_fd(path, 2);
-        write(2, ": ", 2);
-        free(path);
+	home = get_varenv(envp, "HOME");
+	getcwd(cwd, 4096);
+	if (ft_memcmp(cwd, home, ft_strlen(home)))
+		path = ft_strdup(cwd);
+	else
+		path = ft_strjoin("~", cwd + ft_strlen(home));
+	write(2, "\033[1;32mminishell@JGONFROY-JSAGUEZ\033[0;0m", 39);
+	write(2, ":", 1);
+	ft_putstr_fd(path, 2);
+	write(2, ": ", 2);
+	free(path);
 	free(home);
 }
 
@@ -96,10 +73,10 @@ void	init_struct(t_var *shell, t_mini **mini, char **envp)
 			shell->path = ft_substr(envp[i], 5, ft_strlen(envp[i]) - 5);
 		i++;
 	}
-        (*mini) = (t_mini *)malloc(sizeof(t_mini));
-        (*mini)->nbtok = 0;
-        (*mini)->toks = 0;
-        (*mini)->str = 0;
+	(*mini) = (t_mini *)malloc(sizeof(t_mini));
+	(*mini)->nbtok = 0;
+	(*mini)->toks = 0;
+	(*mini)->str = 0;
 	shell->mini = (*mini);
 }
 
@@ -107,7 +84,7 @@ void	sigint_handler(int signo)
 {
 	(void)signo;
 	free(g_read);
- 	g_read = ft_strdup("\0");
+	g_read = ft_strdup("\0");
 	write(1, "\n", 1);
 	if (g_shell->fork)
 		g_shell->ret = 130;
@@ -125,7 +102,7 @@ int	main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
-	init_struct(&shell, &mini,  envp);
+	init_struct(&shell, &mini, envp);
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);

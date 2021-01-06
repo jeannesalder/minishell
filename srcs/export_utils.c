@@ -41,7 +41,8 @@ char	*remove_quotes(char *str)
 
 void	modify_env(char **env, char *cmd, int index, t_env var)
 {
-	char *dest;
+	char	*dest;
+
 	if (var.append)
 		dest = ft_strjoin(env[index], var.value);
 	else
@@ -69,11 +70,10 @@ char	**add_env(char **env, char *cmd, t_env var)
 	}
 	if (var.append)
 	{
-		tmp1 = ft_strjoin(var.name,"=");
+		tmp1 = ft_strjoin(var.name, "=");
 		tmp2 = ft_strjoin(tmp1, var.value);
 		tab[i] = remove_quotes(tmp2);
-		free(tmp1);
-		free(tmp2);
+		free_multiple(tmp1, tmp2, NULL, NULL);
 	}
 	else
 		tab[i] = remove_quotes(cmd);

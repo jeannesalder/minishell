@@ -1,0 +1,7 @@
+parsing.c
+	TOO_MANY_LINES        (line: 80, col: 1):	Function has more than 25 lines
+split_semi.c
+	TOO_MANY_LINES        (line: 82, col: 1):	Function has more than 25 lines
+value_env.c:
+	TOO_MANY_LINES        (line: 33, col: 1):	Function has more than 25 lines
+

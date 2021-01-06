@@ -1,15 +1,26 @@
 #include "./../includes/minishell.h"
 
-void	free_table(char **table)
+char	*ft_cat(char *input, char c)
 {
-	int	i;
+	int		i;
+	char	*str;
 
 	i = 0;
-	if (!table)
-		return ;
-	while (table[i])
-		free(table[i++]);
-	free(table);
+	while (input[i])
+		i++;
+	str = malloc((i + 2) *sizeof(char));
+	if (!str)
+		return (NULL);
+	i = 0;
+	while (input[i])
+	{
+		str[i] = input[i];
+		i++;
+	}
+	str[i] = c;
+	str[i + 1] = 0;
+	free(input);
+	return (str);
 }
 
 char	*ft_strduplen(char *str, int len)
@@ -24,7 +35,8 @@ char	*ft_strduplen(char *str, int len)
 		size++;
 	if (len < size)
 		size = len;
-	if (!(dest = (char *)malloc(sizeof(char) * (size + 1))))
+	dest = (char *)malloc(sizeof(char) * (size + 1));
+	if (!dest)
 		return (NULL);
 	while (i < size)
 	{
@@ -35,28 +47,15 @@ char	*ft_strduplen(char *str, int len)
 	return (dest);
 }
 
-void		ft_addchr(char **str, char c)
+char	quote_and_semi(char quote, char c)
 {
-	char	*temp;
-
-	temp = ft_calloc(sizeof(char), ft_strlen(*str) + 2);
-	ft_memcpy(temp, *str, ft_strlen(*str));
-	temp[ft_strlen(temp)] = c;
-	if (*str)
-		free(*str);
-	*str = temp;
-}
-
-char		quote_and_semi(char quote, char c)
-{
-	char q;
+	char	q;
 
 	q = quote;
-	if ((q == '\'' && c == '\'')
-    || (q == '"' && c == '"'))
-        q = ' ';
-    else if (q == ' ' && (c == '\'' || c == '"'))
-    	q = c;
+	if ((q == '\'' && c == '\'') || (q == '"' && c == '"'))
+		q = ' ';
+	else if (q == ' ' && (c == '\'' || c == '"'))
+		q = c;
 //	else
 //		q = q;
 	return (q);

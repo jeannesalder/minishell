@@ -36,3 +36,15 @@ void	free_strarray(char **tab)
 	}
 	free(tab);
 }
+
+void	free_table(char **table)
+{
+	int	i;
+
+	i = 0;
+	if (!table)
+		return ;
+	while (table[i])
+		free(table[i++]);
+	free(table);
+}

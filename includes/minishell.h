@@ -148,6 +148,7 @@ int                                     q_error(t_mini *mini, char c1, char c2);
  **fonctions utils.c
 */
 void                            free_table(char **table);
+char							*ft_cat(char *g_read, char c);
 char                            *ft_strduplen(char *str, int len);
 void                            ft_addchr(char **str, char c);
 char                            quote_and_semi(char quote, char c);

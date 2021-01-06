@@ -32,20 +32,20 @@ int	search_env(int i, char **str, t_var *shell)
 	return (len);
 }
 
-int		len_env(char *str)
+int	len_env(char *str)
 {
 	int		i;
 
 	i = 0;
-	while (str[i] && !(ft_isdigit(str[0])) 
-	&& (ft_isalnum(str[i]) || str[i] == '_'))
+	while (str[i] && !(ft_isdigit(str[0]))
+		&& (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
 	return (i);
 }
 
 void	value_env(t_var *shell, char **str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while ((*str) && (*str)[i])
@@ -58,7 +58,7 @@ void	value_env(t_var *shell, char **str)
 				i++;
 		}
 		else if ((*str)[i] == '$' && (*str)[i + 1]
-        && (*str)[i] != ' ')
+			&& (*str)[i] != ' ')
 			i += search_var(i, braces, str, param) - 1;
 		i++;
 	}

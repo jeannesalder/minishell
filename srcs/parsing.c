@@ -33,22 +33,22 @@ int	q_error(t_mini *mini, char c1, char c2)
 
 int	s_error(t_mini *m)
 {
-    int 	i;
-    int 	j;
+	int		i;
+	int		j;
 	char	q;
 
-    i = 0;
-    j = 0;
+	i = 0;
+	j = 0;
 	q = ' ';
-    while (m->str && m->str[i])
-    {
+	while (m->str && m->str[i])
+	{
 		q = quote_and_semi(q, m->str[i]);
-        if (m->str[i] == ';' && q == ' ')
-            j--;
-        if (m->str[i] != ';' && m->str[i] != ' ' && j >= 0 && q == ' ')
-            j = 1;
-        i++;
-    }
+		if (m->str[i] == ';' && q == ' ')
+			j--;
+		if (m->str[i] != ';' && m->str[i] != ' ' && j >= 0 && q == ' ')
+			j = 1;
+		i++;
+	}
 	if (!m->str || j < 0)
 	{
 		if (j < 0)
@@ -60,9 +60,9 @@ int	s_error(t_mini *m)
 	return (0);
 }
 
-void		parsing(t_mini *mini, t_var *shell)
+void	parsing(t_mini *mini, t_var *shell)
 {
-	int i;
+	int	i;
 
 	if (s_error(mini) || q_error(mini, '\'', '"'))
 		return ;
@@ -83,5 +83,5 @@ void		parsing(t_mini *mini, t_var *shell)
 	free(mini->str);
 	mini->str = 0;
 	free_table(mini->cmds);
-    return ;
+	return ;
 }
