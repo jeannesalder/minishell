@@ -36,6 +36,9 @@ void	free_and_exit(t_var *shell, int nb_exit)
 	free(shell->path);
 	free_strarray(shell->env);
 	free_strarray(shell->cmd);
+	free_strarray(shell->mini->cmds);
+	free(shell->mini);
+	free(g_read);
 	exit(nb_exit);
 }
 

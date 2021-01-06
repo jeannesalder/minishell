@@ -24,16 +24,6 @@
 # include <sys/stat.h>
 # include <errno.h>
 
-typedef struct s_var
-{
-	char	*pwd;
-	char	*path;
-	char	**cmd;
-	char	**env;
-	int		ret;
-	int		fork;	
-}				t_var;
-
 typedef struct s_env
 {
 	char	*name;
@@ -49,6 +39,17 @@ typedef struct          s_mini
         int             nbtok;
         char    **toks;
 }                                       t_mini;
+
+typedef struct s_var
+{
+	char	*pwd;
+	char	*path;
+	char	**cmd;
+	char	**env;
+	int	ret;
+	int	fork;	
+	t_mini	*mini;	
+}				t_var;
 
 
 t_var	*g_shell;
@@ -108,6 +109,7 @@ void			ft_env(t_var *shell, char **env);
 /*
  **fonctions ft_exit.c
 */
+void			free_and_exit(t_var *shell, int nb_exit);
 void			ft_exit(t_var *shell, char **cmd);
 
 /*
