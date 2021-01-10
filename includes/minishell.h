@@ -170,6 +170,14 @@ void                            rm_token(char **str);
 /*
  **fonctions split_semi.c
 */
-char            **split_semi(char const *s, char c);
+char            **split_semi(char const *s, char c, int nbr);
+
+/*
+ **fonctions split_semi.c
+*/
+int								value_env(t_var *shell, char **str);
+int	    						search_env(char **str, t_var *shell, int i, int brace);
+int	    						len_env(char *str);
+char							*get_envs(char **envp, char *env);
 
 #endif

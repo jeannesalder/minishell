@@ -63,14 +63,16 @@ int	s_error(t_mini *m)
 void	parsing(t_mini *mini, t_var *shell)
 {
 	int	i;
+	int	nbr;
 
+	nbr = 0;
 	if (s_error(mini) || q_error(mini, '\'', '"'))
 		return ;
-	mini->cmds = split_semi(mini->str, ';');
+	mini->cmds = split_semi(mini->str, ';', nbr);
 	i = 0;
 	while (mini->cmds[i])
 	{
-		//value_env(&(shell, mini->cmds[i]));
+		value_env(shell, &(mini->cmds[i]));
 		mini->nbtok = nb_tokens(mini->cmds[i]);
 		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
 		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);

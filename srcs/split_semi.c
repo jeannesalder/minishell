@@ -49,15 +49,13 @@ static char	**ft_remplissage(char *s, char c, char **point_tab)
 	return (point_tab);
 }
 
-char	**split_semi(char const *s, char c)
+char	**split_semi(char const *s, char c, int nbr)
 {
 	char	**point_tab;
-	int		nbr;
 	int		i;
 	char	q;
 
 	i = 1;
-	nbr = 0;
 	q = ' ';
 	if (!s)
 		return (0);
@@ -66,12 +64,11 @@ char	**split_semi(char const *s, char c)
 		point_tab = malloc(sizeof(*point_tab) * 1);
 		return (ft_remplissage((char *)s, c, point_tab));
 	}
-	while (s[i])
+	while (s[i++])
 	{
 		q = quote_and_semi(q, s[i]);
 		if (s[i] == c && s[i - 1] != c && q == ' ')
 			nbr++;
-		i++;
 	}
 	if (s[i - 1] != c)
 		nbr++;
