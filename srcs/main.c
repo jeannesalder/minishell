@@ -95,6 +95,15 @@ void	sigint_handler(int signo)
 	}
 }
 
+void	sigquit_handler(int signo)
+{
+	(void)signo;
+	if (g_shell->fork)
+	{	g_shell->ret = 131;
+		ft_putendl_fd("Quit (core dumped)", 2);
+	}
+}
+
 int	main(int ac, char **av, char **envp)
 {
 	t_var	shell;
@@ -106,6 +115,7 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, sigquit_handler);
 		mini->str = ft_read_input(shell.env);
 		parsing(mini, &shell);
 	}
