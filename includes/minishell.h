@@ -62,7 +62,10 @@ char 	*g_read;
 void			display(char **env);
 char			*get_path(char **envp);
 char			*get_cmd_path(char *path, char *cmd);
+
+//signal.c
 void			sigint_handler(int signo);
+void			sigquit_handler(int signo);
 
 /*
  **fonctions builtin.c
