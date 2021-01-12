@@ -1,7 +1,33 @@
-parsing.c
-	TOO_MANY_LINES        (line: 80, col: 1):	Function has more than 25 lines
-split_semi.c
-	TOO_MANY_LINES        (line: 82, col: 1):	Function has more than 25 lines
-value_env.c:
-	TOO_MANY_LINES        (line: 33, col: 1):	Function has more than 25 lines
+Fonction ft_exec_cmd() ret 1 en cas d'erreur de parsing, sinon 0.
+Donc on peut faire :
 
+void	parsing(t_mini *mini, t_var *shell)
+{
+	int	i;
+	int	nbr;
+
+	nbr = 0;
+	if (s_error(mini) || q_error(mini, '\'', '"'))
+		return ;
+	mini->cmds = split_semi(mini->str, ';', nbr);
+	i = 0;
+	while (mini->cmds[i])
+	{
+		value_env(shell, &(mini->cmds[i]));
+		mini->nbtok = nb_tokens(mini->cmds[i]);
+		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
+		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
+		shell->cmd = mini->toks;
+		if (ft_exec_cmd(shell))
+		{
+			free_table(mini->toks);
+			break;
+		}
+		i++;
+		free_table(mini->toks);
+	}
+	free(mini->str);
+	mini->str = 0;
+	free_table(mini->cmds);
+	return ;
+}

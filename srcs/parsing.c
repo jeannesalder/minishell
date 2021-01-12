@@ -77,7 +77,7 @@ void	parsing(t_mini *mini, t_var *shell)
 		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
 		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
 		shell->cmd = mini->toks;
-		ft_exec_cmd(shell);
+		ft_exec_cmd(shell, shell->cmd);
 //		free_strarray(shell->cmd);
 		i++;
 		free_table(mini->toks);

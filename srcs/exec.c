@@ -82,16 +82,42 @@ int	is_a_built(t_var *shell, char *cmd)
 		ft_env(shell, shell->env);
 	else if (ft_memcmp(cmd, "exit", 5) == 0)
 		ft_exit(shell, shell->cmd);
+	// a supprimer avant de push
 	else if (ft_memcmp(cmd, "ret", 4) == 0)
+	{	
 		ft_putendl_fd(ft_itoa(shell->ret), 1);
+		shell->ret = 0;
+	}
 	else
 		return (0);
 	return (1);
 }
 
-int	ft_exec_cmd(t_var *shell)
+int	ft_exec_cmd(t_var *shell, char **cmd)
 {
-	if (!(is_a_built(shell, shell->cmd[0])))
-		ft_execve(shell);
-	return (1);
+	int	nb_pipes;
+
+	nb_pipes = check_pipes(cmd);
+	if (nb_pipes == -1)
+	{
+		ft_putendl_fd("bash: syntax error near unexpected token `|'", 2);
+		shell->ret = 2;
+		return (1);
+	}
+	if (cmd[nb_arg(cmd)][0] == '<' || cmd[nb_arg(cmd)][0] == '>')
+	{
+		ft_putendl_fd("bash: syntax error near unexpected token `newline'", 2);
+		shell->ret = 2;
+		return (1);
+	}
+	if (!nb_pipes)
+	{
+		ft_putendl_fd("A renvoyer aux redirections de Juju", 1);
+		if (!(is_a_built(shell, cmd[0])))
+			ft_execve(shell);
+		return (0);
+	}
+	ft_putendl_fd("Renvoyer dans ft_pipes", 1);
+	ft_putendl_fd(ft_itoa(nb_pipes), 2);
+	return (0);
 }

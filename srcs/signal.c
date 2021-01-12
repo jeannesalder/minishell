@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   signal.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/12 15:39:22 by jgonfroy          #+#    #+#             */
+/*   Updated: 2021/01/12 15:39:29 by jgonfroy         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
 void	sigint_handler(int signo)
@@ -22,5 +34,10 @@ void	sigquit_handler(int signo)
 	{	
 		g_shell->ret = 131;
 		ft_putendl_fd("Quit (core dumped)", 2);
+	}
+	else
+	{
+		free(g_read);
+		g_read = NULL;
 	}
 }

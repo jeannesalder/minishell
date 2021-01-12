@@ -131,7 +131,8 @@ void			lstadd_value(t_list **list, void *value);
 void			free_multiple(void *s1, void *s2, void *s3, void *s4);
 void			free_strarray(char **tab);
 
-int				ft_exec_cmd(t_var *shell);
+//fonctions exec.c
+int			ft_exec_cmd(t_var *shell, char **cmd);
 
 /*
  **fonctions export_utils.c
@@ -183,5 +184,8 @@ int								value_env(t_var *shell, char **str);
 int	    						search_env(char **str, t_var *shell, int i, int brace);
 int	    						len_env(char *str);
 char							*get_envs(char **envp, char *env);
+
+//fonctions pipes.c
+int			check_pipes(char **cmd);
 
 #endif
