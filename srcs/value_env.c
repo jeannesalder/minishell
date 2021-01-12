@@ -44,6 +44,7 @@ int	    search_env(char **str, t_var *shell, int i, int brace)
 	char	*temp1;
 	char	*temp2;
 	char	*env;
+    char    *temp3;
 	int		len;
 
 	env = 0;
@@ -51,10 +52,10 @@ int	    search_env(char **str, t_var *shell, int i, int brace)
 	if ((*str)[i + 1 + brace] == '?')
 		env = ft_itoa(shell->ret);
     len = len_env(*str + i + 1);
+    temp3 = ft_strduplen(*str + i + 1 + brace, len - brace);
 	if (!(env))
 	{
-		env = ft_strduplen(*str + i + 1 + brace, len - brace);
-        env = ft_strdup(get_envs(shell->env, env));
+        env = ft_strdup(get_envs(shell->env, temp3));
         if (brace == 1 && (*str)[i + 1 + len] != '}')
         {
             free(env);
@@ -64,10 +65,12 @@ int	    search_env(char **str, t_var *shell, int i, int brace)
 	}
 	temp1 = ft_strduplen(*str, i);
 	temp2 = ft_strdup(*str + i + len + 1 + brace);
-	free(*str);
-	*str = ft_strjoin(ft_strjoin(temp1, env), temp2);
-    free_multiple(temp1, temp2, env, NULL);
-	return (ft_strlen(env));
+    free_multiple(temp3, *str, NULL, NULL);
+    temp3 = ft_strjoin(temp1, env);
+	*str = ft_strjoin(temp3, temp2);
+    len = ft_strlen(env);
+    free_multiple(temp1, temp2, env, temp3);
+	return (len);
 }
 
 int     value_env(t_var *shell, char **str)

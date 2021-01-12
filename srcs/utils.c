@@ -56,7 +56,5 @@ char	quote_and_semi(char quote, char c)
 		q = ' ';
 	else if (q == ' ' && (c == '\'' || c == '"'))
 		q = c;
-//	else
-//		q = q;
 	return (q);
 }

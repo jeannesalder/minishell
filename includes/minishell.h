@@ -52,6 +52,7 @@ typedef struct s_var
 }				t_var;
 
 
+
 t_var	*g_shell;
 char 	*g_read;
 
