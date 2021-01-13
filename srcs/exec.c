@@ -160,10 +160,10 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	{
 		ft_putendl_fd("A renvoyer aux redirections de Juju", 1);
 		if (!(is_a_built(shell, cmd[0])))
-			fork_for_exec(shell);
+			fork_for_exec(shell); //est-ce que cette ligne est necessaire ou on peut tout gerer dans les pipes ?
 		return (0);
 	}
-	ft_putendl_fd("Renvoyer dans ft_pipes", 1);
-	ft_putendl_fd(ft_itoa(nb_pipes), 2);
+	//Attention actuellement le fonction segfault
+	ft_pipes(shell, nb_pipes + 1);
 	return (0);
 }

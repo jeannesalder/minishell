@@ -51,8 +51,6 @@ typedef struct s_var
 	t_mini	*mini;	
 }				t_var;
 
-
-
 t_var	*g_shell;
 char 	*g_read;
 
@@ -187,5 +185,6 @@ char							*get_envs(char **envp, char *env);
 
 //fonctions pipes.c
 int			check_pipes(char **cmd);
+void		ft_pipes(t_var *shell, int nb_p);
 
 #endif
