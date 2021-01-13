@@ -25,6 +25,7 @@ int	error_exec(char *cmd, int error)
 	return (127);
 }
 
+/*
 void	exec(t_var *shell, pid_t child_pid, char *path)
 {
 	int		status;
@@ -64,6 +65,51 @@ void	ft_execve(t_var *shell)
 	exec(shell, child_pid, path);
 	if (path)
 		free(path);
+}
+*/
+
+void	ft_exec(t_var *shell)
+{
+	int		ret;
+	char	*path;
+
+	path = ft_strdup("");
+	if (shell->path[0])
+	{
+		free(path);
+		path = get_cmd_path(shell->path, shell->cmd[0]);
+	}
+	if (execve(path, shell->cmd, shell->env) == -1)
+	{
+			ret = error_exec(shell->cmd[0], errno);
+			if (path)
+				free(path);
+			exit (ret);
+	}
+}
+
+void	fork_for_exec(t_var *shell)
+{
+	int		status;
+	pid_t	child_pid;
+
+	child_pid = fork();
+	shell->fork = 1;
+	if (child_pid < 0)
+	{
+		shell->ret = 128;
+		strerror(errno);
+		return ;
+	}
+	if (child_pid == 0)
+		ft_exec(shell);
+	else
+	{
+		waitpid(child_pid, &status, 0);
+		shell->ret = WEXITSTATUS(status);
+		shell->fork = 0;
+	}
+	
 }
 
 int	is_a_built(t_var *shell, char *cmd)
@@ -114,7 +160,7 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	{
 		ft_putendl_fd("A renvoyer aux redirections de Juju", 1);
 		if (!(is_a_built(shell, cmd[0])))
-			ft_execve(shell);
+			fork_for_exec(shell);
 		return (0);
 	}
 	ft_putendl_fd("Renvoyer dans ft_pipes", 1);
