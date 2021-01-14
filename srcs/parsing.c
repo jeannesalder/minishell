@@ -1,6 +1,6 @@
 #include "./../includes/minishell.h"
 
-int	q_error(t_mini *mini, char c1, char c2)
+int	q_error(t_mini *mini, char c1, char c2, t_var *shell)
 {
 	int	i;
 
@@ -22,6 +22,7 @@ int	q_error(t_mini *mini, char c1, char c2)
 		if (!mini->str[i])
 		{
 			ft_putstr_fd("Non finished quotes\n", 2);
+			shell->ret = 2;
 			free(mini->str);
 			mini->str = 0;
 			return (1);
@@ -31,7 +32,7 @@ int	q_error(t_mini *mini, char c1, char c2)
 	return (0);
 }
 
-int	s_error(t_mini *m)
+int	s_error(t_mini *m, t_var *shell)
 {
 	int		i;
 	int		j;
@@ -53,6 +54,7 @@ int	s_error(t_mini *m)
 	{
 		if (j < 0)
 			ft_putstr_fd("-bash; syntax error near unexpected token `;'\n", 2);
+		shell->ret = 2;
 		free(m->str);
 		m->str = 0;
 		return (1);
@@ -66,7 +68,7 @@ void	parsing(t_mini *mini, t_var *shell)
 	int	nbr;
 
 	nbr = 0;
-	if (s_error(mini) || q_error(mini, '\'', '"'))
+	if (s_error(mini, shell) || q_error(mini, '\'', '"', shell))
 		return ;
 	mini->cmds = split_semi(mini->str, ';', nbr);
 	i = 0;
@@ -77,8 +79,11 @@ void	parsing(t_mini *mini, t_var *shell)
 		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
 		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
 		shell->cmd = mini->toks;
-		ft_exec_cmd(shell, shell->cmd);
-//		free_strarray(shell->cmd);
+		if (ft_exec_cmd(shell, shell->cmd))
+		{
+			free_table(mini->toks);
+			break;
+		}
 		i++;
 		free_table(mini->toks);
 	}

@@ -9,7 +9,7 @@ LIBFT		= $(DIR_LIB)libft.a
 SRCS		= $(DIR_SRCS)main.c $(DIR_SRCS)ft_cd.c $(DIR_SRCS)cmd_utils.c $(DIR_SRCS)env_utils.c $(DIR_SRCS)exec.c \
 			$(DIR_SRCS)ft_pwd.c $(DIR_SRCS)ft_echo.c $(DIR_SRCS)free_utils.c $(DIR_SRCS)ft_export.c $(DIR_SRCS)export_unset_utils.c \
 			$(DIR_SRCS)export_utils.c $(DIR_SRCS)ft_unset.c $(DIR_SRCS)ft_env.c $(DIR_SRCS)ft_exit.c $(DIR_SRCS)parsing.c $(DIR_SRCS)utils.c $(DIR_SRCS)tokens.c $(DIR_SRCS)rm.c $(DIR_SRCS)split_semi.c \
-			$(DIR_SRCS)value_env.c $(DIR_SRCS)signal.c $(DIR_SRCS)pipes.c
+			$(DIR_SRCS)value_env.c $(DIR_SRCS)signal.c $(DIR_SRCS)pipes.c $(DIR_SRCS)redirection.c
 
 
 

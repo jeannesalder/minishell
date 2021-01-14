@@ -23,6 +23,7 @@
 # include <signal.h>
 # include <sys/stat.h>
 # include <errno.h>
+# include <fcntl.h>
 
 typedef struct s_env
 {
@@ -144,8 +145,8 @@ int				is_in_order(const char *s1, const char *s2);
  **fonctions parsing.c
 */
 void                            parsing(t_mini *mini, t_var *shell);
-int                                     s_error(t_mini *mini);
-int                                     q_error(t_mini *mini, char c1, char c2);
+int                                     s_error(t_mini *mini, t_var *shell);
+int                                     q_error(t_mini *mini, char c1, char c2, t_var *shell);
 
 /*
  **fonctions utils.c
@@ -186,5 +187,14 @@ char							*get_envs(char **envp, char *env);
 //fonctions pipes.c
 int			check_pipes(char **cmd);
 void		ft_pipes(t_var *shell, int nb_p);
+
+
+/*
+ **fonctions redirection.c
+*/
+char    **redirection(t_var *shell, char **cmd);
+void	redi_out(t_var *shell, char **cmd, int i, int fd);
+char	**delete_redi(t_var *shell, char **cmd);
+int		count_redi(t_var *shell, char **cmd);
 
 #endif
