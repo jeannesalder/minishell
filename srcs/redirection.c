@@ -81,8 +81,8 @@ void	redi_out(t_var *shell, char **cmd, int i, int fd)
         if (fd != 1)
             if ((dup2(fd, 1)) == -1)
 				shell->ret = 2;
-			/*if ((close(fd)) == -1)
-				shell->ret = 2;*/
+			if ((close(fd)) == -1)
+				shell->ret = 2;
 		i++;
 	}
 	return ;
