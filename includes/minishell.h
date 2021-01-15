@@ -194,9 +194,9 @@ int			ft_pipes(t_var *shell, int nb_p);
 /*
  **fonctions redirection.c
 */
-char    **redirection(t_var *shell, char **cmd);
+void	redirection(t_var *shell, char **cmd);
 void	redi_out(t_var *shell, char **cmd, int i, int fd);
-char	**delete_redi(t_var *shell, char **cmd);
+void	delete_redi(t_var *shell, char **cmd);
 int		count_redi(t_var *shell, char **cmd);
 
 #endif

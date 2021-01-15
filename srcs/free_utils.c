@@ -45,6 +45,9 @@ void	free_table(char **table)
 	if (!table)
 		return ;
 	while (table[i])
-		free(table[i++]);
+	{
+		free(table[i]);
+		i++;
+	}
 	free(table);
 }
