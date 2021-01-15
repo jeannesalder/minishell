@@ -44,9 +44,6 @@ void    delete_redi(t_var *shell, char **cmd)
 
 void	redi_in(t_var *shell, char **cmd, int i, int fd)
 {
-	int		ret;
-	char	c;
-
 	while (cmd[i])
 	{
 		if (ft_strncmp(cmd[i], "<", 1))
