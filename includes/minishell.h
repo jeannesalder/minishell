@@ -131,6 +131,8 @@ void			free_multiple(void *s1, void *s2, void *s3, void *s4);
 void			free_strarray(char **tab);
 
 //fonctions exec.c
+void		ft_exec(t_var *shell);
+int			is_a_built(t_var *shell, char *cmd);
 int			ft_exec_cmd(t_var *shell, char **cmd);
 
 /*
@@ -186,7 +188,7 @@ char							*get_envs(char **envp, char *env);
 
 //fonctions pipes.c
 int			check_pipes(char **cmd);
-void		ft_pipes(t_var *shell, int nb_p);
+int			ft_pipes(t_var *shell, int nb_p);
 
 
 /*
