@@ -35,8 +35,8 @@ void	free_and_exit(t_var *shell, int nb_exit, int eof)
 	ft_putendl_fd("exit", 1);
 	if (!eof)
 	{
-		free_strarray(shell->cmd);
-		free_strarray(shell->mini->cmds);
+		// free_strarray(shell->cmd);
+		// free_strarray(shell->mini->cmds);
 	}
 	free(g_read);
 	free(shell->pwd);

@@ -25,49 +25,6 @@ int	error_exec(char *cmd, int error)
 	return (127);
 }
 
-/*
-void	exec(t_var *shell, pid_t child_pid, char *path)
-{
-	int		status;
-
-	if (child_pid == 0)
-	{
-		if (execve(path, shell->cmd, shell->env) == -1)
-			exit(error_exec(shell->cmd[0], errno));
-	}
-	else
-	{
-		waitpid(child_pid, &status, 0);
-		shell->ret = WEXITSTATUS(status);
-		shell->fork = 0;
-	}	
-}
-
-void	ft_execve(t_var *shell)
-{
-	char	*path;
-	pid_t	child_pid;
-
-	path = ft_strdup("");
-	if (shell->path[0])
-	{
-		free(path);
-		path = get_cmd_path(shell->path, shell->cmd[0]);
-	}
-	child_pid = fork();
-	shell->fork = 1;
-	if (child_pid < 0)
-	{
-		shell->ret = 128;
-		strerror(errno);
-		return ;
-	}
-	exec(shell, child_pid, path);
-	if (path)
-		free(path);
-}
-*/
-
 void	ft_exec(t_var *shell)
 {
 	int		ret;
@@ -128,12 +85,6 @@ int	is_a_built(t_var *shell, char *cmd)
 		ft_env(shell, shell->env);
 	else if (ft_memcmp(cmd, "exit", 5) == 0)
 		ft_exit(shell, shell->cmd);
-	// a supprimer avant de push
-	else if (ft_memcmp(cmd, "ret", 4) == 0)
-	{	
-		ft_putendl_fd(ft_itoa(shell->ret), 1);
-		shell->ret = 0;
-	}
 	else
 		return (0);
 	return (1);
@@ -142,6 +93,7 @@ int	is_a_built(t_var *shell, char *cmd)
 int	ft_exec_cmd(t_var *shell, char **cmd)
 {
 	int	nb_pipes;
+	int ret;
 
 	nb_pipes = check_pipes(cmd);
 	if (nb_pipes == -1)
@@ -158,12 +110,13 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	}
 	if (!nb_pipes)
 	{
-		ft_putendl_fd("A renvoyer aux redirections de Juju", 1);
+		redirection(shell, cmd);
 		if (!(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell); //est-ce que cette ligne est necessaire ou on peut tout gerer dans les pipes ?
 		return (0);
 	}
-	//Attention actuellement le fonction segfault
-	ft_pipes(shell, nb_pipes + 1);
+	ret = ft_pipes(shell, nb_pipes + 1);
+	if (ret)
+		shell->ret = ret;
 	return (0);
 }
