@@ -6,22 +6,28 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/18 13:26:09 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/16 16:32:57 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	error_exec(char *cmd, int error)
+int	error_exec(char *cmd)
 {
-	print_str_fd("bash: ", cmd, NULL, 2);
-	if (error == 14)
-	{
-		ft_putendl_fd(": command not found", 2);
-		return (127);
-	}
-	ft_putstr_fd(": ", 2);
-	ft_putendl_fd(strerror(error), 2);
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
+	char	*error;
+
+	tmp1 = ft_strjoin("bash: ", cmd);
+	tmp2 = ft_strjoin(tmp1, ": ");
+	if (errno == 14)
+		tmp3 = ft_strjoin(tmp2, "command not found");
+	else
+		tmp3 = ft_strjoin(tmp2, strerror(errno));
+	error = ft_strjoin(tmp3, "\n");
+	write(2, error, ft_strlen(error));
+	free_multiple(tmp1, tmp2, tmp3, error);
 	return (127);
 }
 
@@ -38,10 +44,10 @@ void	ft_exec(t_var *shell)
 	}
 	if (execve(path, shell->cmd, shell->env) == -1)
 	{
-			ret = error_exec(shell->cmd[0], errno);
-			if (path)
-				free(path);
-			exit (ret);
+		ret = error_exec(shell->cmd[0]);
+		if (path)
+			free(path);
+		exit (ret);
 	}
 }
 
@@ -66,7 +72,6 @@ void	fork_for_exec(t_var *shell)
 		shell->ret = WEXITSTATUS(status);
 		shell->fork = 0;
 	}
-	
 }
 
 int	is_a_built(t_var *shell, char *cmd)
@@ -93,7 +98,7 @@ int	is_a_built(t_var *shell, char *cmd)
 int	ft_exec_cmd(t_var *shell, char **cmd)
 {
 	int	nb_pipes;
-	int ret;
+	int	ret;
 
 	nb_pipes = check_pipes(cmd);
 	if (nb_pipes == -1)
@@ -115,7 +120,7 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 			fork_for_exec(shell); //est-ce que cette ligne est necessaire ou on peut tout gerer dans les pipes ?
 		return (0);
 	}
-	ret = ft_pipes(shell, nb_pipes + 1);
+	ret = ft_pipes(shell, nb_pipes);
 	if (ret)
 		shell->ret = ret;
 	return (0);

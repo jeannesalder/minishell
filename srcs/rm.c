@@ -41,3 +41,22 @@ void	rm_token(char **str)
 			i++;
 	}
 }
+
+static void	recurrence(t_list *lst)
+{
+	if (lst)
+	{
+		recurrence(lst->next);
+		free(lst);
+	}
+}
+
+void	rm_lst(t_list **lst)
+{
+	t_list	*tmp;
+
+	tmp = *lst;
+	if (tmp)
+		recurrence(tmp);
+	*lst = NULL;
+}

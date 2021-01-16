@@ -53,7 +53,10 @@ int	nb_arg(char **cmd)
 
 void	print_str_fd(char *s1, char *s2, char *s3, int fd)
 {
-	ft_putstr_fd(s1, fd);
-	ft_putstr_fd(s2, fd);
-	ft_putstr_fd(s3, fd);
+	write(fd, s1, ft_strlen(s1));
+	write(fd, s2, ft_strlen(s2));
+	write(fd, s3, ft_strlen(s3));
+	// ft_putstr_fd(s1, fd);
+	// ft_putstr_fd(s2, fd);
+	// ft_putstr_fd(s3, fd);
 }

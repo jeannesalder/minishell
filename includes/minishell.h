@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:59:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/21 21:59:53 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/16 17:14:30 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ typedef struct s_env
 	char	*value;
 }				t_env;
 
-typedef struct          s_mini
+typedef struct  s_mini
 {
-        char    *str;
-        char    **cmds;
-        int             nbtok;
-        char    **toks;
+        char	*str;
+        char	**cmds;
+        int	nbtok;
+        char	**toks;
 }                                       t_mini;
 
 typedef struct s_var
@@ -172,6 +172,7 @@ int                                     len_quote(char *str, char c);
 */
 void                            rm_char(char **str, int j);
 void                            rm_token(char **str);
+void							rm_lst(t_list **lst);
 
 /*
  **fonctions split_semi.c
@@ -187,9 +188,14 @@ int	    						len_env(char *str);
 char							*get_envs(char **envp, char *env);
 
 //fonctions pipes.c
-int			check_pipes(char **cmd);
 int			ft_pipes(t_var *shell, int nb_p);
 
+/*
+ **fonctions pipes_utils.c
+*/
+void		close_all_fd(int *pfd, int nb_p);
+t_list		*split_pipes(char **cmd);
+int			check_pipes(char **cmd);
 
 /*
  **fonctions redirection.c
