@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   rm.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/17 21:05:59 by jsaguez           #+#    #+#             */
+/*   Updated: 2021/01/17 21:06:15 by jsaguez          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
-void	rm_char(char **str, int j)
+void		rm_char(char **str, int j)
 {
 	char	*temp1;
 	char	*temp2;
@@ -13,7 +25,7 @@ void	rm_char(char **str, int j)
 	free(temp2);
 }
 
-void	rm_token(char **str)
+void		rm_token(char **str)
 {
 	int		i;
 
@@ -51,7 +63,7 @@ static void	recurrence(t_list *lst)
 	}
 }
 
-void	rm_lst(t_list **lst)
+void		rm_lst(t_list **lst)
 {
 	t_list	*tmp;
 

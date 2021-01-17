@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   tokens.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/17 21:00:25 by jsaguez           #+#    #+#             */
+/*   Updated: 2021/01/17 21:00:44 by jsaguez          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
-int	len_quote(char *str, char c)
+int		len_quote(char *str, char c)
 {
 	int	i;
 
@@ -14,7 +26,7 @@ int	len_quote(char *str, char c)
 	return (i);
 }
 
-int	len_token(char *str, int i)
+int		len_token(char *str, int i)
 {
 	int	j;
 
@@ -63,7 +75,7 @@ void	set_tokens(char **toks, char *str, int nbtok)
 	}
 }
 
-int	nb_tokens(char *str)
+int		nb_tokens(char *str)
 {
 	int		i;
 	int		j;

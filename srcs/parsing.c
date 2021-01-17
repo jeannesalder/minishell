@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
+/*   Updated: 2021/01/17 23:54:18 by jsaguez          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
-int	q_error(t_mini *mini, char c1, char c2, t_var *shell)
+int		q_error(t_mini *mini, char c1, char c2, t_var *shell)
 {
 	int	i;
 
@@ -24,7 +36,6 @@ int	q_error(t_mini *mini, char c1, char c2, t_var *shell)
 			ft_putstr_fd("Non finished quotes\n", 2);
 			shell->ret = 2;
 			free(mini->str);
-			mini->str = 0;
 			return (1);
 		}
 		i++;
@@ -32,7 +43,7 @@ int	q_error(t_mini *mini, char c1, char c2, t_var *shell)
 	return (0);
 }
 
-int	s_error(t_mini *m, t_var *shell)
+int		s_error(t_mini *m, t_var *shell)
 {
 	int		i;
 	int		j;
@@ -56,7 +67,6 @@ int	s_error(t_mini *m, t_var *shell)
 			ft_putstr_fd("-bash; syntax error near unexpected token `;'\n", 2);
 		shell->ret = 2;
 		free(m->str);
-		m->str = 0;
 		return (1);
 	}
 	return (0);
@@ -68,10 +78,10 @@ void	parsing(t_mini *mini, t_var *shell)
 	int	nbr;
 
 	nbr = 0;
+	i = 0;
 	if (s_error(mini, shell) || q_error(mini, '\'', '"', shell))
 		return ;
 	mini->cmds = split_semi(mini->str, ';', nbr);
-	i = 0;
 	while (mini->cmds[i])
 	{
 		value_env(shell, &(mini->cmds[i]));
@@ -82,13 +92,12 @@ void	parsing(t_mini *mini, t_var *shell)
 		if (ft_exec_cmd(shell, shell->cmd))
 		{
 			free_table(mini->toks);
-			break;
+			break ;
 		}
 		i++;
 		free_table(mini->toks);
 	}
 	free(mini->str);
-	mini->str = 0;
 	free_table(mini->cmds);
 	return ;
 }

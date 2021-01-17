@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   split_semi.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/17 21:05:04 by jsaguez           #+#    #+#             */
+/*   Updated: 2021/01/17 21:05:24 by jsaguez          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "./../includes/minishell.h"
 
 static char	*ft_strdup_spe(char *s, int end, int size)
@@ -49,7 +61,7 @@ static char	**ft_remplissage(char *s, char c, char **point_tab)
 	return (point_tab);
 }
 
-char	**split_semi(char const *s, char c, int nbr)
+char		**split_semi(char const *s, char c, int nbr)
 {
 	char	**point_tab;
 	int		i;
