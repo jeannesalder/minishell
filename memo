@@ -1,33 +1,30 @@
-Fonction ft_exec_cmd() ret 1 en cas d'erreur de parsing, sinon 0.
-Donc on peut faire :
+testeur :
 
-void	parsing(t_mini *mini, t_var *shell)
-{
-	int	i;
-	int	nbr;
+Enlever le ? de echo $?
+unset HOME -> segfault a cause de display prompt.
+export HOME= -> ecrit erreur et ret 1 alors qu'il ne devrait rien se passer et ret 0. A changer dans ft_cd. Maybe if getenv HOME = "", path = "."
+export -> segfault
+mkdir a; mkdir a/b; cd a/b; rm -r ../../a; cd .. -> segfault. Gerer le cas ou le dossier est supprime env -i ./minishell -> segfault
+cat Makefile | grep pr | head -n 5 | cd file_not_exit -> pas le meme ret 
+cat Makefile | grep pr | head -n 5 | hello -> pas le meme ret
+ls | exit -> affiche exit alors qu'il devrait ne rien afficher -> ft_exit, ajouter condition : si pas de fork, ecrire exit.
 
-	nbr = 0;
-	if (s_error(mini) || q_error(mini, '\'', '"'))
-		return ;
-	mini->cmds = split_semi(mini->str, ';', nbr);
-	i = 0;
-	while (mini->cmds[i])
-	{
-		value_env(shell, &(mini->cmds[i]));
-		mini->nbtok = nb_tokens(mini->cmds[i]);
-		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
-		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
-		shell->cmd = mini->toks;
-		if (ft_exec_cmd(shell))
-		{
-			free_table(mini->toks);
-			break;
-		}
-		i++;
-		free_table(mini->toks);
-	}
-	free(mini->str);
-	mini->str = 0;
-	free_table(mini->cmds);
-	return ;
-}
+
+Signaux : changer valeur ret ctrl \ (131)
+sleep 10 | sleep 10 ctrl \
+ctrl \ dans pipe : plus rien ne s'affiche sur l'entree std. Fermer les pipes ?
+
+
+Pb parsing :
+si seulement espace, segfault
+"", .. ne renvoi pas la meme erreur. Pb parsing ou exec ? A traiter ?
+echo "\s" ; echo "\\s" -> a traiter ?
+echo [TAB]a -> erreur, ecrit cmd not found a la place de a
+export var="cat Makefile | grep >" ; echo $var -> supprime le dernier " donc erreur car > a cote de ;
+$bla -> segfault
+export loop='bonjour$loop' ; echo $loop -> pas le meme resultat
+echo bonjour ; | -> erreur de syntaxe, ne doit pas afficher avant => on peut pas checker la syntaxe au niveau des pipes, il faut le faire avant
+echo bonjour > > out -> doit etre une syntaxe error => attention a pas supprimer l'espace trop tot dans le parsing. Ou checker les syntaxe error encore avant ca
+echo bonjour > $test -> doit ecrire "redirection ambigue" et ret 1
+echo bonjour > $test w/ test="o1 o2" -> pareil
+echo bonjour >>> test -> doit renvoyer syntaxe error
