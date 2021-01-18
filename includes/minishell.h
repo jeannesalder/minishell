@@ -50,6 +50,7 @@ typedef struct s_var
 	int	ret;
 	int	fork;	
 	t_mini	*mini;	
+	t_list	*pipe;
 }				t_var;
 
 t_var	*g_shell;
@@ -200,8 +201,8 @@ int			check_pipes(char **cmd);
 /*
  **fonctions redirection.c
 */
-void	redirection(t_var *shell, char **cmd);
-void	redi_out(t_var *shell, char **cmd, int i, int fd);
+int		redirection(t_var *shell, char **cmd);
+int		redi_out(t_var *shell, int i, int fd);
 void	delete_redi(t_var *shell, char **cmd);
 int		count_redi(t_var *shell, char **cmd);
 

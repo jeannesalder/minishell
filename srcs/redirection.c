@@ -17,9 +17,9 @@ int		count_redi(t_var *shell, char **cmd)
 	int	count;
 	int	i;
 
-	i = -1;
+	i = 0;
 	count = 0;
-	while (++i < shell->mini->nbtok)
+	while (i < shell->mini->nbtok && cmd[i])
 	{
 		if (!ft_memcmp(cmd[i], ">", 2) || !ft_memcmp(cmd[i], ">>", 3)
 		|| !ft_memcmp(cmd[i], "<", 2))
@@ -27,6 +27,7 @@ int		count_redi(t_var *shell, char **cmd)
 			count++;
 			i++;
 		}
+		i++;
 	}
 	return (count);
 }
@@ -39,9 +40,11 @@ void	delete_redi(t_var *shell, char **cmd)
 
 	i = 0;
 	j = 0;
+	ft_putendl_fd(ft_itoa(shell->mini->nbtok), 2);
 	shell->mini->nbtok -= count_redi(shell, cmd) * 2;
+	ft_putendl_fd(ft_itoa(shell->mini->nbtok), 2);
 	args = (char **)ft_calloc(sizeof(char *), shell->mini->nbtok + 1);
-	while (j < shell->mini->nbtok)
+	while (j < shell->mini->nbtok && cmd[i])
 	{
 		if (!ft_memcmp(cmd[i], ">", 2) || !ft_memcmp(cmd[i], ">>", 3)
 		|| !ft_memcmp(cmd[i], "<", 2))
@@ -52,6 +55,7 @@ void	delete_redi(t_var *shell, char **cmd)
 	cmd = NULL;
 	cmd = args;
 	free_table(args);
+	// ft_putendl_fd("youhou", 2);
 }
 
 void	redi_in(t_var *shell, char **cmd, int i, int fd)
@@ -72,15 +76,25 @@ void	redi_in(t_var *shell, char **cmd, int i, int fd)
 	return ;
 }
 
-void	redi_out(t_var *shell, char **cmd, int i, int fd)
+int		redi_out(t_var *shell, int i, int fd)
 {
 	int		ret;
 	char	c;
+	char	**cmd;
 
+	while (shell->pipe || shell->fork == 0)
+	{
+		if (shell->fork)
+			cmd = (char**)shell->pipe->content;
+		else 
+			cmd = shell->cmd;
 	while (cmd[i])
 	{
+		fd = 1;
 		if (!ft_memcmp(cmd[i], ">", 2))
+		{
 			fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
+		}
 		else if (!ft_memcmp(cmd[i], ">>", 3))
 		{
 			fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_APPEND, 0777);
@@ -98,10 +112,16 @@ void	redi_out(t_var *shell, char **cmd, int i, int fd)
 					shell->ret = 2;
 		i++;
 	}
-	return ;
+	if (shell->fork == 0)
+		break;
+	shell->pipe = shell->pipe->next;
+	}
+	// ft_putendl_fd(ft_itoa(fd), 2);
+	return (fd);
 }
 
-void	redirection(t_var *shell, char **cmd)
+
+int		redirection(t_var *shell, char **cmd)
 {
 	int i;
 	int	j;
@@ -113,13 +133,24 @@ void	redirection(t_var *shell, char **cmd)
 	while (cmd[i] && ft_memcmp(cmd[i], ">", 2) && ft_memcmp(cmd[i], ">>", 3))
 		i++;
 	if (cmd[i])
-		redi_out(shell, cmd, i, fd);
-	fd = 0;
-	while (cmd[j] && ft_strncmp(cmd[j], "<", 1))
-		j++;
-	if (cmd[j])
-		redi_in(shell, cmd, i, fd);
-	if (i != 0 || j != 0)
+		fd = redi_out(shell, i, fd);
+	// ft_putendl_fd(ft_itoa(fd), 2);
+	if (fd != 1)
 		delete_redi(shell, cmd);
-	return ;
+	// ft_putendl_fd(ft_itoa(fd), 2);
+	if (fd != 1)
+		j += 2;
+
+	fd = 0;
+	i = 0;
+	// ft_putendl_fd(ft_itoa(j), 2);
+	while (cmd[i] && ft_strncmp(cmd[i], "<", 1))
+		i++;
+	if (cmd[i])
+		redi_in(shell, cmd, i, fd);
+	if (fd != 0)
+		delete_redi(shell, cmd);
+	if (fd != 0)
+		j += 1;
+	return (j);
 }

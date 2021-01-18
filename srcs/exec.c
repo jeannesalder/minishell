@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/16 16:32:57 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 10:46:44 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_exec(t_var *shell)
 		ret = error_exec(shell->cmd[0]);
 		if (path)
 			free(path);
-		exit (ret);
+		exit(ret);
 	}
 }
 
@@ -99,6 +99,8 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 {
 	int	nb_pipes;
 	int	ret;
+	int stdout;
+	int	stdin;
 
 	nb_pipes = check_pipes(cmd);
 	if (nb_pipes == -1)
@@ -115,9 +117,15 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	}
 	if (!nb_pipes)
 	{
-		redirection(shell, cmd);
+		stdout = dup(1);
+		stdin = dup(0);
+		redirection(shell, cmd);	
 		if (!(is_a_built(shell, cmd[0])))
-			fork_for_exec(shell); //est-ce que cette ligne est necessaire ou on peut tout gerer dans les pipes ?
+			fork_for_exec(shell);
+		dup2(stdout, 1);
+		dup2(stdin, 0);
+		close(stdout);
+		close(stdin);
 		return (0);
 	}
 	ret = ft_pipes(shell, nb_pipes);

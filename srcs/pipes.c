@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/16 17:06:49 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 10:31:27 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,12 @@ int	set_fd_pipe(int *pfd, int nb)
 	return (0);
 }
 
-void	dup_fd(int *pfd, int pos, int nb_p)
+void	dup_fd(int *pfd, int pos, int nb_p, int redir)
 {
-	if (pos != 1)
+	// ft_putendl_fd(ft_itoa(redir), 2);
+	if (pos != 1 && redir != 1 && redir != 3)
 		dup2(pfd[(2 * pos - 4)], 0);
-	if (pos != nb_p + 1)
+	if (pos != nb_p + 1 && redir < 2)
 		dup2(pfd[2 * pos - 1], 1);
 	close_all_fd(pfd, nb_p);
 }
@@ -48,31 +49,34 @@ void	end_fork(t_var *shell, int *pfd, int nb_p)
 		shell->ret = WEXITSTATUS(status);
 		i++;
 	}
+	shell->fork = 0;
 }
 
 void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 {
 	int		pos;
-	t_list	*tmp;
+	int		redir;
+	// t_list	*tmp;
 	pid_t	child_pid;
 
-	tmp = lst_pipe;
+	shell->pipe = lst_pipe;
 	pos = 1;
-	while (tmp)
+	while (shell->pipe)
 	{	
 		child_pid = fork();
+		shell->fork = 1;
 		if (child_pid == -1)
 			exit(EXIT_FAILURE);
 		if (child_pid == 0)
 		{
-			shell->cmd = (char **)tmp->content;
-			// redirection(shell, shell->cmd);
-			dup_fd(pfd, pos, nb_p);
+			shell->cmd = (char **)shell->pipe->content;
+			redir = redirection(shell, shell->cmd);
+			dup_fd(pfd, pos, nb_p, redir);
 			if (!(is_a_built(shell, shell->cmd[0])))
 				ft_exec(shell);
 		}
-		free_table(tmp->content);
-		tmp = tmp->next;
+		free_table(shell->pipe->content);
+		shell->pipe = shell->pipe->next;
 		pos++;
 	}
 	rm_lst(&lst_pipe);

@@ -1,6 +1,5 @@
 testeur :
 
-Enlever le ? de echo $?
 unset HOME -> segfault a cause de display prompt.
 export HOME= -> ecrit erreur et ret 1 alors qu'il ne devrait rien se passer et ret 0. A changer dans ft_cd. Maybe if getenv HOME = "", path = "."
 export -> segfault
@@ -16,15 +15,14 @@ ctrl \ dans pipe : plus rien ne s'affiche sur l'entree std. Fermer les pipes ?
 
 
 Pb parsing :
+Enlever le ? de echo $?
 si seulement espace, segfault
-"", .. ne renvoi pas la meme erreur. Pb parsing ou exec ? A traiter ?
-echo "\s" ; echo "\\s" -> a traiter ?
 echo [TAB]a -> erreur, ecrit cmd not found a la place de a
 export var="cat Makefile | grep >" ; echo $var -> supprime le dernier " donc erreur car > a cote de ;
 $bla -> segfault
-export loop='bonjour$loop' ; echo $loop -> pas le meme resultat
-echo bonjour ; | -> erreur de syntaxe, ne doit pas afficher avant => on peut pas checker la syntaxe au niveau des pipes, il faut le faire avant
+export loop='bonjour$loop' ; echo $loop -> les simples quotes ne doivent pas remplacer la variable d'env
+echo bonjour ; | -> erreur de syntaxe, ne doit pas afficher avant => on peut pas checker la syntaxe au niveau des pipes, il faut le faire avant le split
 echo bonjour > > out -> doit etre une syntaxe error => attention a pas supprimer l'espace trop tot dans le parsing. Ou checker les syntaxe error encore avant ca
-echo bonjour > $test -> doit ecrire "redirection ambigue" et ret 1
+echo bonjour > $test -> doit ecrire "redirection ambigue" et ret 1 
 echo bonjour > $test w/ test="o1 o2" -> pareil
 echo bonjour >>> test -> doit renvoyer syntaxe error
