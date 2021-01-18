@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/17 19:55:52 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/18 21:35:12 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,28 +55,38 @@ void	delete_redi(t_var *shell, char **cmd)
 	cmd = NULL;
 	cmd = args;
 	free_table(args);
-	// ft_putendl_fd("youhou", 2);
 }
 
 void	redi_in(t_var *shell, char **cmd, int i, int fd)
 {
-	while (cmd[i])
+	while (shell->pipe || shell->fork == 0)
 	{
-		if (ft_strncmp(cmd[i], "<", 1))
-			fd = open(cmd[i + 1], O_RDONLY);
-		if (fd != 0)
+		if (shell->fork)
+			cmd = (char**)shell->pipe->content;
+		else 
+			cmd = shell->cmd;
+		while (cmd[i])
 		{
-			if ((dup2(fd, 0)) == -1)
-				shell->ret = 2;
-			if ((close(fd)) == -1)
-				shell->ret = 2;
+			fd = 0;
+			if (ft_strncmp(cmd[i], "<", 1))
+			{
+				fd = open(cmd[i + 1], O_RDONLY);
+				shell->in = 1;
+			}
+			if (fd != 0)
+				if ((dup2(fd, 0)) == -1)
+					if ((close(fd)) == -1)
+						shell->ret = 2;
+			i++;
 		}
-		i++;
+		if (shell->fork == 0)
+			break;
+		shell->pipe = shell->pipe->next;
 	}
 	return ;
 }
 
-int		redi_out(t_var *shell, int i, int fd)
+void	redi_out(t_var *shell, int i, int fd)
 {
 	int		ret;
 	char	c;
@@ -88,69 +98,59 @@ int		redi_out(t_var *shell, int i, int fd)
 			cmd = (char**)shell->pipe->content;
 		else 
 			cmd = shell->cmd;
-	while (cmd[i])
-	{
-		fd = 1;
-		if (!ft_memcmp(cmd[i], ">", 2))
+		while (cmd[i])
 		{
-			fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
+			fd = 1;
+			if (!ft_memcmp(cmd[i], ">", 2))
+			{
+				fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
+				shell->out = 1;
+			}
+			else if (!ft_memcmp(cmd[i], ">>", 3))
+			{
+				fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_APPEND, 0777);
+				ret = 0;
+				while ((ret = read(fd, &c, 1)))
+					if (ret == -1)
+					{
+						write(2, "Couldn't read file\n", 19);
+						break ;
+					}
+				shell->out = 1;
+			}
+			if (fd != 1)
+				if ((dup2(fd, 1)) == -1)
+					if ((close(fd)) == -1)
+						shell->ret = 2;
+			i++;
 		}
-		else if (!ft_memcmp(cmd[i], ">>", 3))
-		{
-			fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_APPEND, 0777);
-			ret = 0;
-			while ((ret = read(fd, &c, 1)))
-				if (ret == -1)
-				{
-					write(2, "Couldn't read file\n", 19);
-					break ;
-				}
-		}
-		if (fd != 1)
-			if ((dup2(fd, 1)) == -1)
-				if ((close(fd)) == -1)
-					shell->ret = 2;
-		i++;
+		if (shell->fork == 0)
+			break;
+		shell->pipe = shell->pipe->next;
 	}
-	if (shell->fork == 0)
-		break;
-	shell->pipe = shell->pipe->next;
-	}
-	// ft_putendl_fd(ft_itoa(fd), 2);
-	return (fd);
+	return ;
 }
 
 
-int		redirection(t_var *shell, char **cmd)
+void	redirection(t_var *shell, char **cmd)
 {
 	int i;
-	int	j;
 	int fd;
 
 	i = 0;
-	j = 0;
 	fd = 1;
+	shell->out = 0;
+	shell->in = 0;
 	while (cmd[i] && ft_memcmp(cmd[i], ">", 2) && ft_memcmp(cmd[i], ">>", 3))
 		i++;
 	if (cmd[i])
-		fd = redi_out(shell, i, fd);
-	// ft_putendl_fd(ft_itoa(fd), 2);
-	if (fd != 1)
-		delete_redi(shell, cmd);
-	// ft_putendl_fd(ft_itoa(fd), 2);
-	if (fd != 1)
-		j += 2;
-
+		redi_out(shell, i, fd);
 	fd = 0;
 	i = 0;
-	// ft_putendl_fd(ft_itoa(j), 2);
 	while (cmd[i] && ft_strncmp(cmd[i], "<", 1))
 		i++;
 	if (cmd[i])
 		redi_in(shell, cmd, i, fd);
-	if (fd != 0)
-		delete_redi(shell, cmd);
-	if (fd != 0)
-		j += 1;
-	return (j);
+	delete_redi(shell, cmd);
+	return ;
 }

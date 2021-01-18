@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:59:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/16 17:14:30 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:23:30 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,9 @@ typedef struct s_var
 	char	**cmd;
 	char	**env;
 	int	ret;
-	int	fork;	
+	int	fork;
+	int		in;
+	int		out;
 	t_mini	*mini;	
 	t_list	*pipe;
 }				t_var;
@@ -150,6 +152,7 @@ int				is_in_order(const char *s1, const char *s2);
 void                            parsing(t_mini *mini, t_var *shell);
 int                                     s_error(t_mini *mini, t_var *shell);
 int                                     q_error(t_mini *mini, char c1, char c2, t_var *shell);
+int										space_error(t_mini *mini, t_var *shell);
 
 /*
  **fonctions utils.c
@@ -201,8 +204,8 @@ int			check_pipes(char **cmd);
 /*
  **fonctions redirection.c
 */
-int		redirection(t_var *shell, char **cmd);
-int		redi_out(t_var *shell, int i, int fd);
+void	redirection(t_var *shell, char **cmd);
+void	redi_out(t_var *shell, int i, int fd);
 void	delete_redi(t_var *shell, char **cmd);
 int		count_redi(t_var *shell, char **cmd);
 

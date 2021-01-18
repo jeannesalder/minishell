@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:00:25 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/17 21:00:44 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/18 21:50:03 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int		len_token(char *str, int i)
 	else
 	{
 		while (str[i + j] && str[i + j] != ' ' && str[i + j] != '>'
-			&& str[i + j] != '<' && str[i + j] != '|')
+			&& str[i + j] != '<' && str[i + j] != '|' && str[i + j] != '\t')
 		{
 			if (str[i + j] == '\'' || str[i + j] == '"')
 			{
@@ -59,18 +59,18 @@ void	set_tokens(char **toks, char *str, int nbtok)
 
 	i = 0;
 	j = 0;
-	while (str[i] && str[i] == ' ')
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	while (j < nbtok && str[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 		len = len_token(str, i);
 		toks[j] = ft_strduplen(str + i, len);
 		rm_token(&(toks[j]));
 		j++;
 		i += len;
-		while (str[i] && str[i] == ' ')
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 	}
 }
@@ -82,15 +82,15 @@ int		nb_tokens(char *str)
 
 	i = 0;
 	j = 0;
-	while (str[i] && str[i] == ' ')
+	while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 		i++;
 	while (str[i])
 	{
-		while (str[i] && str[i] == ' ')
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 		j++;
 		i += len_token(str, i);
-		while (str[i] && str[i] == ' ')
+		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
 	}
 	return (j);
