@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/18 10:31:27 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:57:38 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ int	set_fd_pipe(int *pfd, int nb)
 
 void	dup_fd(int *pfd, int pos, int nb_p, int redir)
 {
-	// ft_putendl_fd(ft_itoa(redir), 2);
 	if (pos != 1 && redir != 1 && redir != 3)
 		dup2(pfd[(2 * pos - 4)], 0);
 	if (pos != nb_p + 1 && redir < 2)
@@ -41,8 +40,8 @@ void	end_fork(t_var *shell, int *pfd, int nb_p)
 	int	i;
 	int	status;
 
-	close_all_fd(pfd, nb_p);
 	i = 0;
+	close_all_fd(pfd, nb_p);
 	while (i <= nb_p)
 	{
 		wait(&status);
@@ -56,7 +55,6 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 {
 	int		pos;
 	int		redir;
-	// t_list	*tmp;
 	pid_t	child_pid;
 
 	shell->pipe = lst_pipe;
@@ -74,6 +72,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 			dup_fd(pfd, pos, nb_p, redir);
 			if (!(is_a_built(shell, shell->cmd[0])))
 				ft_exec(shell);
+			exit(shell->ret);
 		}
 		free_table(shell->pipe->content);
 		shell->pipe = shell->pipe->next;
@@ -88,7 +87,6 @@ int	ft_pipes(t_var *shell, int nb_p)
 	int		*pfd;
 	t_list	*lst_pipe;
 
-	//gestion des signaux. Variable fork + signal handler ?
 	pfd = ft_calloc(2 * nb_p, sizeof(int));
 	if (!pfd)
 		return (EXIT_FAILURE);

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:45:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/17 18:35:54 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:15:04 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,19 @@ void	display(char **envp)
 	char	cwd[4097];
 
 	home = get_varenv(envp, "HOME");
+	if (!home)
+		home = ft_strdup("");
 	getcwd(cwd, 4096);
-	if (ft_memcmp(cwd, home, ft_strlen(home)))
+	if (!home[0])
 		path = ft_strdup(cwd);
 	else
-		path = ft_strjoin("~", cwd + ft_strlen(home));
-	write(2, "\033[1;32mminishell@JGONFROY-JSAGUEZ\033[0;0m", 39);
+		path = ft_strjoin("~/", cwd + ft_strlen(home));
+	write(2, "\033[1;32mjsaguez&jgonfroy@minishell\033[0;0m", 39);
 	write(2, ":", 1);
+	write(2, "\033[1;34m", 8);
 	ft_putstr_fd(path, 2);
-	write(2, ": ", 2);
+	write(2, "\033[0;0m$", 8);
+	write(2, " ", 1);
 	free(path);
 	free(home);
 }

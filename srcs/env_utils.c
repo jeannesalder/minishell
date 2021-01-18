@@ -64,6 +64,7 @@ t_env	split_env(char *var)
 		return (dest);
 	}
 	dest.value = ft_substr(var, index, ft_strlen(var) - index);
+	// dest.value[ft_strlen(dest.value)] = '\0';
 	if (index > 1 && var[index - 2] == '+')
 	{
 		dest.append = 1;

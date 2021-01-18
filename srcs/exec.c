@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/18 10:46:44 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 22:58:57 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,30 @@ int	error_exec(char *cmd)
 	return (127);
 }
 
+int	find_cmd(char *path, char *name)
+{
+	char 		*cmd;
+	struct stat	file;
+	
+	cmd = ft_strjoin(path, name);
+	stat(cmd, &file);
+	free(cmd);
+	if ((file.st_mode & S_IFREG))
+	{
+		if ((file.st_mode & S_IXUSR))
+		{
+			print_str_fd("bash: ", name, ": permission denied\n", 2);
+			return (126);
+		}
+		print_str_fd("bash: ", name, " : command not found\n", 2);
+		return (127);
+	}
+	return (0);
+}
+
 void	ft_exec(t_var *shell)
 {
-	int		ret;
+	int	ret;
 	char	*path;
 
 	path = ft_strdup("");
@@ -42,12 +63,15 @@ void	ft_exec(t_var *shell)
 		free(path);
 		path = get_cmd_path(shell->path, shell->cmd[0]);
 	}
-	if (execve(path, shell->cmd, shell->env) == -1)
+	shell->ret = find_cmd(path, shell->cmd[0]);
+	if (shell->ret)
+		return ;
+	if (execve(path, shell->cmd, shell->env) -1)
 	{
 		ret = error_exec(shell->cmd[0]);
-		if (path)
-			free(path);
-		exit(ret);
+//		if (path)
+//			free(path);
+//		exit(ret);
 	}
 }
 
@@ -65,7 +89,10 @@ void	fork_for_exec(t_var *shell)
 		return ;
 	}
 	if (child_pid == 0)
+	{
 		ft_exec(shell);
+		exit (shell->ret);
+	}
 	else
 	{
 		waitpid(child_pid, &status, 0);

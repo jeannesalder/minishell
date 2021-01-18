@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 19:23:42 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/22 19:23:45 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 19:10:04 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ int	only_digit(char *str)
 
 void	free_and_exit(t_var *shell, int nb_exit, int eof)
 {
-	ft_putendl_fd("exit", 1);
+	if (!shell->fork)
+		ft_putendl_fd("exit", 1);
 	if (!eof)
 	{
 		// free_strarray(shell->cmd);

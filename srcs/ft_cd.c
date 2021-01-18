@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:12:02 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/19 09:12:04 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/18 20:19:14 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,12 @@ void	change_pwd(t_var *shell)
 	char	*env;
 
 	pwd = getcwd(NULL, 0);
+	if (pwd == NULL)
+	{
+		ft_putstr_fd("cd: error retrieving current directory: getcwd: ", 2);
+		ft_putendl_fd("cannot access parent directories: No such file or directory", 2);
+		return ;
+	}
 	free(shell->pwd);
 	shell->pwd = pwd;
 	change_oldpwd(shell);
@@ -89,7 +95,7 @@ void	ft_cd(t_var *shell, char **cmd)
 	path = check_arg(shell->env, cmd);
 	if (!path)
 		return ;
-	if (chdir(path) == -1)
+	if (path[0] && chdir(path))
 	{
 		print_str_fd("bash: cd: ", path, ": ", 2);
 		ft_putendl_fd(strerror(errno), 2);
