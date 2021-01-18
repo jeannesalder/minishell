@@ -12,6 +12,8 @@ ls | exit -> affiche exit alors qu'il devrait ne rien afficher -> ft_exit, ajout
 Signaux : changer valeur ret ctrl \ (131)
 sleep 10 | sleep 10 ctrl \
 ctrl \ dans pipe : plus rien ne s'affiche sur l'entree std. Fermer les pipes ?
+Fonctionne ?
+
 
 
 Pb parsing :
