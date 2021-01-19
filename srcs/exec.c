@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 14:47:59 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/19 17:44:10 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,7 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	{
 		cp_out = dup(1);
 		cp_in = dup(0);
-		redirection(shell, cmd);	
+		cmd = redirection(shell, cmd);	
 		if (!(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell);
 		dup2(cp_out, 1);

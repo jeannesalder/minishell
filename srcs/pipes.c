@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 14:49:10 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/19 17:44:30 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 		if (child_pid == 0)
 		{
 			shell->cmd = (char **)shell->pipe->content;
-			redirection(shell, shell->cmd);
+			shell->cmd = redirection(shell, shell->cmd);
 			dup_fd(shell, pfd, pos, nb_p);
 			if (!(is_a_built(shell, shell->cmd[0])))
 				ft_exec(shell);
