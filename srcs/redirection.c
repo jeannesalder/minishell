@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/18 21:35:12 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/19 11:47:06 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,7 @@ void	delete_redi(t_var *shell, char **cmd)
 
 	i = 0;
 	j = 0;
-	ft_putendl_fd(ft_itoa(shell->mini->nbtok), 2);
 	shell->mini->nbtok -= count_redi(shell, cmd) * 2;
-	ft_putendl_fd(ft_itoa(shell->mini->nbtok), 2);
 	args = (char **)ft_calloc(sizeof(char *), shell->mini->nbtok + 1);
 	while (j < shell->mini->nbtok && cmd[i])
 	{

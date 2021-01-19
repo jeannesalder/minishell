@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 11:19:23 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/19 11:54:41 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ int	set_fd_pipe(int *pfd, int nb)
 	return (0);
 }
 
-void	dup_fd(int *pfd, int pos, int nb_p, int redir)
+void	dup_fd(t_var *shell, int *pfd, int pos, int nb_p)
 {
-	if (pos != 1 && redir != 1 && redir != 3)
+	if (pos != 1 && shell->in == 0)
 		dup2(pfd[(2 * pos - 4)], 0);
-	if (pos != nb_p + 1 && redir < 2)
+	if (pos != nb_p + 1 && shell->out == 0)
 		dup2(pfd[2 * pos - 1], 1);
 	close_all_fd(pfd, nb_p);
 }
@@ -70,10 +70,9 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 		{
 			shell->cmd = (char **)shell->pipe->content;
 			redirection(shell, shell->cmd);
-			dup_fd(pfd, pos, nb_p, redir);
+			dup_fd(shell, pfd, pos, nb_p);
 			if (!(is_a_built(shell, shell->cmd[0])))
 				ft_exec(shell);
-			exit(shell->ret);
 		}
 		free_table(shell->pipe->content);
 		shell->pipe = shell->pipe->next;

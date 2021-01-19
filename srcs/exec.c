@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/18 22:58:57 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/19 12:44:31 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ void	ft_exec(t_var *shell)
 		free(path);
 		path = get_cmd_path(shell->path, shell->cmd[0]);
 	}
-	shell->ret = find_cmd(path, shell->cmd[0]);
-	if (shell->ret)
-		return ;
+//	shell->ret = find_cmd(path, shell->cmd[0]);
+//	if (shell->ret)
+//		return ;
 	if (execve(path, shell->cmd, shell->env) -1)
 	{
 		ret = error_exec(shell->cmd[0]);
-//		if (path)
-//			free(path);
-//		exit(ret);
+		if (path)
+			free(path);
+		exit(ret);
 	}
 }
 
@@ -89,10 +89,10 @@ void	fork_for_exec(t_var *shell)
 		return ;
 	}
 	if (child_pid == 0)
-	{
+//	{
 		ft_exec(shell);
-		exit (shell->ret);
-	}
+//		exit (shell->ret);
+//	}
 	else
 	{
 		waitpid(child_pid, &status, 0);
@@ -126,8 +126,8 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 {
 	int	nb_pipes;
 	int	ret;
-	int stdout;
-	int	stdin;
+	int 	cp_out;
+	int	cp_in;
 
 	nb_pipes = check_pipes(cmd);
 	if (nb_pipes == -1)
@@ -144,15 +144,15 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	}
 	if (!nb_pipes)
 	{
-		stdout = dup(1);
-		stdin = dup(0);
+		cp_out = dup(1);
+		cp_in = dup(0);
 		redirection(shell, cmd);	
 		if (!(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell);
-		dup2(stdout, 1);
-		dup2(stdin, 0);
-		close(stdout);
-		close(stdin);
+		dup2(cp_out, 1);
+		dup2(cp_in, 0);
+		close(cp_out);
+		close(cp_in);
 		return (0);
 	}
 	ret = ft_pipes(shell, nb_pipes);

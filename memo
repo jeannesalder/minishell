@@ -1,5 +1,10 @@
 testeur :
 
+
+Only space or tab ne doit pas retourner d'erreur. Set shell->ret a 0
+
+
+
 unset HOME -> segfault a cause de display prompt.
 export HOME= -> ecrit erreur et ret 1 alors qu'il ne devrait rien se passer et ret 0. A changer dans ft_cd. Maybe if getenv HOME = "", path = "."
 export -> segfault
