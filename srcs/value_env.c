@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:02:33 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/18 21:55:31 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/19 10:58:10 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int		len_env(char *str)
 	if (str[i] && str[i] == '?')
 	{
 		i++;
-		return(i);
+		return (i);
 	}
 	while (str[i] && !(ft_isdigit(str[0]))
 		&& (ft_isalnum(str[i]) || str[i] == '_'))

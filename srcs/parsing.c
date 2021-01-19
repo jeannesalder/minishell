@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/18 22:22:41 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/19 11:19:54 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		space_error(t_mini *mini, t_var *shell)
 	int	i;
 
 	i = 0;
-	while (mini->str[i] && (str[i] == ' ' || str[i] == '\t'))
+	while (mini->str[i] && (mini->str[i] == ' ' || mini->str[i] == '\t'))
 		i++;
 	if(!(mini->str[i]))
 	{
@@ -97,7 +97,7 @@ void	parsing(t_mini *mini, t_var *shell)
 	nbr = 0;
 	i = 0;
 	if (s_error(mini, shell) || q_error(mini, '\'', '"', shell)
-	|| space_error(mini))
+	|| space_error(mini, shell))
 		return ;
 	mini->cmds = split_semi(mini->str, ';', nbr);
 	while (mini->cmds[i])

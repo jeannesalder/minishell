@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/18 22:57:38 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/19 11:19:23 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 
 	shell->pipe = lst_pipe;
 	pos = 1;
+	redir = 0;
 	while (shell->pipe)
 	{	
 		child_pid = fork();
@@ -68,7 +69,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 		if (child_pid == 0)
 		{
 			shell->cmd = (char **)shell->pipe->content;
-			redir = redirection(shell, shell->cmd);
+			redirection(shell, shell->cmd);
 			dup_fd(pfd, pos, nb_p, redir);
 			if (!(is_a_built(shell, shell->cmd[0])))
 				ft_exec(shell);
