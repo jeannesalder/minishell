@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 11:54:41 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:49:10 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,17 +35,18 @@ void	dup_fd(t_var *shell, int *pfd, int pos, int nb_p)
 	close_all_fd(pfd, nb_p);
 }
 
-void	end_fork(t_var *shell, int *pfd, int nb_p)
+void	end_fork(t_var *shell, int *pfd, int nb_p, pid_t child_pid)
 {
 	int	i;
 	int	status;
 
 	i = 0;
 	close_all_fd(pfd, nb_p);
-	while (i <= nb_p)
+	waitpid(child_pid, &status, 0);
+	shell->ret = WEXITSTATUS(status);
+	while (i <= nb_p - 1)
 	{
 		wait(&status);
-		shell->ret = WEXITSTATUS(status);
 		i++;
 	}
 	shell->fork = 0;
@@ -54,12 +55,10 @@ void	end_fork(t_var *shell, int *pfd, int nb_p)
 void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 {
 	int		pos;
-	int		redir;
 	pid_t	child_pid;
 
 	shell->pipe = lst_pipe;
 	pos = 1;
-	redir = 0;
 	while (shell->pipe)
 	{	
 		child_pid = fork();
@@ -79,7 +78,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 		pos++;
 	}
 	rm_lst(&lst_pipe);
-	end_fork(shell, pfd, nb_p);
+	end_fork(shell, pfd, nb_p, child_pid);
 }
 
 int	ft_pipes(t_var *shell, int nb_p)

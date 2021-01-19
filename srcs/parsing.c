@@ -97,7 +97,7 @@ void	parsing(t_mini *mini, t_var *shell)
 	nbr = 0;
 	i = 0;
 	if (s_error(mini, shell) || q_error(mini, '\'', '"', shell)
-	|| space_error(mini, shell))
+	|| space_error(mini, shell) || syntax_error(mini->str))
 		return ;
 	mini->cmds = split_semi(mini->str, ';', nbr);
 	while (mini->cmds[i])

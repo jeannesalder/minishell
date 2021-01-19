@@ -6,55 +6,30 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 12:44:31 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/19 14:47:59 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	error_exec(char *cmd)
+int	find_cmd(char *path, char *cmd)
 {
-	char	*tmp1;
-	char	*tmp2;
-	char	*tmp3;
-	char	*error;
-
-	tmp1 = ft_strjoin("bash: ", cmd);
-	tmp2 = ft_strjoin(tmp1, ": ");
-	if (errno == 14)
-		tmp3 = ft_strjoin(tmp2, "command not found");
-	else
-		tmp3 = ft_strjoin(tmp2, strerror(errno));
-	error = ft_strjoin(tmp3, "\n");
-	write(2, error, ft_strlen(error));
-	free_multiple(tmp1, tmp2, tmp3, error);
-	return (127);
-}
-
-int	find_cmd(char *path, char *name)
-{
-	char 		*cmd;
 	struct stat	file;
-	
-	cmd = ft_strjoin(path, name);
-	stat(cmd, &file);
-	free(cmd);
-	if ((file.st_mode & S_IFREG))
+
+	stat(path, &file);
+	if ((file.st_mode & S_IFREG) && (file.st_mode & S_IXUSR))
+		return (0);
+	if (file.st_mode & S_IFREG)
 	{
-		if ((file.st_mode & S_IXUSR))
-		{
-			print_str_fd("bash: ", name, ": permission denied\n", 2);
-			return (126);
-		}
-		print_str_fd("bash: ", name, " : command not found\n", 2);
-		return (127);
+		print_str_fd("bash: ", cmd, ": permission denied\n", 2);
+		return (126);
 	}
-	return (0);
+	print_str_fd("bash: ", cmd, " : command not found\n", 2);
+	return (127);
 }
 
 void	ft_exec(t_var *shell)
 {
-	int	ret;
 	char	*path;
 
 	path = ft_strdup("");
@@ -63,16 +38,16 @@ void	ft_exec(t_var *shell)
 		free(path);
 		path = get_cmd_path(shell->path, shell->cmd[0]);
 	}
-//	shell->ret = find_cmd(path, shell->cmd[0]);
-//	if (shell->ret)
-//		return ;
-	if (execve(path, shell->cmd, shell->env) -1)
+	shell->ret = find_cmd(path, shell->cmd[0]);
+	if (shell->ret)
 	{
-		ret = error_exec(shell->cmd[0]);
 		if (path)
-			free(path);
-		exit(ret);
+			free(path);	
+		exit (shell->ret);
 	}
+	execve(path, shell->cmd, shell->env);
+	if (path)
+		free(path);
 }
 
 void	fork_for_exec(t_var *shell)
@@ -89,10 +64,7 @@ void	fork_for_exec(t_var *shell)
 		return ;
 	}
 	if (child_pid == 0)
-//	{
 		ft_exec(shell);
-//		exit (shell->ret);
-//	}
 	else
 	{
 		waitpid(child_pid, &status, 0);
@@ -126,7 +98,7 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 {
 	int	nb_pipes;
 	int	ret;
-	int 	cp_out;
+	int	cp_out;
 	int	cp_in;
 
 	nb_pipes = check_pipes(cmd);
