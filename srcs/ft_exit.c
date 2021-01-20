@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 19:23:42 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/18 19:10:04 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/20 19:35:20 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@ int	only_digit(char *str)
 	int	i;
 
 	i = 0;
-	if (str[i] == '_' || str[i] == '+')
+	if (str[0] == '-' && !str[1])
+		return (0);
+	if (str[i] == '-' || str[i] == '+')
 		i++;
 	while (str[i])
 	{
@@ -30,15 +32,8 @@ int	only_digit(char *str)
 	return (1);
 }
 
-void	free_and_exit(t_var *shell, int nb_exit, int eof)
+void	free_and_exit(t_var *shell, int nb_exit)
 {
-	if (!shell->fork)
-		ft_putendl_fd("exit", 1);
-	if (!eof)
-	{
-		// free_strarray(shell->cmd);
-		// free_strarray(shell->mini->cmds);
-	}
 	free(g_read);
 	free(shell->pwd);
 	free(shell->path);
@@ -55,16 +50,20 @@ void	ft_exit(t_var *shell, char **cmd)
 	nb_args = nb_arg(cmd);
 	if (nb_args > 1)
 	{
+		if (!shell->fork)
+			ft_putendl_fd("exit", 2);
 		ft_putendl_fd("bash: exit: too many arguments", 2);
 		return ;
 	}
 	if (!cmd[1])
-		free_and_exit(shell, 0, 0);
+		free_and_exit(shell, 0);
 	if (!only_digit(cmd[1]))
-	{
+	{	
+		if (!shell->fork)
+			ft_putendl_fd("exit", 2);
 		print_str_fd("bash: exit: ", cmd[1], ": numeric argument required", 2);
 		ft_putchar_fd('\n', 2);
-		free_and_exit(shell, 2, 0);
+		free_and_exit(shell, 2);
 	}
-	free_and_exit(shell, ft_atoi(cmd[1]), 0);
+	free_and_exit(shell, ft_atoi(cmd[1]));
 }

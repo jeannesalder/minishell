@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:45:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/18 22:15:04 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/20 20:38:46 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ char	*ft_read_input(char **env)
 	g_read[0] = 0;
 	ret = read(0, &c, 1);
 	if (ret == 0)
-		free_and_exit(g_shell, 0, 1);
+	{	
+		ft_putendl_fd("exit", 2);
+		free_and_exit(g_shell, 0);
+	}
 	while (c != '\n')
 	{
 		g_read = ft_cat(g_read, c);
@@ -46,7 +49,7 @@ void	display(char **envp)
 	if (!home)
 		home = ft_strdup("");
 	getcwd(cwd, 4096);
-	if (!home[0])
+	if (!home[0] || ft_strlen(home) >= ft_strlen(cwd))
 		path = ft_strdup(cwd);
 	else
 		path = ft_strjoin("~/", cwd + ft_strlen(home));

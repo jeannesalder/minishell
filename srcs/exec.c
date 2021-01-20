@@ -6,30 +6,36 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 17:44:10 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/20 21:21:32 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	find_cmd(char *path, char *cmd)
+int     error_exec(char *cmd)
 {
-	struct stat	file;
+        char    *tmp1;
+        char    *tmp2;
+        char    *tmp3;
+        char    *error;
 
-	stat(path, &file);
-	if ((file.st_mode & S_IFREG) && (file.st_mode & S_IXUSR))
-		return (0);
-	if (file.st_mode & S_IFREG)
-	{
-		print_str_fd("bash: ", cmd, ": permission denied\n", 2);
+        tmp1 = ft_strjoin("bash: ", cmd);
+        tmp2 = ft_strjoin(tmp1, ": ");
+        if (errno == 14) 
+                tmp3 = ft_strjoin(tmp2, "command not found");
+        else
+                tmp3 = ft_strjoin(tmp2, strerror(errno));
+        error = ft_strjoin(tmp3, "\n");
+        write(2, error, ft_strlen(error));
+        free_multiple(tmp1, tmp2, tmp3, error);
+	if (errno == EACCES)
 		return (126);
-	}
-	print_str_fd("bash: ", cmd, " : command not found\n", 2);
-	return (127);
+        return (127);
 }
 
 void	ft_exec(t_var *shell)
 {
+	int	ret;
 	char	*path;
 
 	path = ft_strdup("");
@@ -38,16 +44,13 @@ void	ft_exec(t_var *shell)
 		free(path);
 		path = get_cmd_path(shell->path, shell->cmd[0]);
 	}
-	shell->ret = find_cmd(path, shell->cmd[0]);
-	if (shell->ret)
-	{
-		if (path)
-			free(path);	
-		exit (shell->ret);
-	}
-	execve(path, shell->cmd, shell->env);
-	if (path)
-		free(path);
+	if (execve(path, shell->cmd, shell->env) == -1) 
+        {
+                ret = error_exec(shell->cmd[0]);
+                if (path)
+                        free(path);
+                exit(ret);
+        }
 }
 
 void	fork_for_exec(t_var *shell)
@@ -118,7 +121,7 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	{
 		cp_out = dup(1);
 		cp_in = dup(0);
-		cmd = redirection(shell, cmd);	
+		cmd = redirection(shell, cmd, 0);	
 		if (!(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell);
 		dup2(cp_out, 1);
