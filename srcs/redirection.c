@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/20 13:47:23 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/20 13:52:12 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,6 @@ char	**delete_redi(t_var *shell, char **cmd)
 	}
 	cmd = NULL;
 	cmd = args;
-	ft_putendl_fd(shell->cmd[0], 2);
-	ft_putendl_fd(shell->cmd[1], 2);
-	ft_putendl_fd(shell->cmd[2], 2);
 	//free_table(args); Free si il n'y a pas de pipe?
 	return (cmd);
 }
