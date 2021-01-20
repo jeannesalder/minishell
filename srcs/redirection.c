@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/20 13:52:12 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/20 19:16:26 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		count_redi(t_var *shell, char **cmd)
 	return (count);
 }
 
-char	**delete_redi(t_var *shell, char **cmd)
+char	**delete_redi(t_var *shell, char **cmd, int p)
 {
 	char	**args;
 	int		i;
@@ -60,7 +60,8 @@ char	**delete_redi(t_var *shell, char **cmd)
 	}
 	cmd = NULL;
 	cmd = args;
-	//free_table(args); Free si il n'y a pas de pipe?
+	if (p == 0)
+		free_table(args);
 	return (cmd);
 }
 
@@ -177,7 +178,7 @@ void	redi_out(t_var *shell, int i, int fd)
 }*/
 
 
-char	**redirection(t_var *shell, char **cmd)
+char	**redirection(t_var *shell, char **cmd, int p)
 {
 	int i;
 	int	j;
@@ -198,6 +199,6 @@ char	**redirection(t_var *shell, char **cmd)
 	if (cmd[j])
 		redi_in(shell, j, fd);
 	if (cmd[i] || cmd[j])
-		cmd = delete_redi(shell, cmd);
+		cmd = delete_redi(shell, cmd, p);
 	return (cmd);
 }

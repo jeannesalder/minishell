@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:02:33 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/19 10:58:10 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/20 22:15:00 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,49 @@ int		value_env(t_var *shell, char **str)
 	brace = 0;
 	while ((*str) && (*str)[i])
 	{
+		if ((*str)[i] == '\'')
+		{
+			i++;
+			while ((*str)[i] && ((*str)[i] != '\''))
+			{
+				if ((*str)[i] == '$' && (*str)[i + 1]
+				&& (*str)[i + 1] != ' ')
+					i += search_env(str, shell, i, brace) - 1;
+				i++;
+			}
+		}
+		if ((*str)[i] == '"')
+		{
+			i++;
+			while ((*str)[i] && ((*str)[i] != '"'))
+			{
+				if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\'
+				|| (*str)[i + 1] == '$' || (*str)[i + 1] == '"'))
+				{
+					rm_char(str, i);
+					i++;
+				}
+				if ((*str)[i] == '$' && (*str)[i + 1]
+				&& (*str)[i + 1] != ' ')
+					i += search_env(str, shell, i, brace) - 1;
+				i++;
+			}
+		}
+		if (!(*str)[i])
+		{
+			ft_putstr_fd("Non finished quotes\n", 2);
+			shell->ret = 2;
+			//free(mini->str);
+			//return (1);
+		}
+		if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\'
+		|| (*str)[i + 1] == '$' || (*str)[i + 1] == '"'))
+		{
+			rm_char(str, i);
+			i++;
+		}
 		if ((*str)[i] == '$' && (*str)[i + 1]
-			&& (*str)[i] != ' ')
+		&& (*str)[i + 1] != ' ')
 			i += search_env(str, shell, i, brace) - 1;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 21:59:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/20 13:47:49 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/20 18:53:56 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,10 +180,10 @@ int			check_pipes(char **cmd);
 /*
  **fonctions redirection.c
  */
-char	**redirection(t_var *shell, char **cmd);
+char	**redirection(t_var *shell, char **cmd, int p);
 void	redi_out(t_var *shell, int i, int fd);
 void	redi_in(t_var *shell, int i, int fd);
-char	**delete_redi(t_var *shell, char **cmd);
+char	**delete_redi(t_var *shell, char **cmd, int p);
 int		count_redi(t_var *shell, char **cmd);
 
 /*
