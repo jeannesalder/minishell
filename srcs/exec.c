@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/20 21:21:32 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/20 21:43:15 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	{
 		cp_out = dup(1);
 		cp_in = dup(0);
-		cmd = redirection(shell, cmd, 0);	
+		cmd = redirection(shell, cmd);	
 		if (!(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell);
 		dup2(cp_out, 1);

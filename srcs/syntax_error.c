@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:26:15 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 16:27:36 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:04:34 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_chevron(char *input, char c, int j)
 			while (input[j] && (input[j] == ' ' || input[j] == '\t'))
 				j--;
 			if (input[j] == '>')
-			return (1);
+				return (1);
 		}
 	}
 	return (0);

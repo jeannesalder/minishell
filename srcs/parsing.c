@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/19 11:19:54 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/21 13:08:03 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,8 +97,13 @@ void	parsing(t_mini *mini, t_var *shell)
 	nbr = 0;
 	i = 0;
 	if (s_error(mini, shell) || q_error(mini, '\'', '"', shell)
-	|| space_error(mini, shell) || syntax_error(mini->str))
+	|| space_error(mini, shell)) 
 		return ;
+	if (syntax_error(mini->str))
+	{
+		shell->ret = 2;
+		return ;	
+	}
 	mini->cmds = split_semi(mini->str, ';', nbr);
 	while (mini->cmds[i])
 	{
@@ -115,7 +120,8 @@ void	parsing(t_mini *mini, t_var *shell)
 		i++;
 		free_table(mini->toks);
 	}
-	free(mini->str);
+	if (g_read[0] != '\0')
+		free(mini->str);
 	free_table(mini->cmds);
 	return ;
 }

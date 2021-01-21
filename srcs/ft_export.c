@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:38:45 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/19 11:35:30 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/20 21:39:54 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	ft_export(t_var *shell, char **env, char **cmd)
 		{
 			index = is_in_env(shell->env, tmp.name);
 			if (index && tmp.content == 1)
-				modify_env(env, cmd[i], index, tmp);
+				modify_env(shell->env, cmd[i], index, tmp);
 			if (index == 0)
 				shell->env = add_env(shell->env, cmd[i], tmp);
 			change_path(shell, tmp);
