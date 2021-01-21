@@ -1,18 +1,18 @@
 /* ************************************************************************** */
-/*																			  */
-/*														  :::	   ::::::::   */
-/*	 exec.c												:+:		 :+:	:+:   */
-/*													  +:+ +:+		  +:+	  */
-/*	 By: jsaguez <jsaguez@student.42.fr>			+#+  +:+	   +#+		  */
-/*												  +#+#+#+#+#+	+#+			  */
-/*	 Created: 2020/12/18 13:19:43 by jgonfroy		   #+#	  #+#			  */
-/*	 Updated: 2021/01/21 16:44:59 by jgonfroy		  ###	########.fr		  */
-/*																			  */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/21 22:21:19 by jsaguez           #+#    #+#             */
+/*   Updated: 2021/01/21 23:18:30 by jsaguez          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	error_exec(char *cmd)
+int		error_exec(char *cmd)
 {
 	char	*tmp1;
 	char	*tmp2;
@@ -78,7 +78,7 @@ void	fork_for_exec(t_var *shell)
 	}
 }
 
-int	is_a_built(t_var *shell, char *cmd)
+int		is_a_built(t_var *shell, char *cmd)
 {
 	if (ft_memcmp(cmd, "echo", 5) == 0)
 		ft_echo(shell, shell->cmd);
@@ -99,7 +99,7 @@ int	is_a_built(t_var *shell, char *cmd)
 	return (1);
 }
 
-int	ft_exec_cmd(t_var *shell, char **cmd)
+int		ft_exec_cmd(t_var *shell, char **cmd)
 {
 	int	nb_pipes;
 	int	ret;

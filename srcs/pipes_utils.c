@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 12:17:22 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/19 14:50:05 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:20:16 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@ void	close_all_fd(int *pfd, int nb_p)
 	while (i < nb_p * 2)
 	{
 		if (close(pfd[i]))
-			exit (EXIT_FAILURE);
+			exit(EXIT_FAILURE);
 		i++;
 	}
 }
 
-int	next_pipe(char **cmd, int start)
+int		next_pipe(char **cmd, int start)
 {
 	int	end;
 
@@ -74,7 +74,7 @@ t_list	*split_pipes(char **cmd)
 	return (lst_pipe);
 }
 
-int	check_pipes(char **cmd)
+int		check_pipes(char **cmd)
 {
 	int	i;
 	int	nb_pipes;

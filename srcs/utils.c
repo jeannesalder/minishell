@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:23:09 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/17 21:23:18 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/21 23:23:55 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_cat(char *input, char c)
 	i = 0;
 	while (input[i])
 		i++;
-	str = malloc((i + 2) *sizeof(char));
+	str = malloc((i + 2) * sizeof(char));
 	if (!str)
 		return (NULL);
 	i = 0;

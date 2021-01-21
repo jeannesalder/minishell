@@ -6,13 +6,13 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 18:12:59 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:20:41 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	set_fd_pipe(int *pfd, int nb)
+int		set_fd_pipe(int *pfd, int nb)
 {
 	int	i;
 
@@ -63,7 +63,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 	shell->pipe = lst_pipe;
 	pos = 1;
 	while (shell->pipe)
-	{	
+	{
 		child_pid = fork();
 		shell->fork = 1;
 		if (child_pid == -1)
@@ -84,7 +84,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 	end_fork(shell, pfd, nb_p, child_pid);
 }
 
-int	ft_pipes(t_var *shell, int nb_p)
+int		ft_pipes(t_var *shell, int nb_p)
 {
 	int		*pfd;
 	t_list	*lst_pipe;

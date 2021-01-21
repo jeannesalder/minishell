@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:18:33 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/19 09:19:18 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:19:23 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int	is_arg(char *cmd)
+int		is_arg(char *cmd)
 {
 	int	i;
 

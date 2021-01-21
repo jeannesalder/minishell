@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*									      */
-/*							  :::	   ::::::::   */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*						      +:+ +:+	      +:+     */
-/*   By: jsaguez <jsaguez@student.42.fr>	    +#+  +:+	   +#+	      */
-/*						  +#+#+#+#+#+	+#+	      */
-/*   Created: 2020/12/21 21:59:48 by jgonfroy	       #+#    #+#	      */
-/*   Updated: 2021/01/21 21:33:18 by jgonfroy         ###   ########.fr       */
-/*									      */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
+/*   Updated: 2021/01/21 23:36:40 by jsaguez          ###   ########.fr       */
+/*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -37,7 +37,9 @@ void			display(char **env);
 char			*get_path(char **envp);
 char			*get_cmd_path(char *path, char *cmd);
 
-//signal.c
+/*
+ **fonctions signal.c
+ */
 void			sigint_handler(int signo);
 void			sigquit_handler(int signo);
 
@@ -109,7 +111,9 @@ void			lstadd_value(t_list **list, void *value);
 void			free_multiple(void *s1, void *s2, void *s3, void *s4);
 void			free_strarray(char **tab);
 
-//fonctions exec.c
+/*
+ **fonctions exec.c
+ */
 void			ft_exec(t_var *shell);
 int				is_a_built(t_var *shell, char *cmd);
 int				ft_exec_cmd(t_var *shell, char **cmd);
@@ -167,7 +171,9 @@ int				search_env(char **str, t_var *shell, int i, int brace);
 int				len_env(char *str);
 char			*get_envs(char **envp, char *env);
 
-//fonctions pipes.c
+/*
+ **fonctions pipes.c
+ */
 int				ft_pipes(t_var *shell, int nb_p);
 
 /*

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   list_utils.c                                       :+:      :+:    :+:   */
+/*   cmd_utils.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 11:37:40 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/19 11:37:43 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:17:00 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ char	*get_cmd_path(char *path, char *cmd)
 	return (NULL);
 }
 
-int	nb_arg(char **cmd)
+int		nb_arg(char **cmd)
 {
 	int	i;
 

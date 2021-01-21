@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 16:35:22 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/21 16:35:24 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:18:46 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char	**add_env(char **env, char *cmd, t_env var)
 	return (tab);
 }
 
-int	is_in_order(const char *s1, const char *s2)
+int		is_in_order(const char *s1, const char *s2)
 {
 	if (ft_memcmp(s1, s2, ft_strlen(s1) + 1) <= 0)
 		return (1);

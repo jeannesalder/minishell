@@ -6,23 +6,21 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/21 13:14:02 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:19:55 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int		space_error(t_mini *mini, t_var *shell)
+int		space_error(t_mini *mini)
 {
 	int	i;
 
 	i = 0;
 	while (mini->str[i] && (mini->str[i] == ' ' || mini->str[i] == '\t'))
 		i++;
-	if(!(mini->str[i]))
+	if (!(mini->str[i]))
 	{
-		ft_putstr_fd("Only spaces or/and tabs\n", 2);
-		shell->ret = 2;
 		free(mini->str);
 		return (1);
 	}
@@ -97,12 +95,12 @@ void	parsing(t_mini *mini, t_var *shell)
 	nbr = 0;
 	i = 0;
 	if (s_error(mini, shell) || q_error(mini, '\'', '"', shell)
-	|| space_error(mini, shell)) 
+	|| space_error(mini))
 		return ;
 	if (syntax_error(mini->str))
 	{
 		shell->ret = 2;
-		return ;	
+		return ;
 	}
 	mini->cmds = split_semi(mini->str, ';', nbr);
 	while (mini->cmds[i])

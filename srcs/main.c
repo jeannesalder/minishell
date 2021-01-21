@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:45:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 21:32:05 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:29:24 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	*ft_read_input(char **env)
 	g_read[0] = 0;
 	ret = read(0, &c, 1);
 	if (ret == 0)
-	{	
+	{
 		ft_putendl_fd("exit", 2);
 		free_and_exit(g_shell, 0, 1);
 	}
@@ -87,7 +87,7 @@ void	init_struct(t_var *shell, t_mini **mini, char **envp)
 	shell->mini = (*mini);
 }
 
-int	main(int ac, char **av, char **envp)
+int		main(int ac, char **av, char **envp)
 {
 	t_var	shell;
 	t_mini	*mini;

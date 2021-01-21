@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_error.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:26:15 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 18:16:15 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:23:02 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	print_error(char *input, char c)
 {
-	free (input);
+	free(input);
 	ft_putstr_fd("bash: syntax error near unexpected token \'", 2);
 	if (c == ' ')
 		ft_putstr_fd("newline", 2);
@@ -25,11 +25,11 @@ int	print_error(char *input, char c)
 }
 
 int	check_chevron(char *input, char c, int j)
-{	
+{
 	if (c != '>')
 		return (0);
 	if (input[j])
-	{	
+	{
 		if (input[j] == '<')
 			return (1);
 		if (input[j] == '>' && input[j + 1] != '>')

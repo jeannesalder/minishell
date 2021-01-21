@@ -5,145 +5,90 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/01/17 21:02:33 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/20 22:15:00 by jsaguez          ###   ########.fr       */
+/*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
+/*   Updated: 2021/01/21 23:24:43 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-char	*get_envs(char **export, char *env)
+int	*change_out(int *verif)
 {
-	int		i;
-	int		len;
-	char	*tmp;
+	int i;
 
-	env = ft_strjoin(env, "=");
-	len = strlen(env);
 	i = 0;
-	while (export[i] && ft_memcmp(env, export[i], len))
+	while (verif[i])
 		i++;
-	if (export[i])
-		tmp = export[i] + len;
-	else
-		tmp = "\0";
-	free(env);
-	return (tmp);
+	i--;
+	while (i != -1)
+	{
+		if (verif[i] == 2)
+		{
+			while (i != -1)
+			{
+				verif[i] = 2;
+				i--;
+			}
+			return (verif);
+		}
+		i--;
+	}
+	return (verif);
 }
 
-int		len_env(char *str)
+int	nb_redi(t_var *shell)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	if (str[i] && str[0] == '{')
-		i++;
-	if (str[i] && str[i] == '?')
+	while (shell->pipe)
 	{
 		i++;
-		return (i);
+		shell->pipe = shell->pipe->next;
 	}
-	while (str[i] && !(ft_isdigit(str[0]))
-		&& (ft_isalnum(str[i]) || str[i] == '_'))
-		i++;
 	return (i);
 }
 
-int		begin_env(char **str, int i, int brace)
+int	*verif_out(t_var *shell, int *verif)
 {
-	if ((*str)[i + 1] == '{')
-		brace = 1;
-	return (brace);
+	int		i;
+	int		j;
+	char	**cmd;
+
+	j = 0;
+	j = nb_redi(shell);
+	verif = ft_calloc(sizeof(int*), j + 1);
+	j = 0;
+	while (shell->pipe)
+	{
+		if (shell->fork)
+			cmd = (char**)shell->pipe->content;
+		i = 0;
+		while (cmd[i])
+		{
+			if (!ft_memcmp(cmd[i], ">", 2) || !ft_memcmp(cmd[i], ">>", 3))
+				verif[j] = 1;
+			i++;
+		}
+		if (verif[j] != 1)
+			verif[j] = 2;
+		j++;
+	}
+	verif = change_out(verif);
+	return (verif);
 }
 
-int		search_env(char **str, t_var *shell, int i, int brace)
+int	drop_redi(char **cmd, int i)
 {
-	char	*temp1;
-	char	*temp2;
-	char	*env;
-	char	*temp3;
-	int		len;
-
-	env = 0;
-	brace = begin_env(str, i, brace);
-	if ((*str)[i + 1 + brace] == '?')
-		env = ft_itoa(shell->ret);
-	len = len_env(*str + i + 1);
-	temp3 = ft_strduplen(*str + i + 1 + brace, len - brace);
-	if (!(env))
-	{
-		env = ft_strdup(get_envs(shell->env, temp3));
-		if (brace == 1 && (*str)[i + 1 + len] != '}')
-		{
-			free(env);
-			env = ft_strdup("\0");
-			brace = 0;
-		}
-	}
-	temp1 = ft_strduplen(*str, i);
-	temp2 = ft_strdup(*str + i + len + 1 + brace);
-	free_multiple(temp3, *str, NULL, NULL);
-	temp3 = ft_strjoin(temp1, env);
-	*str = ft_strjoin(temp3, temp2);
-	len = ft_strlen(env);
-	free_multiple(temp1, temp2, env, temp3);
-	return (len);
+	cmd[i] = NULL;
+	cmd[i + 1] = NULL;
+	i += 2;
+	return (i);
 }
 
-int		value_env(t_var *shell, char **str)
+int	open_redi(t_var *shell, char **cmd, int i, int fd)
 {
-	int	i;
-	int brace;
-
-	i = 0;
-	brace = 0;
-	while ((*str) && (*str)[i])
-	{
-		if ((*str)[i] == '\'')
-		{
-			i++;
-			while ((*str)[i] && ((*str)[i] != '\''))
-			{
-				if ((*str)[i] == '$' && (*str)[i + 1]
-				&& (*str)[i + 1] != ' ')
-					i += search_env(str, shell, i, brace) - 1;
-				i++;
-			}
-		}
-		if ((*str)[i] == '"')
-		{
-			i++;
-			while ((*str)[i] && ((*str)[i] != '"'))
-			{
-				if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\'
-				|| (*str)[i + 1] == '$' || (*str)[i + 1] == '"'))
-				{
-					rm_char(str, i);
-					i++;
-				}
-				if ((*str)[i] == '$' && (*str)[i + 1]
-				&& (*str)[i + 1] != ' ')
-					i += search_env(str, shell, i, brace) - 1;
-				i++;
-			}
-		}
-		if (!(*str)[i])
-		{
-			ft_putstr_fd("Non finished quotes\n", 2);
-			shell->ret = 2;
-			//free(mini->str);
-			//return (1);
-		}
-		if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\'
-		|| (*str)[i + 1] == '$' || (*str)[i + 1] == '"'))
-		{
-			rm_char(str, i);
-			i++;
-		}
-		if ((*str)[i] == '$' && (*str)[i + 1]
-		&& (*str)[i + 1] != ' ')
-			i += search_env(str, shell, i, brace) - 1;
-		i++;
-	}
-	return (0);
+	fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
+	shell->out = 1;
+	return (fd);
 }

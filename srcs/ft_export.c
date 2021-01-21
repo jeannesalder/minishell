@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:38:45 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/20 21:39:54 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 23:19:41 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	change_path(t_var *shell, t_env tmp)
 	}
 }
 
-int	no_arg(char **env, char *cmd)
+int		no_arg(char **env, char *cmd)
 {
 	if (!cmd)
 	{
