@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 14:02:21 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 18:12:59 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	end_fork(t_var *shell, int *pfd, int nb_p, pid_t child_pid)
 	close_all_fd(pfd, nb_p);
 	waitpid(child_pid, &status, 0);
 	if (WIFSIGNALED(status))
-		shell->ret = 128 + WTERMSIG(status); 
+		shell->ret = 128 + WTERMSIG(status);
 	else
 		shell->ret = WEXITSTATUS(status);
 	while (i <= nb_p - 1)

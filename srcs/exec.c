@@ -1,41 +1,41 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   exec.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 14:14:28 by jgonfroy         ###   ########.fr       */
-/*                                                                            */
+/*																			  */
+/*														  :::	   ::::::::   */
+/*	 exec.c												:+:		 :+:	:+:   */
+/*													  +:+ +:+		  +:+	  */
+/*	 By: jsaguez <jsaguez@student.42.fr>			+#+  +:+	   +#+		  */
+/*												  +#+#+#+#+#+	+#+			  */
+/*	 Created: 2020/12/18 13:19:43 by jgonfroy		   #+#	  #+#			  */
+/*	 Updated: 2021/01/21 16:44:59 by jgonfroy		  ###	########.fr		  */
+/*																			  */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
 
-int     error_exec(char *cmd)
+int	error_exec(char *cmd)
 {
-        char    *tmp1;
-        char    *tmp2;
-        char    *tmp3;
-        char    *error;
+	char	*tmp1;
+	char	*tmp2;
+	char	*tmp3;
+	char	*error;
 
-        tmp1 = ft_strjoin("bash: ", cmd);
-        tmp2 = ft_strjoin(tmp1, ": ");
-        if (errno == 14) 
-                tmp3 = ft_strjoin(tmp2, "command not found");
-        else
-                tmp3 = ft_strjoin(tmp2, strerror(errno));
-        error = ft_strjoin(tmp3, "\n");
-        write(2, error, ft_strlen(error));
-        free_multiple(tmp1, tmp2, tmp3, error);
+	tmp1 = ft_strjoin("bash: ", cmd);
+	tmp2 = ft_strjoin(tmp1, ": ");
+	if (errno == 14)
+		tmp3 = ft_strjoin(tmp2, "command not found");
+	else
+		tmp3 = ft_strjoin(tmp2, strerror(errno));
+	error = ft_strjoin(tmp3, "\n");
+	write(2, error, ft_strlen(error));
+	free_multiple(tmp1, tmp2, tmp3, error);
 	if (errno == EACCES)
 		return (126);
-        return (127);
+	return (127);
 }
 
 void	ft_exec(t_var *shell)
 {
-	int	ret;
+	int		ret;
 	char	*path;
 
 	path = ft_strdup("");
@@ -44,13 +44,13 @@ void	ft_exec(t_var *shell)
 		free(path);
 		path = get_cmd_path(shell->path, shell->cmd[0]);
 	}
-	if (execve(path, shell->cmd, shell->env) == -1) 
-        {
-                ret = error_exec(shell->cmd[0]);
-                if (path)
-                        free(path);
-                exit(ret);
-        }
+	if (execve(path, shell->cmd, shell->env) == -1)
+	{
+		ret = error_exec(shell->cmd[0]);
+		if (path)
+			free(path);
+		exit(ret);
+	}
 }
 
 void	fork_for_exec(t_var *shell)
@@ -72,7 +72,7 @@ void	fork_for_exec(t_var *shell)
 	{
 		waitpid(child_pid, &status, 0);
 		if (WIFSIGNALED(status))
-			shell->ret = 128 + WTERMSIG(status); 
+			shell->ret = 128 + WTERMSIG(status);
 		else
 			shell->ret = WEXITSTATUS(status);
 		if (shell->ret == 131)
@@ -110,23 +110,11 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	int	cp_in;
 
 	nb_pipes = check_pipes(cmd);
-	if (nb_pipes == -1)
-	{
-		ft_putendl_fd("bash: syntax error near unexpected token `|'", 2);
-		shell->ret = 2;
-		return (1);
-	}
-	if (cmd[nb_arg(cmd)][0] == '<' || cmd[nb_arg(cmd)][0] == '>')
-	{
-		ft_putendl_fd("bash: syntax error near unexpected token `newline'", 2);
-		shell->ret = 2;
-		return (1);
-	}
 	if (!nb_pipes)
 	{
 		cp_out = dup(1);
 		cp_in = dup(0);
-		cmd = redirection(shell, cmd, 0);	
+		cmd = redirection(shell, cmd, 0);
 		if (!(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell);
 		dup2(cp_out, 1);

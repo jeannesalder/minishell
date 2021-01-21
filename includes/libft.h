@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 14:27:01 by jgonfroy          #+#    #+#             */
-/*   Updated: 2019/12/09 18:32:54 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:19:15 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,6 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 				void (*del) (void *));
 int				ft_charset(char c, char *charset);
+long long int			ft_atoi_llong(const char *str);
 
 #endif

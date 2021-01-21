@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:26:15 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 13:04:34 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 18:16:15 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@ int	print_error(char *input, char c)
 }
 
 int	check_chevron(char *input, char c, int j)
-{	if (c != '>')
+{	
+	if (c != '>')
 		return (0);
 	if (input[j])
 	{	
@@ -63,19 +64,19 @@ int	check_prev(char *input, int i, char c)
 			return (print_error(input, c));
 	}
 	if ((c == '<' || c == '>') && !input[i + 1])
-			return (print_error(input, ' '));
+		return (print_error(input, ' '));
 	if (c == '<')
 		if (input[j] && (input[j] == '<' || input[j] == '>'))
 			return (print_error(input, c));
-	if (check_chevron(input, c, j))	
-			return (print_error(input, c));
+	if (check_chevron(input, c, j))
+		return (print_error(input, c));
 	return (0);
 }
 
 int	syntax_error(char *input)
 {
-	int	i;
-	int	error;
+	int		i;
+	int		error;
 	char	c;
 
 	i = 0;

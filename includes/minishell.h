@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
+/*									      */
+/*							  :::	   ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/21 21:59:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 13:54:41 by jgonfroy         ###   ########.fr       */
-/*                                                                            */
+/*						      +:+ +:+	      +:+     */
+/*   By: jsaguez <jsaguez@student.42.fr>	    +#+  +:+	   +#+	      */
+/*						  +#+#+#+#+#+	+#+	      */
+/*   Created: 2020/12/21 21:59:48 by jgonfroy	       #+#    #+#	      */
+/*   Updated: 2021/01/21 18:27:19 by jgonfroy         ###   ########.fr       */
+/*									      */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
@@ -27,7 +27,7 @@
 # include <fcntl.h>
 
 t_var	*g_shell;
-char 	*g_read;
+char	*g_read;
 
 /*
  **fonctions main.c
@@ -68,7 +68,7 @@ int				is_valid_id(t_var *shell, char *name, char *arg);
 /*
  **fonctions syntax_error.c
  */
-int	syntax_error(char *input);
+int				syntax_error(char *input);
 
 /*
  **fonctions ft_export.c
@@ -110,9 +110,9 @@ void			free_multiple(void *s1, void *s2, void *s3, void *s4);
 void			free_strarray(char **tab);
 
 //fonctions exec.c
-void		ft_exec(t_var *shell);
-int			is_a_built(t_var *shell, char *cmd);
-int			ft_exec_cmd(t_var *shell, char **cmd);
+void			ft_exec(t_var *shell);
+int				is_a_built(t_var *shell, char *cmd);
+int				ft_exec_cmd(t_var *shell, char **cmd);
 
 /*
  **fonctions export_utils.c
@@ -125,72 +125,72 @@ int				is_in_order(const char *s1, const char *s2);
 /*
  **fonctions parsing.c
  */
-void                            parsing(t_mini *mini, t_var *shell);
-int                                     s_error(t_mini *mini, t_var *shell);
-int                                     q_error(t_mini *mini, char c1, char c2, t_var *shell);
-int										space_error(t_mini *mini, t_var *shell);
+void			parsing(t_mini *mini, t_var *shell);
+int				s_error(t_mini *mini, t_var *shell);
+int				q_error(t_mini *mini, char c1, char c2, t_var *shell);
+int				space_error(t_mini *mini, t_var *shell);
 
 /*
  **fonctions utils.c
  */
-void                            free_table(char **table);
-char							*ft_cat(char *g_read, char c);
-char                            *ft_strduplen(char *str, int len);
-void                            ft_addchr(char **str, char c);
-char                            quote_and_semi(char quote, char c);
+void			free_table(char **table);
+char			*ft_cat(char *g_read, char c);
+char			*ft_strduplen(char *str, int len);
+void			ft_addchr(char **str, char c);
+char			quote_and_semi(char quote, char c);
 
 /*
  **fonctions tokens.c
  */
-int                                     nb_tokens(char *str);
-void                            set_tokens(char **toks, char *str, int nbtok);
-int                                     len_token(char *str, int i);
-int                                     len_quote(char *str, char c);
+int				nb_tokens(char *str);
+void			set_tokens(char **toks, char *str, int nbtok);
+int				len_token(char *str, int i);
+int				len_quote(char *str, char c);
 
 /*
  **fonctions rm.c
  */
-void                            rm_char(char **str, int j);
-void                            rm_token(char **str);
-void							rm_lst(t_list **lst);
+void			rm_char(char **str, int j);
+void			rm_token(char **str);
+void			rm_lst(t_list **lst);
 
 /*
  **fonctions split_semi.c
  */
-char            **split_semi(char const *s, char c, int nbr);
+char			**split_semi(char const *s, char c, int nbr);
 
 /*
  **fonctions split_semi.c
  */
-int								value_env(t_var *shell, char **str);
-int	    						search_env(char **str, t_var *shell, int i, int brace);
-int	    						len_env(char *str);
-char							*get_envs(char **envp, char *env);
+int				value_env(t_var *shell, char **str);
+int				search_env(char **str, t_var *shell, int i, int brace);
+int				len_env(char *str);
+char			*get_envs(char **envp, char *env);
 
 //fonctions pipes.c
-int			ft_pipes(t_var *shell, int nb_p);
+int				ft_pipes(t_var *shell, int nb_p);
 
 /*
  **fonctions pipes_utils.c
  */
-void		close_all_fd(int *pfd, int nb_p);
-t_list		*split_pipes(char **cmd);
-int			check_pipes(char **cmd);
+void			close_all_fd(int *pfd, int nb_p);
+t_list			*split_pipes(char **cmd);
+int				check_pipes(char **cmd);
 
 /*
  **fonctions redirection.c
  */
-char	**redirection(t_var *shell, char **cmd, int p);
-void	redi_out(t_var *shell, int i, int fd);
-void	redi_in(t_var *shell, int i, int fd);
-char	**delete_redi(t_var *shell, char **cmd, int p);
-int		count_redi(t_var *shell, char **cmd);
+char			**redirection(t_var *shell, char **cmd, int p);
+void			redi_out(t_var *shell, int i, int fd);
+void			redi_in(t_var *shell, int i, int fd);
+char			**delete_redi(t_var *shell, char **cmd, int p);
+int				count_redi(t_var *shell, char **cmd);
 
 /*
  **fonctions verif_redi.c
-*/
-int		*verif_out(t_var *shell, int *verif);
-int 	nb_redi(t_var *shell);
-int 	*change_out(int *verif);
+ */
+int				*verif_out(t_var *shell, int *verif);
+int				nb_redi(t_var *shell);
+int				*change_out(int *verif);
 
 #endif

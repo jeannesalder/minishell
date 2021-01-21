@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 19:23:42 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/20 19:35:20 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 18:01:39 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,18 +17,22 @@ int	only_digit(char *str)
 	int	i;
 
 	i = 0;
-	if (str[0] == '-' && !str[1])
-		return (0);
 	if (str[i] == '-' || str[i] == '+')
 		i++;
+	if (!str[i])
+		return (0);
 	while (str[i])
 	{
 		if (!ft_isdigit(str[i]))
 			return (0);
 		i++;
 	}
-	if (ft_strlen(str) > 17)
-		return (0);
+	if (str[0] != '-')
+		if (ft_atoi_llong(str) < 0)
+			return (0);
+	if (str[0] == '-')
+		if (ft_atoi_llong(str) > 0)
+			return (0);
 	return (1);
 }
 
@@ -65,5 +69,5 @@ void	ft_exit(t_var *shell, char **cmd)
 		ft_putchar_fd('\n', 2);
 		free_and_exit(shell, 2);
 	}
-	free_and_exit(shell, ft_atoi(cmd[1]));
+	free_and_exit(shell, ft_atoi_llong(cmd[1]));
 }
