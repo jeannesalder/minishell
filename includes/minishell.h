@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>	    +#+  +:+	   +#+	      */
 /*						  +#+#+#+#+#+	+#+	      */
 /*   Created: 2020/12/21 21:59:48 by jgonfroy	       #+#    #+#	      */
-/*   Updated: 2021/01/21 18:27:19 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 21:33:18 by jgonfroy         ###   ########.fr       */
 /*									      */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void			ft_env(t_var *shell, char **env);
 /*
  **fonctions ft_exit.c
  */
-void			free_and_exit(t_var *shell, int nb_exit);
+void			free_and_exit(t_var *shell, int nb_exit, int eof);
 void			ft_exit(t_var *shell, char **cmd);
 
 /*

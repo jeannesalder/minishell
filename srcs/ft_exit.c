@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 19:23:42 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 18:01:39 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 21:41:11 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,17 @@ int	only_digit(char *str)
 	return (1);
 }
 
-void	free_and_exit(t_var *shell, int nb_exit)
+void	free_and_exit(t_var *shell, int nb_exit, int eof)
 {
+	if (!eof)
+	{
+		free_table(shell->mini->cmds);
+		free_table(shell->mini->toks);
+	}
 	free(g_read);
 	free(shell->pwd);
 	free(shell->path);
-	free_strarray(shell->env);
+	free_table(shell->env);
 	free(shell->mini);
 	exit(nb_exit);
 }
@@ -60,14 +65,14 @@ void	ft_exit(t_var *shell, char **cmd)
 		return ;
 	}
 	if (!cmd[1])
-		free_and_exit(shell, 0);
+		free_and_exit(shell, 0, 0);
 	if (!only_digit(cmd[1]))
 	{	
 		if (!shell->fork)
 			ft_putendl_fd("exit", 2);
 		print_str_fd("bash: exit: ", cmd[1], ": numeric argument required", 2);
 		ft_putchar_fd('\n', 2);
-		free_and_exit(shell, 2);
+		free_and_exit(shell, 2, 0);
 	}
-	free_and_exit(shell, ft_atoi_llong(cmd[1]));
+	free_and_exit(shell, ft_atoi_llong(cmd[1]), 0);
 }

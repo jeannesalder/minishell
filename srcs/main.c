@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:45:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 13:55:13 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 21:32:05 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	*ft_read_input(char **env)
 	if (ret == 0)
 	{	
 		ft_putendl_fd("exit", 2);
-		free_and_exit(g_shell, 0);
+		free_and_exit(g_shell, 0, 1);
 	}
 	while (c != '\n')
 	{

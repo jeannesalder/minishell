@@ -6,7 +6,7 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:18:06 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/18 13:19:17 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 21:18:01 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ t_env	split_env(char *var)
 		return (dest);
 	}
 	dest.value = ft_substr(var, index, ft_strlen(var) - index);
-	// dest.value[ft_strlen(dest.value)] = '\0';
 	if (index > 1 && var[index - 2] == '+')
 	{
 		dest.append = 1;
