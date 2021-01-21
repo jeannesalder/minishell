@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 13:19:43 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/20 21:43:15 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 14:14:28 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,12 @@ void	fork_for_exec(t_var *shell)
 	else
 	{
 		waitpid(child_pid, &status, 0);
-		shell->ret = WEXITSTATUS(status);
+		if (WIFSIGNALED(status))
+			shell->ret = 128 + WTERMSIG(status); 
+		else
+			shell->ret = WEXITSTATUS(status);
+		if (shell->ret == 131)
+			ft_putendl_fd("Quit (core dumped)", 2);
 		shell->fork = 0;
 	}
 }
@@ -121,7 +126,7 @@ int	ft_exec_cmd(t_var *shell, char **cmd)
 	{
 		cp_out = dup(1);
 		cp_in = dup(0);
-		cmd = redirection(shell, cmd);	
+		cmd = redirection(shell, cmd, 0);	
 		if (!(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell);
 		dup2(cp_out, 1);

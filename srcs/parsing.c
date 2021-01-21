@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/21 13:08:03 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 13:14:02 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,8 @@ void	parsing(t_mini *mini, t_var *shell)
 	}
 	if (g_read[0] != '\0')
 		free(mini->str);
+	else
+		free(g_read);
 	free_table(mini->cmds);
 	return ;
 }
