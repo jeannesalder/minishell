@@ -37,7 +37,7 @@ fsan:		$(OBJS) $(DIR_INCLUDES)*.h
 			$(CC) $(CFLAGS) $(FSAN) $(DIR_SRCS)*.o -o $(NAME) $(LIBFT)
 
 leaks:		$(NAME)
-		valgrind --tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes ./$(NAME)
+		valgrind --tool=memcheck --leak-check=full --leak-resolution=high --show-reachable=yes --child-silent-after-fork=yes ./$(NAME)
 
 
 all:		$(NAME)

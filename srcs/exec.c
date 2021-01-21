@@ -38,17 +38,14 @@ void	ft_exec(t_var *shell)
 	int		ret;
 	char	*path;
 
-	path = ft_strdup("");
 	if (shell->path[0])
-	{
-		free(path);
 		path = get_cmd_path(shell->path, shell->cmd[0]);
-	}
+	else
+		path = ft_strdup(shell->cmd[0]);
 	if (execve(path, shell->cmd, shell->env) == -1)
 	{
 		ret = error_exec(shell->cmd[0]);
-		if (path)
-			free(path);
+		free(path);
 		exit(ret);
 	}
 }
