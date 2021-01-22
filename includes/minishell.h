@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 14:28:43 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/22 17:00:16 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,7 +174,7 @@ char			*get_envs(char **envp, char *env);
 /*
  **fonctions value_env_utils.c
  */
- int            value_env_simpleq(char **str, t_var *shell, int i, int brace);
+ int            value_env_simpleq(char **str, int i);
  int            value_env_doubleq(char **str, t_var *shell, int i, int brace);
 
 /*

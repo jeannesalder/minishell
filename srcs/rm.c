@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:05:59 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/17 21:06:15 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 17:59:20 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,25 +32,40 @@ void		rm_token(char **str)
 	i = 0;
 	while ((*str)[i])
 	{
+		if ((*str)[i] == '\n' && i == 0)
+			(*str)[i] = '\0';
+		if ((*str)[i] == '\n')
+			(*str)[i] = ' ';
 		if ((*str)[i] == '\'')
 		{
 			rm_char(str, i);
 			while ((*str)[i] && (*str)[i] != '\'')
+			{
+				if ((*str)[i] == '\r')
+					(*str)[i] = '\'';
 				i++;
-			rm_char(str, i);
+			}
+			if ((*str)[i] != '\'')
+				rm_char(str, i);
 		}
 		else if ((*str)[i] == '"')
 		{
 			rm_char(str, i);
 			while ((*str)[i] && (*str)[i] != '"')
+			{
+				if ((*str)[i] == '\b')
+					(*str)[i] = '"';
 				i++;
-			rm_char(str, i);
+			}
+			if ((*str)[i] != '"')
+				rm_char(str, i);
 		}
-		else if (((*str)[i] == '\\') && ((*str)[i + 1] == '\\'
-					|| (*str)[i + 1] == '"' || (*str)[i + 1] == '\''))
-			rm_char(str, i++);
 		else
 			i++;
+		if ((*str)[i - 1] == '\r')
+					(*str)[i - 1] = '\'';
+		if ((*str)[i - 1] == '\b')
+					(*str)[i - 1] = '"';
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 14:47:13 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 17:55:31 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ int		value_env(t_var *shell, char **str)
 	while ((*str) && (*str)[i])
 	{
 		if ((*str)[i] == '\'')
-			i = value_env_simpleq(str, shell, i, brace);
+			i = value_env_simpleq(str, i);
 		if ((*str)[i] == '"')
 			i = value_env_doubleq(str, shell, i, brace);
 		if (!(*str)[i])
@@ -115,6 +115,14 @@ int		value_env(t_var *shell, char **str)
 		if ((*str)[i] == '$' && (*str)[i + 1]
 		&& ((*str)[i + 1] == '?' || ft_isalnum((*str)[i + 1])))
 			i += search_env(str, shell, i, brace) - 1;
+		if ((*str)[i] == '\\' && (*str)[i + 1] && (*str)[i + 1] == ' '
+		&& (((*str)[i - 1] && (*str)[i - 1] == ' ') || ((*str)[i + 2]
+		&& (*str)[i + 2] == ' ')))
+			(*str)[i] = '\n';
+		if ((*str)[i] == '\\' && (*str)[i + 1] && (*str)[i + 1] == '"')
+                (*str)[i + 1] = '\b';
+		if ((*str)[i] == '\\' && (*str)[i + 1] && (*str)[i + 1] == '\'')
+                (*str)[i + 1] = '\r';
 		if ((*str)[i] == '\\')
 			rm_char(str, i);
 		i++;

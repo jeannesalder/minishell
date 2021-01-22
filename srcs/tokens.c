@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:00:25 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/18 21:50:03 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 18:47:59 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,7 @@ int		len_quote(char *str, char c)
 
 	i = 0;
 	while (str[i] && str[i] != c)
-	{
-		if (str[i] == '\\' && (str[i + 1] == '"' || str[i + 1] == '\\'))
-			i++;
 		i++;
-	}
 	return (i);
 }
 
