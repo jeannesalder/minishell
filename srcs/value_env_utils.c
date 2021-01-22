@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 17:41:56 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/21 23:25:55 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 14:03:55 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		value_env_simpleq(char **str, t_var *shell, int i, int brace)
 	while ((*str)[i] && ((*str)[i] != '\''))
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1]
-		&& (*str)[i + 1] != ' ')
+		&& ft_isalnum((*str)[i + 1]))
 			i += search_env(str, shell, i, brace) - 1;
 		i++;
 	}
@@ -31,7 +31,7 @@ int		value_env_doubleq(char **str, t_var *shell, int i, int brace)
 	while ((*str)[i] && ((*str)[i] != '"'))
 	{
 		if ((*str)[i] == '$' && (*str)[i + 1]
-		&& (*str)[i + 1] != ' ')
+		&& ft_isalnum((*str)[i + 1]))
 			i += search_env(str, shell, i, brace) - 1;
 		if ((*str)[i] == '\\' && ((*str)[i + 1] == '\\'
 		|| (*str)[i + 1] == '$' || (*str)[i + 1] == '"'))
