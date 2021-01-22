@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:26:15 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 23:23:02 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 12:29:36 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,18 +73,41 @@ int	check_prev(char *input, int i, char c)
 	return (0);
 }
 
+int	check_quotes(int quotes, char c)
+{
+	if (c == '\'')
+	{
+		if (quotes == 0)
+			quotes = 1;
+		else if (quotes == 1)
+			quotes = 0;
+	}
+	if (c == '"')
+	{
+		if (quotes == 0)
+			quotes = 2;
+		else if (quotes == 2)
+			quotes = 0;
+	}
+	return (quotes);
+}
+
 int	syntax_error(char *input)
 {
 	int		i;
+	int		quotes;
 	int		error;
 	char	c;
 
 	i = 0;
+	quotes = 0;
 	error = 0;
 	while (input[i])
 	{
 		c = input[i];
-		if (c == ';' || c == '|' || c == '<' || c == '>')
+		if (c == '\"' || c == '\'')
+			quotes = check_quotes(quotes, c);
+		if (quotes == 0 && (c == ';' || c == '|' || c == '<' || c == '>'))
 			if (check_prev(input, i, c))
 				return (1);
 		i++;
