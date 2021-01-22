@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 10:25:55 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 11:26:36 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,14 @@ int		search_env(char **str, t_var *shell, int i, int brace)
 	if (!(env))
 	{
 		env = ft_strdup(get_envs(shell->env, temp3));
-		if (brace == 1 && (*str)[i + 1 + len] != '}')
+		if ((brace == 1 && (*str)[i + 1 + len] != '}'))
 		{
 			free(env);
 			env = ft_strdup("\0");
 			brace = 0;
 		}
+		//if (env[0] == NULL)
+		//	ft_putendl_fd("wesh", 2);
 	}
 	temp1 = ft_strduplen(*str, i);
 	temp2 = ft_strdup(*str + i + len + 1 + brace);

@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/21 23:21:18 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 10:32:40 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	redi_in(t_var *shell, char **cmd, int i, int fd)
 	while (cmd[i])
 	{
 		fd = 0;
-		if (!ft_memcmp(cmd[i], ">", 2))
+		if (!ft_memcmp(cmd[i], "<", 2))
 		{
 			fd = open(cmd[i + 1], O_RDONLY);
 			shell->in = 1;
@@ -87,6 +87,7 @@ void	redi_out(t_var *shell, char **cmd, int i, int fd)
 
 	while (cmd[i])
 	{
+		fd = 1;
 		if (!ft_memcmp(cmd[i], ">", 2))
 			fd = open_redi(shell, cmd, i, fd);
 		else if (!ft_memcmp(cmd[i], ">>", 3))
