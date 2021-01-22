@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/21 23:36:40 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 10:24:55 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ int				is_in_order(const char *s1, const char *s2);
 void			parsing(t_mini *mini, t_var *shell);
 int				s_error(t_mini *mini, t_var *shell);
 int				q_error(t_mini *mini, char c1, char c2, t_var *shell);
-int				space_error(t_mini *mini, t_var *shell);
+int				space_error(t_mini *mini);
 
 /*
  **fonctions utils.c
@@ -164,12 +164,18 @@ void			rm_lst(t_list **lst);
 char			**split_semi(char const *s, char c, int nbr);
 
 /*
- **fonctions split_semi.c
+ **fonctions value_env.c
  */
 int				value_env(t_var *shell, char **str);
 int				search_env(char **str, t_var *shell, int i, int brace);
 int				len_env(char *str);
 char			*get_envs(char **envp, char *env);
+
+/*
+ **fonctions value_env_utils.c
+ */
+ int            value_env_simpleq(char **str, t_var *shell, int i, int brace);
+ int            value_env_doubleq(char **str, t_var *shell, int i, int brace);
 
 /*
  **fonctions pipes.c
@@ -187,8 +193,8 @@ int				check_pipes(char **cmd);
  **fonctions redirection.c
  */
 char			**redirection(t_var *shell, char **cmd, int p);
-void			redi_out(t_var *shell, int i, int fd);
-void			redi_in(t_var *shell, int i, int fd);
+void			redi_out(t_var *shell, char **cmd, int i, int fd);
+void			redi_in(t_var *shell, char **cmd, int i, int fd);
 char			**delete_redi(t_var *shell, char **cmd, int p);
 int				count_redi(t_var *shell, char **cmd);
 
@@ -198,5 +204,7 @@ int				count_redi(t_var *shell, char **cmd);
 int				*verif_out(t_var *shell, int *verif);
 int				nb_redi(t_var *shell);
 int				*change_out(int *verif);
+int             drop_redi(char **cmd, int i);
+int	            open_redi(t_var *shell, char **cmd, int i, int fd);
 
 #endif

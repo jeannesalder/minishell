@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/21 23:28:50 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 10:25:40 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,4 +76,19 @@ int	*verif_out(t_var *shell, int *verif)
 	}
 	verif = change_out(verif);
 	return (verif);
+}
+
+int	drop_redi(char **cmd, int i)
+{
+	cmd[i] = NULL;
+	cmd[i + 1] = NULL;
+	i += 2;
+	return (i);
+}
+
+int	open_redi(t_var *shell, char **cmd, int i, int fd)
+{
+	fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_TRUNC, 0777);
+	shell->out = 1;
+	return (fd);
 }
