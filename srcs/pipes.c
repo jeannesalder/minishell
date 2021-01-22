@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 23:20:41 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 11:07:41 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,16 @@ int		ft_pipes(t_var *shell, int nb_p)
 
 	pfd = ft_calloc(2 * nb_p, sizeof(int));
 	if (!pfd)
-		return (EXIT_FAILURE);
+	{
+		ft_putendl_fd("bash error : no more memory available", 2);
+		free_and_exit(shell, EXIT_FAILURE, 0);
+	}
 	if (set_fd_pipe(pfd, nb_p))
-		return (EXIT_FAILURE);
+	{
+		ft_putendl_fd("bash error : too much pipes", 2);
+		free(pfd);
+		free_and_exit(shell, EXIT_FAILURE, 0);
+	}
 	lst_pipe = split_pipes(shell->cmd);
 	fork_pipes(shell, lst_pipe, pfd, nb_p);
 	free(pfd);
