@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:26:15 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/22 12:29:36 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/22 14:27:32 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ int	check_quotes(int quotes, char c)
 	return (quotes);
 }
 
-int	syntax_error(char *input)
+int	syntax_error(t_var *shell, char *input)
 {
 	int		i;
 	int		quotes;
@@ -109,7 +109,10 @@ int	syntax_error(char *input)
 			quotes = check_quotes(quotes, c);
 		if (quotes == 0 && (c == ';' || c == '|' || c == '<' || c == '>'))
 			if (check_prev(input, i, c))
+			{
+				shell->ret = 2;
 				return (1);
+			}
 		i++;
 	}
 	return (0);

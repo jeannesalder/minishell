@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 10:24:55 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 14:28:43 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int				is_valid_id(t_var *shell, char *name, char *arg);
 /*
  **fonctions syntax_error.c
  */
-int				syntax_error(char *input);
+int				syntax_error(t_var *shell, char *input);
 
 /*
  **fonctions ft_export.c
