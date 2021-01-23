@@ -6,11 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 11:37:40 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 23:17:00 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 21:19:28 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*get_cmd_path(char *path, char *cmd)
 {
@@ -31,13 +31,13 @@ char	*get_cmd_path(char *path, char *cmd)
 		free(tmp);
 		if (stat(cmd_path, &file) == 0)
 		{
-			free_strarray(path_split);
+			free_table(path_split);
 			return (cmd_path);
 		}
 		i++;
 		free(cmd_path);
 	}
-	free_strarray(path_split);
+	free_table(path_split);
 	return (NULL);
 }
 

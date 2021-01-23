@@ -6,11 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 22:21:19 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 12:42:33 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/22 20:16:17 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int		error_exec(char *cmd)
 {
@@ -112,7 +112,7 @@ int		ft_exec_cmd(t_var *shell, char **cmd)
 		cp_out = dup(1);
 		cp_in = dup(0);
 		cmd = redirection(shell, cmd, 0);
-		if (!(is_a_built(shell, cmd[0])))
+		if (cmd[0] && !(is_a_built(shell, cmd[0])))
 			fork_for_exec(shell);
 		dup2(cp_out, 1);
 		dup2(cp_in, 0);

@@ -6,11 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 12:17:22 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/22 12:44:31 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/22 14:41:05 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 void	close_all_fd(int *pfd, int nb_p)
 {

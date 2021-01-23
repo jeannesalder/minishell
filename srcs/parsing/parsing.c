@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int		space_error(t_mini *mini)
 {
@@ -107,7 +107,7 @@ void	parsing(t_mini *mini, t_var *shell)
 		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
 		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
 		shell->cmd = mini->toks;
-		if (ft_exec_cmd(shell, shell->cmd))
+		if (shell->cmd[i] && ft_exec_cmd(shell, shell->cmd))
 		{
 			free_table(mini->toks);
 			break ;

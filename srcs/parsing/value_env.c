@@ -6,11 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 17:55:31 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 22:23:09 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*get_envs(char **export, char *env)
 {
@@ -81,8 +81,6 @@ int		search_env(char **str, t_var *shell, int i, int brace)
 			env = ft_strdup("\0");
 			brace = 0;
 		}
-		//if (env[0] == NULL)
-		//	ft_putendl_fd("wesh", 2);
 	}
 	temp1 = ft_strduplen(*str, i);
 	temp2 = ft_strdup(*str + i + len + 1 + brace);

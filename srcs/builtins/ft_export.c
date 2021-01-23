@@ -6,11 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:38:45 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 23:19:41 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 21:17:48 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	**sort_env(char **cpy)
 {
@@ -57,7 +57,7 @@ void	print_env(char **env)
 		free(tmp.value);
 		i++;
 	}
-	free_strarray(env);
+	free_table(env);
 }
 
 void	change_path(t_var *shell, t_env tmp)

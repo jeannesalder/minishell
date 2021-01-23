@@ -6,11 +6,11 @@
 /*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 10:30:30 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/22 10:30:34 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/22 21:18:23 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	**remove_env(char **env, int index)
 {
@@ -31,7 +31,7 @@ char	**remove_env(char **env, int index)
 		i++;
 		j++;
 	}
-	free_strarray(env);
+	free_table(env);
 	return (tab);
 }
 

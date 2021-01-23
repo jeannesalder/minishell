@@ -6,11 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/22 11:07:41 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/22 18:49:10 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int		set_fd_pipe(int *pfd, int nb)
 {

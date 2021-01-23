@@ -6,11 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/21 16:35:22 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 23:18:46 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/22 21:14:33 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 char	*remove_quotes(char *str)
 {
@@ -77,7 +77,7 @@ char	**add_env(char **env, char *cmd, t_env var)
 	}
 	else
 		tab[i] = remove_quotes(cmd);
-	free_strarray(env);
+	free_table(env);
 	return (tab);
 }
 

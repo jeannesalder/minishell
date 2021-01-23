@@ -24,19 +24,6 @@ void	free_multiple(void *s1, void *s2, void *s3, void *s4)
 		free(s4);
 }
 
-void	free_strarray(char **tab)
-{
-	int	i;
-
-	i = 0;
-	while (tab[i])
-	{
-		free(tab[i]);
-		i++;
-	}
-	free(tab);
-}
-
 void	free_table(char **table)
 {
 	int	i;

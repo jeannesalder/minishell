@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./../includes/minishell.h"
+#include "../../includes/minishell.h"
 
 int		len_quote(char *str, char c)
 {
@@ -61,7 +61,7 @@ void	set_tokens(char **toks, char *str, int nbtok)
 	{
 		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
-		len = len_token(str, i);
+		len = len_token(str, i);	
 		toks[j] = ft_strduplen(str + i, len);
 		rm_token(&(toks[j]));
 		j++;
