@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 22:23:09 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/24 15:43:10 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,22 +105,10 @@ int		value_env(t_var *shell, char **str)
 			i = value_env_simpleq(str, i);
 		if ((*str)[i] == '"')
 			i = value_env_doubleq(str, shell, i, brace);
-		if (!(*str)[i])
-		{
-			ft_putstr_fd("Non finished quotes\n", 2);
-			shell->ret = 2;
-		}
 		if ((*str)[i] == '$' && (*str)[i + 1]
 		&& ((*str)[i + 1] == '?' || ft_isalnum((*str)[i + 1])))
 			i += search_env(str, shell, i, brace) - 1;
-		if ((*str)[i] == '\\' && (*str)[i + 1] && (*str)[i + 1] == ' '
-		&& (((*str)[i - 1] && (*str)[i - 1] == ' ') || ((*str)[i + 2]
-		&& (*str)[i + 2] == ' ')))
-			(*str)[i] = '\n';
-		if ((*str)[i] == '\\' && (*str)[i + 1] && (*str)[i + 1] == '"')
-                (*str)[i + 1] = '\b';
-		if ((*str)[i] == '\\' && (*str)[i + 1] && (*str)[i + 1] == '\'')
-                (*str)[i + 1] = '\r';
+		(*str) = safe_char(str, i);
 		if ((*str)[i] == '\\')
 			rm_char(str, i);
 		i++;

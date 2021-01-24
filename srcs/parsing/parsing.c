@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 18:48:15 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 15:46:30 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,18 +34,18 @@ int		q_error(t_mini *mini, char c1, char c2, t_var *shell)
 	i = 0;
 	while (mini->str[i])
 	{
-		if (mini->str[i] == c1)
+		if (mini->str[i] == c1 && mini->str[i - 1] != '\\')
 		{
 			i++;
-			while (mini->str[i] && (mini->str[i] != c1 
-			&& mini->str[i - 1] != '\\'))
+			while (mini->str[i] && (mini->str[i] != c1
+			|| (mini->str[i] == c1 && mini->str[i - 1] == '\\')))
 				i++;
 		}
-		if (mini->str[i] == c2)
+		if (mini->str[i] == c2 && mini->str[i - 1] != '\\')
 		{
 			i++;
-			while (mini->str[i] && (mini->str[i] != c2 
-			&& mini->str[i - 1] != '\\'))
+			while (mini->str[i] && (mini->str[i] != c2
+			|| (mini->str[i] == c2 && mini->str[i - 1] == '\\')))
 				i++;
 		}
 		if (!mini->str[i])
@@ -97,7 +97,7 @@ void	parsing(t_mini *mini, t_var *shell)
 	nbr = 0;
 	i = 0;
 	if (syntax_error(shell, mini->str) || s_error(mini, shell)
-	|| space_error(mini))
+	|| q_error(mini, '\'', '"', shell) || space_error(mini))
 		return ;
 	mini->cmds = split_semi(mini->str, ';', nbr);
 	while (mini->cmds[i])

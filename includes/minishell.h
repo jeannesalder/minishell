@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 17:00:16 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 17:08:05 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,6 +176,9 @@ char			*get_envs(char **envp, char *env);
  */
  int            value_env_simpleq(char **str, int i);
  int            value_env_doubleq(char **str, t_var *shell, int i, int brace);
+ char	        *safe_char(char **str, int i);
+ int		    quote_char(char **str, int i);
+ int		    doublequote_char(char **str, int i);
 
 /*
  **fonctions pipes.c

@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 10:32:40 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 18:04:11 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,11 @@ void	redi_out(t_var *shell, char **cmd, int i, int fd)
 		{
 			fd = open(cmd[i + 1], O_RDWR | O_CREAT | O_APPEND, 0777);
 			ret = 0;
-			while ((ret = read(fd, &c, 1)))
+			while ((ret = read(fd, &c, 1)) && ret > 0)
 				if (ret == -1)
-				{
 					write(2, "Couldn't read file\n", 19);
-					break ;
-				}
+			if (ret == -1)
+				break ;
 			shell->out = 1;
 		}
 		if (fd != 1)

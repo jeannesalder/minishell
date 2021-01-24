@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:00:25 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 18:47:59 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 14:51:57 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	set_tokens(char **toks, char *str, int nbtok)
 	{
 		while (str[i] && (str[i] == ' ' || str[i] == '\t'))
 			i++;
-		len = len_token(str, i);	
+		len = len_token(str, i);
 		toks[j] = ft_strduplen(str + i, len);
 		rm_token(&(toks[j]));
 		j++;
