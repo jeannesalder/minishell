@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:23:09 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 20:57:04 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/24 23:26:47 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ char	*ft_strduplen(char *str, int len)
 		i++;
 	}
 	dest[i] = '\0';
+	free(dest);
 	return (dest);
 }
 

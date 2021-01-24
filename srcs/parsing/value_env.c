@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 15:43:10 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 23:04:21 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,21 +66,16 @@ int		search_env(char **str, t_var *shell, int i, int brace)
 	char	*temp3;
 	int		len;
 
-	env = 0;
 	brace = begin_env(str, i, brace);
-	if ((*str)[i + 1 + brace] == '?')
-		env = ft_itoa(shell->ret);
+	env = ((*str)[i + 1 + brace] == '?') ? ft_itoa(shell->ret) : 0;
 	len = len_env(*str + i + 1);
 	temp3 = ft_strduplen(*str + i + 1 + brace, len - brace);
-	if (!(env))
+	env = (!(env)) ? ft_strdup(get_envs(shell->env, temp3)) : env;
+	if ((brace == 1 && (*str)[i + 1 + len] != '}'))
 	{
-		env = ft_strdup(get_envs(shell->env, temp3));
-		if ((brace == 1 && (*str)[i + 1 + len] != '}'))
-		{
-			free(env);
-			env = ft_strdup("\0");
-			brace = 0;
-		}
+		free(env);
+		env = ft_strdup("\0");
+		brace = 0;
 	}
 	temp1 = ft_strduplen(*str, i);
 	temp2 = ft_strdup(*str + i + len + 1 + brace);
@@ -106,7 +101,8 @@ int		value_env(t_var *shell, char **str)
 		if ((*str)[i] == '"')
 			i = value_env_doubleq(str, shell, i, brace);
 		if ((*str)[i] == '$' && (*str)[i + 1]
-		&& ((*str)[i + 1] == '?' || ft_isalnum((*str)[i + 1])))
+		&& ((*str)[i + 1] == '?' || ft_isalnum((*str)[i + 1])
+		|| ((*str)[i + 1] == '{')))
 			i += search_env(str, shell, i, brace) - 1;
 		(*str) = safe_char(str, i);
 		if ((*str)[i] == '\\')
