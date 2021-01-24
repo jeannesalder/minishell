@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:45:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/22 21:03:10 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/24 18:47:23 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,15 +91,19 @@ int		main(int ac, char **av, char **envp)
 {
 	t_var	shell;
 	t_mini	*mini;
+	int		i;
+	int		nbr;
 
 	(void)ac;
 	(void)av;
+	nbr = 0;
+	i = 0;
 	init_struct(&shell, &mini, envp);
 	while (1)
 	{
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, sigquit_handler);
 		mini->str = ft_read_input(shell.env);
-		parsing(mini, &shell);
+		parsing(mini, &shell, i, nbr);
 	}
 }

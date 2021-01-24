@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 17:08:05 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 18:45:29 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ int				is_in_order(const char *s1, const char *s2);
 /*
  **fonctions parsing.c
  */
-void			parsing(t_mini *mini, t_var *shell);
+void			parsing(t_mini *mini, t_var *shell, int i, int nbr);
 int				s_error(t_mini *mini, t_var *shell);
 int				q_error(t_mini *mini, char c1, char c2, t_var *shell);
 int				space_error(t_mini *mini);
@@ -142,6 +142,7 @@ char			*ft_cat(char *g_read, char c);
 char			*ft_strduplen(char *str, int len);
 void			ft_addchr(char **str, char c);
 char			quote_and_semi(char quote, char c);
+int				quote_verif(t_mini *mini, char c, int i);
 
 /*
  **fonctions tokens.c
@@ -174,11 +175,11 @@ char			*get_envs(char **envp, char *env);
 /*
  **fonctions value_env_utils.c
  */
- int            value_env_simpleq(char **str, int i);
- int            value_env_doubleq(char **str, t_var *shell, int i, int brace);
- char	        *safe_char(char **str, int i);
- int		    quote_char(char **str, int i);
- int		    doublequote_char(char **str, int i);
+int				value_env_simpleq(char **str, int i);
+int				value_env_doubleq(char **str, t_var *shell, int i, int brace);
+char			*safe_char(char **str, int i);
+int				quote_char(char **str, int i);
+int				doublequote_char(char **str, int i);
 
 /*
  **fonctions pipes.c
@@ -207,7 +208,7 @@ int				count_redi(t_var *shell, char **cmd);
 int				*verif_out(t_var *shell, int *verif);
 int				nb_redi(t_var *shell);
 int				*change_out(int *verif);
-int             drop_redi(char **cmd, int i);
-int	            open_redi(t_var *shell, char **cmd, int i, int fd);
+int				drop_redi(char **cmd, int i);
+int				open_redi(t_var *shell, char **cmd, int i, int fd);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 15:46:30 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 18:45:16 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,8 @@ int		q_error(t_mini *mini, char c1, char c2, t_var *shell)
 	i = 0;
 	while (mini->str[i])
 	{
-		if (mini->str[i] == c1 && mini->str[i - 1] != '\\')
-		{
-			i++;
-			while (mini->str[i] && (mini->str[i] != c1
-			|| (mini->str[i] == c1 && mini->str[i - 1] == '\\')))
-				i++;
-		}
-		if (mini->str[i] == c2 && mini->str[i - 1] != '\\')
-		{
-			i++;
-			while (mini->str[i] && (mini->str[i] != c2
-			|| (mini->str[i] == c2 && mini->str[i - 1] == '\\')))
-				i++;
-		}
+		i = quote_verif(mini, c1, i);
+		i = quote_verif(mini, c2, i);
 		if (!mini->str[i])
 		{
 			ft_putstr_fd("Non finished quotes\n", 2);
@@ -89,13 +77,8 @@ int		s_error(t_mini *m, t_var *shell)
 	return (0);
 }
 
-void	parsing(t_mini *mini, t_var *shell)
+void	parsing(t_mini *mini, t_var *shell, int i, int nbr)
 {
-	int	i;
-	int	nbr;
-
-	nbr = 0;
-	i = 0;
 	if (syntax_error(shell, mini->str) || s_error(mini, shell)
 	|| q_error(mini, '\'', '"', shell) || space_error(mini))
 		return ;
