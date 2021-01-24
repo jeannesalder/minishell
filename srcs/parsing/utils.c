@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:23:09 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/21 23:23:55 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/24 20:57:04 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,16 @@ char	quote_and_semi(char quote, char c)
 	else if (q == ' ' && (c == '\'' || c == '"'))
 		q = c;
 	return (q);
+}
+
+int		quote_verif(t_mini *mini, char c, int i)
+{
+	if (mini->str[i] == c && mini->str[i - 1] != '\\')
+	{
+		i++;
+		while (mini->str[i] && (mini->str[i] != c
+		|| (mini->str[i] == c && mini->str[i - 1] == '\\')))
+			i++;
+	}
+	return (i);
 }

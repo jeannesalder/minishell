@@ -92,12 +92,12 @@ int		ft_pipes(t_var *shell, int nb_p)
 	pfd = ft_calloc(2 * nb_p, sizeof(int));
 	if (!pfd)
 	{
-		ft_putendl_fd("bash error : no more memory available", 2);
+		ft_putendl_fd("bash error : no more memory available\nexit", 2);
 		free_and_exit(shell, EXIT_FAILURE, 0);
 	}
 	if (set_fd_pipe(pfd, nb_p))
 	{
-		ft_putendl_fd("bash error : too much pipes", 2);
+		ft_putendl_fd("bash error : too much pipes\nexit", 2);
 		free(pfd);
 		free_and_exit(shell, EXIT_FAILURE, 0);
 	}
