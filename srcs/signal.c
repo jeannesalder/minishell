@@ -30,7 +30,10 @@ void	sigquit_handler(int signo)
 	(void)signo;
 	if (!g_shell->fork)
 	{
-		free(g_read);
-		g_read = NULL;
+		if (g_read[0])
+		{
+			free(g_read);
+			g_read = NULL;
+		}
 	}
 }

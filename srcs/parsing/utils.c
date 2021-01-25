@@ -56,7 +56,6 @@ char	*ft_strduplen(char *str, int len)
 		i++;
 	}
 	dest[i] = '\0';
-	free(dest);
 	return (dest);
 }
 

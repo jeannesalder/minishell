@@ -90,7 +90,7 @@ void	parsing(t_mini *mini, t_var *shell, int i, int nbr)
 		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
 		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
 		shell->cmd = mini->toks;
-		if (shell->cmd[i] && ft_exec_cmd(shell, shell->cmd))
+		if (shell->cmd[0] && ft_exec_cmd(shell, shell->cmd))
 		{
 			free_table(mini->toks);
 			break ;
