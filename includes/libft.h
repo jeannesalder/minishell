@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
+typedef struct	s_list
 {
 	void			*content;
 	struct s_list	*next;
@@ -68,6 +68,6 @@ void			ft_lstclear(t_list **lst, void (*del)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 				void (*del) (void *));
 int				ft_charset(char c, char *charset);
-long long int			ft_atoi_llong(const char *str);
+long long int	ft_atoi_llong(const char *str);
 
 #endif
