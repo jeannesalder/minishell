@@ -6,7 +6,7 @@
 /*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/25 13:53:52 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/25 14:18:41 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ int		search_env(char **str, t_var *shell, int i, int brace)
 	}
 	temp1 = ft_strduplen(*str, i);
 	temp2 = ft_strdup(*str + i + len + 1 + brace);
-	ft_bzero(*str, ft_strlen(*str));
 	free_multiple(temp3, *str, NULL, NULL);
 	temp3 = ft_strjoin(temp1, env);
 	*str = ft_strjoin(temp3, temp2);
