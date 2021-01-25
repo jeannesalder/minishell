@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 23:32:40 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/25 13:16:16 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,16 +87,17 @@ void	parsing(t_mini *mini, t_var *shell, int i, int nbr)
 	{
 		value_env(shell, &(mini->cmds[i]));
 		mini->nbtok = nb_tokens(mini->cmds[i]);
+		mini->nbtemp = mini->nbtok;
 		mini->toks = (char **)ft_calloc(sizeof(char *), (mini->nbtok + 1));
 		set_tokens(mini->toks, mini->cmds[i], mini->nbtok);
 		shell->cmd = mini->toks;
 		if (shell->cmd[0] && ft_exec_cmd(shell, shell->cmd))
 		{
-			free_table(mini->toks);
+			free_toks(mini->toks, mini->nbtemp);
 			break ;
 		}
 		i++;
-		free_table(mini->toks);
+		free_toks(mini->toks, mini->nbtemp);
 	}
 	if (g_read[0] != '\0')
 		free(mini->str);

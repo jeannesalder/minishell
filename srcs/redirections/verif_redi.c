@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   verif_redi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/22 10:25:40 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/25 13:10:13 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ int	*verif_out(t_var *shell, int *verif)
 
 int	drop_redi(char **cmd, int i)
 {
+	free(cmd[i]);
+	free(cmd[i + 1]);
 	cmd[i] = NULL;
 	cmd[i + 1] = NULL;
 	i += 2;

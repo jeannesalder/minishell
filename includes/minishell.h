@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 20:46:45 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/25 12:05:30 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void			lstadd_value(t_list **list, void *value);
 
 void			free_multiple(void *s1, void *s2, void *s3, void *s4);
 void			free_strarray(char **tab);
+void	        free_toks(char **toks, int nbtoks);
 
 /*
  **fonctions exec.c

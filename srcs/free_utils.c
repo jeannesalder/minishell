@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jgonfroy <jgonfroy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:10:22 by jgonfroy          #+#    #+#             */
-/*   Updated: 2020/12/19 09:11:16 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/25 13:10:59 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,20 @@ void	free_table(char **table)
 		i++;
 	}
 	free(table);
+}
+
+void	free_toks(char **toks, int nbtoks)
+{
+	int	i;
+
+	i = 0;
+	if (!toks)
+		return ;
+	while (i < nbtoks)
+	{
+		if (toks[i])
+			free(toks[i]);
+		i++;
+	}
+	free(toks);
 }

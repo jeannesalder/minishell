@@ -26,6 +26,7 @@ typedef struct s_mini
 	char	*str;
 	char	**cmds;
 	int		nbtok;
+	int		nbtemp;
 	char	**toks;
 }		t_mini;
 

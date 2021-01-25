@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/18 11:45:48 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/24 18:47:23 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/25 12:59:25 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void	init_struct(t_var *shell, t_mini **mini, char **envp)
 	}
 	(*mini) = (t_mini *)malloc(sizeof(t_mini));
 	(*mini)->nbtok = 0;
+	(*mini)->nbtemp = 0;
 	(*mini)->toks = 0;
 	(*mini)->str = 0;
 	shell->mini = (*mini);
