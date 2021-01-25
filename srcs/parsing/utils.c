@@ -47,7 +47,7 @@ char	*ft_strduplen(char *str, int len)
 		size++;
 	if (len < size)
 		size = len;
-	dest = (char *)malloc(sizeof(char) * (size + 1));
+	dest = (char *)ft_calloc(sizeof(char), (size + 1));
 	if (!dest)
 		return (NULL);
 	while (i < size)

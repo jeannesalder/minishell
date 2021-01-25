@@ -6,11 +6,22 @@
 /*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:10:22 by jgonfroy          #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2021/01/25 13:10:59 by jsaguez          ###   ########.fr       */
+=======
 /*   Updated: 2021/01/25 14:19:24 by jsaguez          ###   ########.fr       */
+>>>>>>> 340ae0f0b3e398d8ed4585c3e88e52031734911a
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./../includes/minishell.h"
+
+char	*free_and_dup(char *str)
+{
+	free(str);
+	ft_strdup("\0");
+	return (str);
+}
 
 void	free_multiple(void *s1, void *s2, void *s3, void *s4)
 {

@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 14:27:01 by jgonfroy          #+#    #+#             */
-/*   Updated: 2019/11/19 11:47:29 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/21 16:19:15 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-typedef struct s_list
+typedef struct	s_list
 {
 	void			*content;
 	struct s_list	*next;
@@ -49,7 +49,7 @@ int				ft_tolower(int c);
 int				ft_toupper(int c);
 char			*ft_substr(char const *s, unsigned int start, size_t len);
 char			*ft_strjoin(char const *s1, char const *s2);
-char			*ft_strtrim(char *s1, char const *s2);
+char			*ft_strtrim(char *s1, char const *set);
 char			**ft_split(char const *s, char c);
 void			ft_putchar_fd(char c, int fd);
 void			ft_putstr_fd(char *s, int fd);
@@ -67,5 +67,7 @@ void			ft_lstiter(t_list *lst, void (*f)(void *));
 void			ft_lstclear(t_list **lst, void (*del)(void *));
 t_list			*ft_lstmap(t_list *lst, void *(*f)(void *), \
 				void (*del) (void *));
+int				ft_charset(char c, char *charset);
+long long int	ft_atoi_llong(const char *str);
 
 #endif

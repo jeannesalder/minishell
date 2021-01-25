@@ -6,7 +6,11 @@
 /*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
+<<<<<<< HEAD
+/*   Updated: 2021/01/25 13:53:52 by jsaguez          ###   ########.fr       */
+=======
 /*   Updated: 2021/01/25 14:18:41 by jsaguez          ###   ########.fr       */
+>>>>>>> 340ae0f0b3e398d8ed4585c3e88e52031734911a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +77,17 @@ int		search_env(char **str, t_var *shell, int i, int brace)
 	env = (!(env)) ? ft_strdup(get_envs(shell->env, temp3)) : env;
 	if ((brace == 1 && (*str)[i + 1 + len] != '}'))
 	{
+<<<<<<< HEAD
+		env = free_and_dup(env);
+=======
 		free(env);
 		env = ft_strdup("\0");
+>>>>>>> 340ae0f0b3e398d8ed4585c3e88e52031734911a
 		brace = 0;
 	}
 	temp1 = ft_strduplen(*str, i);
 	temp2 = ft_strdup(*str + i + len + 1 + brace);
+	ft_bzero(*str, ft_strlen(*str));
 	free_multiple(temp3, *str, NULL, NULL);
 	temp3 = ft_strjoin(temp1, env);
 	*str = ft_strjoin(temp3, temp2);

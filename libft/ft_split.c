@@ -74,7 +74,7 @@ static char	**cut_words(char **tab, char const *s, char c)
 	return (tab);
 }
 
-char	**ft_split(char const *s, char c)
+char		**ft_split(char const *s, char c)
 {
 	unsigned int	count;
 	char			**tab;
