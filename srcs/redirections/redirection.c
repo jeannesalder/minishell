@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 15:24:35 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 16:32:25 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,10 @@ void	redi_in(t_var *shell, char **cmd, int i, int fd)
 		{
 			fd = open(cmd[i + 1], O_RDONLY);
 			shell->in = 1;
+			if (fd == -1)
+				shell->in = -1;
 		}
-		if (fd != 0)
+		if (fd != 0 && fd != -1)
 			if ((dup2(fd, 0)) == -1)
 				if ((close(fd)) == -1)
 					shell->ret = 2;
@@ -128,7 +130,7 @@ int		redirection(t_var *shell, char **cmd)
 	fd = 0;
 	if (cmd[j])
 		redi_in(shell, cmd, j, fd);
-	if (cmd[i] || cmd[j])
+	if ((cmd[i] || cmd[j]) && shell->in != -1)
 	{
 		shell->cmd = delete_redi(shell, cmd);
 		return (1);
