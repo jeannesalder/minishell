@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:23:09 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 23:26:47 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 15:16:29 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,13 +71,27 @@ char	quote_and_semi(char quote, char c)
 	return (q);
 }
 
+int		nb_backslash(char *str, int i)
+{
+	int nb;
+
+	nb = 2;
+	while (str[i - 1] && str[i - 1] == '\\')
+	{
+		i--;
+		nb++;
+	}
+	nb = nb % 2;
+	return (nb);
+}
+
 int		quote_verif(t_mini *mini, char c, int i)
 {
 	if (mini->str[i] == c && mini->str[i - 1] != '\\')
 	{
 		i++;
 		while (mini->str[i] && (mini->str[i] != c
-		|| (mini->str[i] == c && mini->str[i - 1] == '\\')))
+		|| (mini->str[i] == c && nb_backslash(mini->str, i) == 1)))
 			i++;
 	}
 	return (i);

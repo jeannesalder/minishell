@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/26 11:55:45 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 13:10:14 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 		{
 			shell->cmd = (char **)shell->pipe->content;
 			dup_fd(shell, pfd, pos, nb_p);
-			shell->redi = redirection(shell, shell->cmd, 1);
+			shell->redi = redirection(shell, shell->cmd);
 			if (!(is_a_built(shell, shell->cmd[0])))
 				ft_exec(shell);
 		}

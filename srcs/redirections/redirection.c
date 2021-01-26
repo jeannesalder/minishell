@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 11:57:29 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 15:24:35 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int		count_redi(t_var *shell, char **cmd)
 	return (count);
 }
 
-char	**delete_redi(t_var *shell, char **cmd, int p)
+char	**delete_redi(t_var *shell, char **cmd)
 {
 	char	**args;
 	int		i;
@@ -46,31 +46,17 @@ char	**delete_redi(t_var *shell, char **cmd, int p)
 	{
 		if (!ft_memcmp(cmd[i], ">", 2) || !ft_memcmp(cmd[i], ">>", 3)
 		|| !ft_memcmp(cmd[i], "<", 2))
-			//i = i + 2;
 			i = drop_redi(cmd, i);
 		else
 		{
 			args[j] = ft_strdup(cmd[i]);
-//			ft_putendl_fd(args[j], 2);
 			ft_bzero(cmd[i], ft_strlen(cmd[i]));
 			j++;
 			i++;
 		}
 	}
 	free_table(shell->cmd);
-	/*cmd = (char **)ft_calloc(sizeof(char*), shell->mini->nbtok + 1);
-	i = 0;
-	while (args[i])
-	{
-		cmd[i] = ft_strdup(args[i]);
-		ft_putendl_fd(cmd[i], 2);
-		i++;
-	}*/
 	cmd = NULL;
-	//cmd = args;
-	if (p == 0)
-		p = 0;
-		//free_table(args);
 	return (args);
 }
 
@@ -122,7 +108,7 @@ void	redi_out(t_var *shell, char **cmd, int i, int fd)
 	}
 }
 
-int	redirection(t_var *shell, char **cmd, int p)
+int		redirection(t_var *shell, char **cmd)
 {
 	int i;
 	int	j;
@@ -144,7 +130,7 @@ int	redirection(t_var *shell, char **cmd, int p)
 		redi_in(shell, cmd, j, fd);
 	if (cmd[i] || cmd[j])
 	{
-		shell->cmd = delete_redi(shell, cmd, p);
+		shell->cmd = delete_redi(shell, cmd);
 		return (1);
 	}
 	return (0);

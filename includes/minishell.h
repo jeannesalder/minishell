@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 11:56:03 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 15:26:12 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ char			*ft_strduplen(char *str, int len);
 void			ft_addchr(char **str, char c);
 char			quote_and_semi(char quote, char c);
 int				quote_verif(t_mini *mini, char c, int i);
+int				nb_backslash(char *str, int i);
 
 /*
  **fonctions tokens.c
@@ -176,10 +177,9 @@ char			*get_envs(char **envp, char *env);
 /*
  **fonctions value_env_utils.c
 */
-int				value_env_simpleq(char **str, int i);
 int				value_env_doubleq(char **str, t_var *shell, int i, int brace);
 char			*safe_char(char **str, int i);
-int				quote_char(char **str, int i);
+int				simplequote_char(char **str, int i);
 int				doublequote_char(char **str, int i);
 
 /*
@@ -197,10 +197,10 @@ int				check_pipes(char **cmd);
 /*
  **fonctions redirection.c
 */
-int			redirection(t_var *shell, char **cmd, int p);
+int				redirection(t_var *shell, char **cmd);
 void			redi_out(t_var *shell, char **cmd, int i, int fd);
 void			redi_in(t_var *shell, char **cmd, int i, int fd);
-char			**delete_redi(t_var *shell, char **cmd, int p);
+char			**delete_redi(t_var *shell, char **cmd);
 int				count_redi(t_var *shell, char **cmd);
 
 /*

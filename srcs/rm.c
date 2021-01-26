@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:05:59 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/24 17:07:01 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 15:19:48 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void		rm_token(char **str)
 		if ((*str)[i] == '\a' || (*str)[i] == '\n')
 			(*str)[i] = ' ';
 		if ((*str)[i] == '\'')
-			i = quote_char(str, i);
+			i = simplequote_char(str, i);
 		else if ((*str)[i] == '"')
 			i = doublequote_char(str, i);
 		else

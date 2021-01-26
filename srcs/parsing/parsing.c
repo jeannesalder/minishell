@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 12:03:57 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 14:12:50 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,12 @@ int		q_error(t_mini *mini, char c1, char c2, t_var *shell)
 	i = 0;
 	while (mini->str[i])
 	{
-		i = quote_verif(mini, c1, i);
+		if (mini->str[i] == c1 && mini->str[i - 1] != '\\')
+		{
+			i++;
+			while (mini->str[i] && mini->str[i] != c1)
+				i++;
+		}
 		i = quote_verif(mini, c2, i);
 		if (!mini->str[i])
 		{

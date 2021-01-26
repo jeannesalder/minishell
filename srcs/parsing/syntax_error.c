@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:26:15 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/26 09:53:22 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 15:22:43 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_chevron(char *input, char c, int j)
 			j = j - 1;
 			while (j >= 0 && (input[j] == ' ' || input[j] == '\t'))
 				j--;
-			if (j>= 0 && input[j] == '>')
+			if (j >= 0 && input[j] == '>')
 				return (1);
 		}
 	}

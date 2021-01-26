@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   value_env.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:17:03 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/25 13:53:52 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 14:00:25 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,11 @@ int		value_env(t_var *shell, char **str)
 	while ((*str) && (*str)[i])
 	{
 		if ((*str)[i] == '\'')
-			i = value_env_simpleq(str, i);
+		{
+			i++;
+			while ((*str)[i] && (*str)[i] != '\'')
+				i++;
+		}
 		if ((*str)[i] == '"')
 			i = value_env_doubleq(str, shell, i, brace);
 		if ((*str)[i] == '$' && (*str)[i + 1]
