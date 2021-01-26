@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 16:32:25 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 16:49:15 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ void	redi_in(t_var *shell, char **cmd, int i, int fd)
 			fd = open(cmd[i + 1], O_RDONLY);
 			shell->in = 1;
 			if (fd == -1)
+			{
 				shell->in = -1;
+				return ;
+			}
 		}
 		if (fd != 0 && fd != -1)
 			if ((dup2(fd, 0)) == -1)
@@ -118,16 +121,15 @@ int		redirection(t_var *shell, char **cmd)
 
 	i = 0;
 	j = 0;
+	fd = 0;
 	shell->out = 0;
 	shell->in = 0;
 	while (cmd[i] && ft_memcmp(cmd[i], ">", 2) && ft_memcmp(cmd[i], ">>", 3))
 		i++;
-	fd = 1;
 	if (cmd[i])
 		redi_out(shell, cmd, i, fd);
 	while (cmd[j] && ft_strncmp(cmd[j], "<", 1))
 		j++;
-	fd = 0;
 	if (cmd[j])
 		redi_in(shell, cmd, j, fd);
 	if ((cmd[i] || cmd[j]) && shell->in != -1)
@@ -135,5 +137,7 @@ int		redirection(t_var *shell, char **cmd)
 		shell->cmd = delete_redi(shell, cmd);
 		return (1);
 	}
+	if (shell->in == -1)
+		ft_putendl_fd("bash: No such file or directory", 2);
 	return (0);
 }

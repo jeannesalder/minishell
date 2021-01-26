@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 22:21:19 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 13:10:23 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 16:59:03 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ void	fork_for_exec(t_var *shell)
 
 int		is_a_built(t_var *shell, char *cmd)
 {
+	if (shell->in == -1)
+		exit (1);
 	if (ft_memcmp(cmd, "echo", 5) == 0)
 		ft_echo(shell, shell->cmd);
 	else if (ft_memcmp(cmd, "cd", 3) == 0)
@@ -112,8 +114,10 @@ int		ft_exec_cmd(t_var *shell, char **cmd)
 		cp_out = dup(1);
 		cp_in = dup(0);
 		redirection(shell, cmd);
-		if (shell->cmd[0] && !(is_a_built(shell, shell->cmd[0])))
+		if (shell->in != -1 && shell->cmd[0] && !(is_a_built(shell, shell->cmd[0])))
 			fork_for_exec(shell);
+		if (shell->in == -1)
+			shell->ret = 1;
 		dup2(cp_out, 1);
 		dup2(cp_in, 0);
 		close(cp_out);
