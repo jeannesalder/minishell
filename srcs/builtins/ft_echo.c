@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/19 09:18:33 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/26 11:01:08 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 11:20:34 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ void	ft_echo(t_var *shell, char **cmd)
 	shell->ret = 0;
 	i = 1;
 	arg = 0;
-	ft_putendl_fd(cmd[0], 2);
-	ft_putendl_fd(cmd[1], 2);
 	while (cmd[i] != NULL && is_arg(cmd[i]))
 	{
 		arg = 1;

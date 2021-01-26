@@ -6,7 +6,7 @@
 /*   By: jgonfroy <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/11/08 14:27:01 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 16:19:15 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 11:54:42 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef struct	s_var
 	int		fork;
 	int		in;
 	int		out;
+	int		redi;
 	t_mini	*mini;
 	t_list	*pipe;
 }				t_var;

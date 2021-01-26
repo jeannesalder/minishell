@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 19:46:52 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 11:05:47 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 11:57:29 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**delete_redi(t_var *shell, char **cmd, int p)
 		else
 		{
 			args[j] = ft_strdup(cmd[i]);
-			ft_putendl_fd(args[j], 2);
+//			ft_putendl_fd(args[j], 2);
 			ft_bzero(cmd[i], ft_strlen(cmd[i]));
 			j++;
 			i++;
@@ -66,7 +66,7 @@ char	**delete_redi(t_var *shell, char **cmd, int p)
 		ft_putendl_fd(cmd[i], 2);
 		i++;
 	}*/
-	//cmd = NULL;
+	cmd = NULL;
 	//cmd = args;
 	if (p == 0)
 		p = 0;
@@ -122,7 +122,7 @@ void	redi_out(t_var *shell, char **cmd, int i, int fd)
 	}
 }
 
-char	**redirection(t_var *shell, char **cmd, int p)
+int	redirection(t_var *shell, char **cmd, int p)
 {
 	int i;
 	int	j;
@@ -143,6 +143,9 @@ char	**redirection(t_var *shell, char **cmd, int p)
 	if (cmd[j])
 		redi_in(shell, cmd, j, fd);
 	if (cmd[i] || cmd[j])
+	{
 		shell->cmd = delete_redi(shell, cmd, p);
-	return (shell->cmd);
+		return (1);
+	}
+	return (0);
 }
