@@ -6,11 +6,7 @@
 /*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-<<<<<<< HEAD
 /*   Updated: 2021/01/25 12:05:30 by jsaguez          ###   ########.fr       */
-=======
-/*   Updated: 2021/01/25 15:06:22 by jsaguez          ###   ########.fr       */
->>>>>>> 340ae0f0b3e398d8ed4585c3e88e52031734911a
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,11 +148,7 @@ int				quote_verif(t_mini *mini, char c, int i);
 /*
  **fonctions tokens.c
 */
-<<<<<<< HEAD
 int				nb_tokens(char *str, int *tmp);
-=======
-int				nb_tokens(char *str, int *temp);
->>>>>>> 340ae0f0b3e398d8ed4585c3e88e52031734911a
 void			set_tokens(char **toks, char *str, int nbtok);
 int				len_token(char *str, int i);
 int				len_quote(char *str, char c);
