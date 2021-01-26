@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/19 15:26:15 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/22 14:27:32 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 09:53:22 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_chevron(char *input, char c, int j)
 {
 	if (c != '>')
 		return (0);
-	if (input[j])
+	if (j >= 0)
 	{
 		if (input[j] == '<')
 			return (1);
@@ -37,9 +37,9 @@ int	check_chevron(char *input, char c, int j)
 		if (input[j] == '>')
 		{
 			j = j - 1;
-			while (input[j] && (input[j] == ' ' || input[j] == '\t'))
+			while (j >= 0 && (input[j] == ' ' || input[j] == '\t'))
 				j--;
-			if (input[j] == '>')
+			if (j>= 0 && input[j] == '>')
 				return (1);
 		}
 	}
@@ -51,22 +51,22 @@ int	check_prev(char *input, int i, char c)
 	int	j;
 
 	j = i - 1;
-	while (input[j] && (input[j] == ' ' || input[j] == '\t'))
+	while (i > 0 && j >= 0 && (input[j] == ' ' || input[j] == '\t'))
 		j--;
 	if (c == ';')
 	{
-		if (!input[j] || ft_charset(input[j], "<>|;"))
+		if (j < 0 || ft_charset(input[j], "<>|;"))
 			return (print_error(input, c));
 	}
 	if (c == '|')
 	{
-		if (!input[j] || ft_charset(input[j], "<>|;") || !input[i + 1])
+		if (j < 0 || ft_charset(input[j], "<>|;") || !input[i + 1])
 			return (print_error(input, c));
 	}
 	if ((c == '<' || c == '>') && !input[i + 1])
 		return (print_error(input, ' '));
 	if (c == '<')
-		if (input[j] && (input[j] == '<' || input[j] == '>'))
+		if (j >= 0 && (input[j] == '<' || input[j] == '>'))
 			return (print_error(input, c));
 	if (check_chevron(input, c, j))
 		return (print_error(input, c));

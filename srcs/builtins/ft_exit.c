@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/22 19:23:42 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/21 23:29:44 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 09:30:21 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	free_and_exit(t_var *shell, int nb_exit, int eof)
 	if (!eof)
 	{
 		free_table(shell->mini->cmds);
-		free_table(shell->mini->toks);
+		free_table(shell->cmd);
 	}
 	free(g_read);
 	free(shell->pwd);

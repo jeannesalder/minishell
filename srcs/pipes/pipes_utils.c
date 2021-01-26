@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 12:17:22 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/24 14:53:57 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 09:36:14 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,16 @@ t_list	*split_pipes(char **cmd)
 {
 	int		prev;
 	int		next;
+	int		size;
 	t_list	*tmp;
 	t_list	*lst_pipe;
 
+	size = 0;
+	while (cmd[size])
+		size++;
 	next = -1;
 	lst_pipe = NULL;
-	while (next && cmd[next])
+	while (next && next < size)
 	{
 		prev = next + 1;
 		next = next_pipe(cmd, prev);
