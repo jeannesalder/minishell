@@ -16,7 +16,7 @@ SRCS 	= $(DIR_SRCS)/main.c $(DIR_SRCS)/free_utils.c $(DIR_SRCS)/rm.c $(DIR_SRCS)
 	$(DIR_SRCS)/parsing/parsing.c $(DIR_SRCS)/parsing/split_semi.c $(DIR_SRCS)/parsing/syntax_error.c \
 	$(DIR_SRCS)/parsing/tokens.c $(DIR_SRCS)/parsing/utils.c $(DIR_SRCS)/parsing/value_env.c \
 	$(DIR_SRCS)/parsing/value_env_utils.c \
-	$(DIR_SRCS)/pipes/pipes.c $(DIR_SRCS)/pipes/pipes_utils.c \
+	$(DIR_SRCS)/pipes/pipes.c $(DIR_SRCS)/pipes/llist_utils.c $(DIR_SRCS)/pipes/pipes_fd.c \
 	$(DIR_SRCS)/redirections/redirection.c $(DIR_SRCS)/redirections/verif_redi.c
 
 OBJS = ${SRCS:.c=.o}

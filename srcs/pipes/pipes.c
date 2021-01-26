@@ -6,34 +6,11 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/12 15:39:34 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/26 13:10:14 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 16:15:23 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
-
-int		set_fd_pipe(int *pfd, int nb)
-{
-	int	i;
-
-	i = 0;
-	while (i < nb)
-	{
-		if (pipe(pfd + 2 * i) == -1)
-			return (EXIT_FAILURE);
-		i++;
-	}
-	return (0);
-}
-
-void	dup_fd(t_var *shell, int *pfd, int pos, int nb_p)
-{
-	if (pos != 1 && shell->in == 0)
-		dup2(pfd[(2 * pos - 4)], 0);
-	if (pos != nb_p + 1 && shell->out == 0)
-		dup2(pfd[2 * pos - 1], 1);
-	close_all_fd(pfd, nb_p);
-}
 
 void	end_fork(t_var *shell, int *pfd, int nb_p, pid_t child_pid)
 {
@@ -76,9 +53,7 @@ void	fork_pipes(t_var *shell, t_list *lst_pipe, int *pfd, int nb_p)
 			if (!(is_a_built(shell, shell->cmd[0])))
 				ft_exec(shell);
 		}
-		if (!shell->redi)
-			free_table(shell->pipe->content);
-		shell->pipe = shell->pipe->next;
+		shell->pipe = get_next_pipe(shell->pipe, shell->redi);
 		pos++;
 	}
 	rm_lst(&lst_pipe);

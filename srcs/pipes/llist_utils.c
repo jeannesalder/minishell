@@ -1,28 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   pipes_utils.c                                      :+:      :+:    :+:   */
+/*   llist_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/14 12:17:22 by jgonfroy          #+#    #+#             */
-/*   Updated: 2021/01/26 09:36:14 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 16:14:26 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/minishell.h"
 
-void	close_all_fd(int *pfd, int nb_p)
+t_list	*get_next_pipe(t_list *pipe, int redi)
 {
-	int	i;
-
-	i = 0;
-	while (i < nb_p * 2)
-	{
-		if (close(pfd[i]))
-			exit(EXIT_FAILURE);
-		i++;
-	}
+	if (!redi)
+		free_table(pipe->content);
+	return (pipe->next);
 }
 
 int		next_pipe(char **cmd, int start)

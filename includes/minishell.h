@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 15:26:12 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 16:19:05 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,9 +188,16 @@ int				doublequote_char(char **str, int i);
 int				ft_pipes(t_var *shell, int nb_p);
 
 /*
- **fonctions pipes_utils.c
+ **fonctions pipes_fd.c
 */
+int			set_fd_pipe(int *pfd, int nb);
+void			dup_fd(t_var *shell, int *pfd, int pos, int nb_p);
 void			close_all_fd(int *pfd, int nb_p);
+
+/*
+ **fonctions llist_utils.c
+*/
+t_list			*get_next_pipe(t_list *pipe, int redi);
 t_list			*split_pipes(char **cmd);
 int				check_pipes(char **cmd);
 
