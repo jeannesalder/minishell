@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 21:23:09 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 15:16:29 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/26 15:34:32 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ int		nb_backslash(char *str, int i)
 
 int		quote_verif(t_mini *mini, char c, int i)
 {
-	if (mini->str[i] == c && mini->str[i - 1] != '\\')
+	if (mini->str[i] == c && nb_backslash(mini->str, i) == 0)
 	{
 		i++;
 		while (mini->str[i] && (mini->str[i] != c
