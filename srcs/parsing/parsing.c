@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jsaguez <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/17 20:08:29 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 09:11:23 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/26 10:18:51 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,12 +95,12 @@ void	parsing(t_mini *mini, t_var *shell, int i, int nbr)
 		if (shell->cmd[0] && ft_exec_cmd(shell, shell->cmd))
 		{
 //			free_toks(mini->toks, mini->nbtemp);
-			free_toks(shell->cmd, mini->nbtemp);
+			free_table(shell->cmd);
 			break ;
 		}
 		i++;
 //		free_toks(mini->toks, mini->nbtemp);
-		free_toks(shell->cmd, mini->nbtemp);
+		free_table(shell->cmd);
 	}
 	if (g_read[0] != '\0')
 		free(mini->str);
