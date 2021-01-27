@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 22:21:19 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 16:59:03 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/27 13:00:02 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ void	fork_for_exec(t_var *shell)
 int		is_a_built(t_var *shell, char *cmd)
 {
 	if (shell->in == -1)
-		exit (1);
+		exit(1);
 	if (ft_memcmp(cmd, "echo", 5) == 0)
 		ft_echo(shell, shell->cmd);
 	else if (ft_memcmp(cmd, "cd", 3) == 0)
