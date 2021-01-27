@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 23:36:39 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/26 16:19:05 by jgonfroy         ###   ########.fr       */
+/*   Updated: 2021/01/27 13:25:32 by jsaguez          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,7 @@ int				ft_pipes(t_var *shell, int nb_p);
 /*
  **fonctions pipes_fd.c
 */
-int			set_fd_pipe(int *pfd, int nb);
+int				set_fd_pipe(int *pfd, int nb);
 void			dup_fd(t_var *shell, int *pfd, int pos, int nb_p);
 void			close_all_fd(int *pfd, int nb_p);
 
