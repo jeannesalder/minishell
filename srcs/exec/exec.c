@@ -6,7 +6,7 @@
 /*   By: jsaguez <jsaguez@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/21 22:21:19 by jsaguez           #+#    #+#             */
-/*   Updated: 2021/01/27 13:00:02 by jsaguez          ###   ########.fr       */
+/*   Updated: 2021/01/27 18:10:37 by jgonfroy         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int		is_a_built(t_var *shell, char *cmd)
 	return (1);
 }
 
-int		ft_exec_cmd(t_var *shell, char **cmd)
+int		ft_exec_cmd(t_var *sh, char **cmd)
 {
 	int	nb_pipes;
 	int	ret;
@@ -113,19 +113,19 @@ int		ft_exec_cmd(t_var *shell, char **cmd)
 	{
 		cp_out = dup(1);
 		cp_in = dup(0);
-		redirection(shell, cmd);
-		if (shell->in != -1 && shell->cmd[0] && !(is_a_built(shell, shell->cmd[0])))
-			fork_for_exec(shell);
-		if (shell->in == -1)
-			shell->ret = 1;
+		redirection(sh, cmd);
+		if (sh->in != -1 && sh->cmd[0] && !(is_a_built(sh, sh->cmd[0])))
+			fork_for_exec(sh);
+		if (sh->in == -1)
+			sh->ret = 1;
 		dup2(cp_out, 1);
 		dup2(cp_in, 0);
 		close(cp_out);
 		close(cp_in);
 		return (0);
 	}
-	ret = ft_pipes(shell, nb_pipes);
+	ret = ft_pipes(sh, nb_pipes);
 	if (ret)
-		shell->ret = ret;
+		sh->ret = ret;
 	return (0);
 }
